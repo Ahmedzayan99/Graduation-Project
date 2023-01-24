@@ -1,54 +1,49 @@
-
-
 import 'package:blackgym/shared/cubit/states.dart';
+import 'package:blackgym/shared/widgets/home_training_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../modules/chats.dart';
 import '../../modules/exercises.dart';
-import '../../modules/gym.dart';
 import '../../modules/home.dart';
 import '../../modules/settings.dart';
 import '../../modules/workouts.dart';
+import '../styles/iconly_broken.dart';
 
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
   static GymCubit get(context) => BlocProvider.of(context);
+  var a;
   bool isBottomSheet = false;
   int current = 0;
   List< BottomNavigationBarItem> bottomitem  = [
-    BottomNavigationBarItem(
-      icon: Icon(
-        Icons.home_filled,
-      ),
+     BottomNavigationBarItem(
+       icon:Icon(IconlyBroken.home),
       label: 'Home',),
-    BottomNavigationBarItem(
-      icon:Icon(Icons.accessibility_new),
+     BottomNavigationBarItem(
+       icon:Icon(IconlyBroken.exercise_1),
       label: 'exercises',
     ),
     BottomNavigationBarItem(
-      icon:Icon(Icons.work_outline_sharp),
+      icon:Icon(IconlyBroken.report),
       label: 'Workouts',
 
     ),
-    BottomNavigationBarItem(
-
-      icon: Icon(
-        Icons.chat_bubble_outline_rounded,
+     BottomNavigationBarItem(
+      icon: Icon(IconlyBroken.chat
       ),
       label: 'Chat',),
-    BottomNavigationBarItem(
+     BottomNavigationBarItem(
       icon: Icon(
-        Icons.settings,
+        IconlyBroken.setting,
       ),
       label: 'settings',),
 ];
   List<Widget> screen = [
-    HomeScreen(),
-    ExercisesScreen(),
-    WorkoutsScreen(),
-    ChatScreen(),
+    const HomeScreen(),
+    const ExercisesScreen(),
+    const WorkoutsScreen(),
+    const ChatScreen(),
     SettingsScreen(),
   ];
   void changeIndex(int index) {

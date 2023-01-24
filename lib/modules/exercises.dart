@@ -1,8 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 import '../shared/widgets/home_training_item_widget.dart';
@@ -32,7 +30,7 @@ class ExercisesScreen extends StatelessWidget {
               shrinkWrap: true,
               children:List.generate(homeTrainingDummy.length,(index){
                 var homeDummyItem =  homeTrainingDummy[index];
-                return HomeTrainingItemWidget(selectTraining: homeDummyItem,);
+                return HomeTrainingItemWidget(selectTraining:homeDummyItem,);
               }),),
           ),
           fallback: (context) => const Center(child:CircularProgressIndicator()),

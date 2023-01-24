@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/material.dart';
+import '../shared/styles/iconly_broken.dart';
 import 'login/homeSignup.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -9,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.only(right: 25,left: 25,top: 20,bottom: 20,),
         child: Column(
@@ -18,23 +21,25 @@ class SettingsScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: 40.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(101, 99, 99, 1.0),
                     borderRadius:BorderRadius.all(Radius.circular(10.0))
                 ),
                 child:InkWell(
                   onTap: () {
-                  },
 
+                  },
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.person,
-                        color: Color.fromRGBO(248, 202, 89, 1),),
-                      SizedBox(width: 2.0,),
-                      Text('My profile',
+                       const Padding(
+                         padding: EdgeInsets.only(left: 2.0),
+                         child: Icon(IconlyBroken.profile,
+                          color: Color.fromRGBO(248, 202, 89, 1),),
+                       ),
+                      const SizedBox(width: 2.0,),
+                      const Text('My profile',
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
@@ -43,12 +48,12 @@ class SettingsScreen extends StatelessWidget {
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width:40.0,),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                          children: const [
                             Icon(Icons.navigate_next,color: Color.fromRGBO(251, 251, 251, 1), ),
                           ],
                         ),),
@@ -56,11 +61,11 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ) ,),
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 15.0,),
               Container(
                 width: double.infinity,
                 height: 40.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(101, 99, 99, 1.0),
                     borderRadius:BorderRadius.all(Radius.circular(10.0))
                 ),
@@ -72,11 +77,11 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.man_sharp,
+                      const Icon(
+                        IconlyBroken.back,
                         color: Color.fromRGBO(248, 202, 89, 1),),
-                      SizedBox(width: 2.0,),
-                      Text('My Coach',
+                      const SizedBox(width: 2.0,),
+                      const Text('My Coach',
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
@@ -85,12 +90,12 @@ class SettingsScreen extends StatelessWidget {
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width:40.0,),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                          children: const [
                             Icon(Icons.navigate_next,color: Color.fromRGBO(251, 251, 251, 1), ),
                           ],
                         ),),
@@ -98,11 +103,11 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ) ,),
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
               Container(
                 width: double.infinity,
                 height: 40.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(101, 99, 99, 1.0),
                     borderRadius:BorderRadius.all(Radius.circular(10.0))
                 ),
@@ -114,11 +119,11 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.language_sharp,
                         color: Color.fromRGBO(248, 202, 89, 1),),
-                      SizedBox(width: 2.0,),
-                      Text('Language',
+                      const SizedBox(width: 2.0,),
+                      const Text('Language',
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
@@ -127,12 +132,12 @@ class SettingsScreen extends StatelessWidget {
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width:40.0,),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                          children: const [
                             Icon(Icons.navigate_next,color: Color.fromRGBO(251, 251, 251, 1), ),
                           ],
                         ),),
@@ -141,17 +146,17 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
 
               Container(
                 width: double.infinity,
                 height:200.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(101, 99, 99, 1.0),
                     borderRadius:BorderRadius.all(Radius.circular(10.0))
                 ),
                 child: Column(
-                  children: [
+                  children: const [
                     ListTile(
                       dense: true,
                       title: Text("Rate the App",
@@ -203,11 +208,11 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20.0,),
+              const SizedBox(height: 20.0,),
               Container(
                 width: double.infinity,
                 height:51.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(101, 99, 99, 1.0),
                     borderRadius:BorderRadius.all(Radius.circular(10.0))
                 ),
@@ -225,10 +230,8 @@ class SettingsScreen extends StatelessWidget {
                         color: Color.fromRGBO(
                             248, 202, 89, 1),),
                       onTap: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeSignUpScreen(),
-                          ),
-                        );
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context) =>  const HomeSignUpScreen(),), (route) => false);
                       },
                     ),
                   ],

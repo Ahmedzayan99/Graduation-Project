@@ -7,7 +7,6 @@ import 'package:blackgym/modules/dummy/training_dummy.dart';
 
 class StartTraining extends StatelessWidget {
   const StartTraining({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,7 +30,7 @@ class StartTraining extends StatelessWidget {
                     shrinkWrap:true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                      var trainingItemDummy = trainingDummy[index];
+                      var trainingItemDummy =trainingDummy[index];
                       return TrainingItemWidget(train: trainingItemDummy);
                       },
                       separatorBuilder:(context, index) => const SizedBox(height: 10.0,),

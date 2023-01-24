@@ -1,4 +1,5 @@
 import 'package:blackgym/modules/login/homeSignup.dart';
+import 'package:blackgym/shared/styles/string_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/styles/colors_manager.dart';
@@ -14,105 +15,136 @@ class LoginScreen extends StatelessWidget {
     var userNameController = TextEditingController();
     var passController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-    return Container(
+    return Form(
       key: _formKey,
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/abdominal muscles.png'),
-              fit: BoxFit.fill,opacity:150.0),),
-      child: Scaffold(
-        appBar:AppBar(),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children:
-                [
-                  const Text('Login to your Account',
+      child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/abdominal muscles.png'),
+                fit: BoxFit.fill,opacity:150.0),),
+        child: Scaffold(
+          appBar:AppBar(),
+          body: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children:
+                  [
+                    Text(AppString.loginToYourAccount,
+                        style: TextStyle(
+                          inherit: false,
+                          color: ColorsManager.white,
+                          fontSize: 45,
+                          fontWeight: FontWeight.w700,
+                        )),
+                    const SizedBox(height: 70,),
+                    Text(AppString.userName,
                       style: TextStyle(
                         inherit: false,
-                        color: Color.fromRGBO(243, 243, 242, 1.0),
-                        fontSize: 45,
+                        color: ColorsManager.primary,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
-                      )),
-                  const SizedBox(height: 70,),
-                  CustomTextFormFiled(
-                    controller: userNameController,
-                    textInputType: TextInputType.name,
-                    icon: IconlyBroken.message,
-                  ),
-                  const SizedBox(height: 23,),
-                  CustomTextFormFiled(
-                    controller: passController,
-                    textInputType: TextInputType.name,
-                    icon: IconlyBroken.lock,
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: TextButton(
-                        onPressed: () {
-                      Navigator.push( context,
-                          MaterialPageRoute(builder: (context) => const HomeSignUpScreen(),)
-                      );
-                    },
-                        child:const Text('Forget the password?',
-                            style: TextStyle(
-                              inherit: false,
-                              color: Color.fromRGBO(248, 202, 89, 1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ))),
-                  ),
-                  const SizedBox(height: 13.0,),
-                  MaterialButton(
-                    height: 54,
-                    minWidth: double.infinity,
-                    shape: const StadiumBorder(),
-                    color: ColorsManager.primary,
-                    onPressed: () {
-
-                    },
-                    child: const Text(' Sign In',
-                        style:TextStyle(
-                          inherit: false,
-                          color:Colors.white,
-                          fontSize:20.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                  const SizedBox(height: 33.0,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Don\'t have an account?',
-                          maxLines: 1,
-                          style: TextStyle(
-                            inherit: false,
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                          )),
-                      TextButton(
+                      ),),
+                    CustomTextFormFiled(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return AppString.thisFiledFree;
+                        }
+                        return null;
+                      },
+                      controller: userNameController,
+                      textInputType: TextInputType.name,
+                      icon: IconlyBroken.message,
+                    ),
+                    const SizedBox(height: 23,),
+                    Text(AppString.userName,
+                      style: TextStyle(
+                        inherit: false,
+                        color: ColorsManager.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),),
+                    CustomTextFormFiled(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return AppString.thisFiledFree;
+                        }
+                        return null;
+                      },
+                      controller: passController,
+                      textInputType: TextInputType.name,
+                      icon: IconlyBroken.lock,
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: TextButton(
                           onPressed: () {
-                            Navigator.push( context,
-                                MaterialPageRoute(builder: (context) => const HomeSignUpScreen(),)
-                            );
-                          },
-                          child:const Text('Sign up',
-                              maxLines: 1,
+                        Navigator.push( context,
+                            MaterialPageRoute(builder: (context) => const HomeSignUpScreen(),)
+                        );
+                      },
+                          child: Text( AppString.forgetThePassword,
                               style: TextStyle(
                                 inherit: false,
-                                color: Color.fromRGBO(248, 202, 89, 1),
+                                color:ColorsManager.primary,
                                 fontSize: 15,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                               ))),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 13.0,),
+                    MaterialButton(
+                      height: 54,
+                      minWidth: double.infinity,
+                      shape: const StadiumBorder(),
+                      color: ColorsManager.primary,
+                     onPressed:() {
+                        if(_formKey.currentState!.validate()){
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
+                        }
+                      },
+                      child:  Text(AppString.logIn,
+                          style: TextStyle(
+                            inherit: false,
+                            color:ColorsManager.black,
+                            fontSize:20.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                    const SizedBox(height: 33.0,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         Text(AppString.dontHaveAnAccount,
+                            maxLines: 1,
+                            style: TextStyle(
+                              inherit: false,
+                              color:ColorsManager.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            )),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push( context,
+                                  MaterialPageRoute(builder: (context) => const HomeSignUpScreen(),)
+                              );
+                            },
+                            child: Text(AppString.logIn,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  inherit: false,
+                                  color: ColorsManager.primary,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ))),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

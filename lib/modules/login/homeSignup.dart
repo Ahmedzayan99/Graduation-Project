@@ -1,6 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:blackgym/modules/login/login/login.dart';
 import 'package:blackgym/modules/login/register/signup.dart';
+import 'package:blackgym/shared/styles/string_manager.dart';
 import 'package:flutter/material.dart';
+
+import '../../shared/styles/colors_manager.dart';
 class HomeSignUpScreen extends StatelessWidget {
   const HomeSignUpScreen({Key? key}) : super(key: key);
 
@@ -24,29 +29,28 @@ class HomeSignUpScreen extends StatelessWidget {
                SizedBox(
                  child: Column(
 
-                   children: const
+                   children:
                    [
                      Padding(
-                       padding: EdgeInsets.symmetric(horizontal: 25.0),
-                       child: Text('Become Stronger with Our Workout Plans',
+                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                       child: Text(AppString.becomeStrongerWithOurWorkoutPlans,
                        maxLines: 2,
                        style:TextStyle(
                          inherit: false,
-                         color:Color.fromRGBO(255, 255, 255, 1),
+                         color:ColorsManager.white,
                          fontSize: 20.0,
                          fontWeight: FontWeight.bold,
                        ),
                    ),
                      ),
-                 SizedBox(height: 10.0,),
+                 const SizedBox(height: 10.0,),
                  Padding(
-                   padding: EdgeInsets.symmetric(horizontal: 10.0),
-                   child: Text('Through this application, your health, weight, and height will be monitored, and through it, the plan will be developed, in front of a coach or without a coach.',
+                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                   child: Text(AppString.throughthisApplicationYourhealth,
                      maxLines: 4,
-
                      style:TextStyle(
                        inherit: false,
-                       color:Color.fromRGBO(255, 255, 255, 1),
+                       color: ColorsManager.white,
                        fontSize:14.0,
                        fontWeight: FontWeight.w400,
                      ),),
@@ -54,51 +58,39 @@ class HomeSignUpScreen extends StatelessWidget {
                  ),
                ),
                const SizedBox(height: 30.0,),
-               Container(
-                 height: 52.0,
-                 width: double.infinity,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(12.0),
-                   color: const Color.fromRGBO(248, 202, 89, 1),
-                 ),
-                 child: MaterialButton(
-                   onPressed: () {
-                     Navigator.push(context, MaterialPageRoute(
-                       builder: (context) => const LoginScreen(),),);
-
-                   },
-                   child: const Text(' Login',
-                       style:TextStyle(
-                     inherit: false,
-                     color:Color.fromRGBO(0, 0, 0, 1),
-                     fontSize:22.0,
-                     fontWeight: FontWeight.bold,
-                   )),
-                 ),
+               MaterialButton(
+                 height: 54,
+                 minWidth: double.infinity,
+                 shape: const StadiumBorder(),
+                 color: ColorsManager.primary,
+                 onPressed: () {
+                   Navigator.push(context, PageRouteBuilder(pageBuilder:(context, animation, secondaryAnimation) => const LoginScreen(),));
+                 },
+                 child:  Text(AppString.logIn,
+                     style:const TextStyle(
+                       inherit: false,
+                       color:Colors.black,
+                       fontSize:20.0,
+                       fontWeight: FontWeight.bold,
+                     )),
                ),
                const SizedBox(height: 25.0,),
-               Container(
-                 height: 52.0,
-                 width: double.infinity,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(12.0),
-                   color: const Color.fromRGBO(248, 202, 89, 1),
-                 ),
-                 child: MaterialButton(
-                   onPressed: () {
-                     Navigator.push(context,
-                         MaterialPageRoute(
-                           builder: (context) =>  SignupScreen(),)
-                     );
-                   },
-                   child: const Text(' Sign Up',
-                       style:TextStyle(
-                         inherit: false,
-                         color:Color.fromRGBO(0, 0, 0, 1),
-                         fontSize:22.0,
-                         fontWeight: FontWeight.bold,
-                       )),
-                 ),
+               MaterialButton(
+                 height: 54,
+                 minWidth: double.infinity,
+                 shape: const StadiumBorder(),
+                 color: ColorsManager.primary,
+                 onPressed: () {
+                   Navigator.push(context, PageRouteBuilder(pageBuilder:(context, animation, secondaryAnimation) => SignupScreen(),));
+
+                 },
+                 child:  Text(AppString.signIn,
+                     style:const TextStyle(
+                       inherit: false,
+                       color:Colors.black,
+                       fontSize:20.0,
+                       fontWeight: FontWeight.bold,
+                     )),
                ),
              ],
 

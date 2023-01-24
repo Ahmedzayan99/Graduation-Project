@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 
 class TrainingItemWidget extends StatelessWidget {
-  final Train train;
+  final SelectTrain train;
   const TrainingItemWidget({Key? key, required this.train}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-
       crossAxisAlignment:CrossAxisAlignment.start,
       children: [
         Expanded(
