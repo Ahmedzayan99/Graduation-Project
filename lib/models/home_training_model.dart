@@ -1,38 +1,23 @@
+ import 'package:blackgym/models/start_training_model.dart';
+
 class Train {
   late String image;
   late String lebol;
   late String details;
   late String id;
+  List<SelectTrain> data;
+
 //  late SelectTrain data;
   Train({
     required this.id,
     required this.image,
     required this.lebol,
     required this.details,
-  });
-  }
-  class SelectTrain {
-  late String id;
-  late String image;
-  late String lebol;
-  late String details;
-
-  SelectTrain({
-  required this.id,
-  required this.image,
-  required this.lebol,
-  required this.details,
-  });
-  }
-class Model {
-  final String name;
-  final String message;
-  final String data;
-  final String photos;
-  Model({
-    required this.name,
     required this.data,
-    required this.message,
-    required this.photos,
   });
-}
+  }
+
+
+
+
+

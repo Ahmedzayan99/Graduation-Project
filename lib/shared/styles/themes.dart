@@ -5,8 +5,10 @@ import 'colors_manager.dart';
 ThemeData getAppThemeData() => ThemeData(
     scaffoldBackgroundColor:const Color.fromRGBO(255, 255, 255,0),
     //appBar Theme
-    appBarTheme: const AppBarTheme(elevation: 0,
-        color:Color.fromRGBO(255, 255, 255,0)),
+    appBarTheme:AppBarTheme(elevation: 0,
+        color:Color.fromRGBO(255, 255, 255,0),
+      titleTextStyle: TextStyle(color: ColorsManager.white,fontSize:20.0,fontWeight:FontWeight.bold ),
+    ),
     //bottom Sheet theme
     bottomSheetTheme:const BottomSheetThemeData(
         elevation: 10.0,
@@ -22,12 +24,16 @@ ThemeData getAppThemeData() => ThemeData(
       elevation: 0,
 
     ),
+
     /// Input Decoration Theme (Text FormFiled)
+    ///
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: ColorsManager.black,
+      suffixIconColor:ColorsManager.primary,
       prefixIconColor: ColorsManager.primary,
       contentPadding: const EdgeInsets.all(8.0),
+      hintStyle:  TextStyle(color: ColorsManager.primary,),
       errorStyle: const TextStyle(fontWeight: FontWeight.w300, color: Colors.red, fontSize: 12),
 
       /// Enable Border

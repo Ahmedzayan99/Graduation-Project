@@ -47,7 +47,7 @@ class NewLayout extends StatelessWidget {
                       onTap: (index){
                         cubit.changeIndex(index);
                       },
-                    items:cubit.bottomitem
+                    items:cubit.bottomItem
                   ),
            //     ),
             //  ),

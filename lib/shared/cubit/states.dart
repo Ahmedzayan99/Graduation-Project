@@ -7,5 +7,9 @@ class GymChangeBottomNavBarState extends GymStates{
 }
 class GymChangeBottomSheetState extends GymStates{
 }
-class GymChangeHomeLodeing extends GymStates{
+class GymChangeHomeLoading extends GymStates{
+}
+class GymChangeProfileState extends GymStates{
+}
+class GymChangetrainingeState extends GymStates{
 }

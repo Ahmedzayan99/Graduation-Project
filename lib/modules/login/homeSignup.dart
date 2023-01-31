@@ -46,7 +46,7 @@ class HomeSignUpScreen extends StatelessWidget {
                  const SizedBox(height: 10.0,),
                  Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                   child: Text(AppString.throughthisApplicationYourhealth,
+                   child: Text(AppString.throughThisApplicationYourHealth,
                      maxLines: 4,
                      style:TextStyle(
                        inherit: false,
@@ -84,7 +84,7 @@ class HomeSignUpScreen extends StatelessWidget {
                    Navigator.push(context, PageRouteBuilder(pageBuilder:(context, animation, secondaryAnimation) => SignupScreen(),));
 
                  },
-                 child:  Text(AppString.signIn,
+                 child:  Text(AppString.signUp,
                      style:const TextStyle(
                        inherit: false,
                        color:Colors.black,

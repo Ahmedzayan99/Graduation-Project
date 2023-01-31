@@ -1,8 +1,7 @@
 import 'package:blackgym/shared/cubit/states.dart';
-import 'package:blackgym/shared/widgets/home_training_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../modules/chats.dart';
+import '../../modules/login/chat/chats.dart';
 import '../../modules/exercises.dart';
 import '../../modules/home.dart';
 import '../../modules/settings.dart';
@@ -13,34 +12,33 @@ class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
   static GymCubit get(context) => BlocProvider.of(context);
-  var a;
   bool isBottomSheet = false;
   int current = 0;
-  List< BottomNavigationBarItem> bottomitem  = [
-     BottomNavigationBarItem(
+  List< BottomNavigationBarItem> bottomItem  = [
+     const BottomNavigationBarItem(
        icon:Icon(IconlyBroken.home),
       label: 'Home',),
-     BottomNavigationBarItem(
+     const BottomNavigationBarItem(
        icon:Icon(IconlyBroken.exercise_1),
       label: 'exercises',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon:Icon(IconlyBroken.report),
       label: 'Workouts',
 
     ),
-     BottomNavigationBarItem(
+     const BottomNavigationBarItem(
       icon: Icon(IconlyBroken.chat
       ),
       label: 'Chat',),
-     BottomNavigationBarItem(
+     const BottomNavigationBarItem(
       icon: Icon(
         IconlyBroken.setting,
       ),
       label: 'settings',),
 ];
   List<Widget> screen = [
-    const HomeScreen(),
+     HomeScreen(),
     const ExercisesScreen(),
     const WorkoutsScreen(),
     const ChatScreen(),
@@ -50,10 +48,24 @@ class GymCubit extends Cubit<GymStates> {
     current = index;
     emit(GymChangeBottomNavBarState());
   }
-  void changeBottomSheetState(
-      {required bool isShow})
+  void changeBottomSheetState({required bool isShow})
   {
     isBottomSheet = isShow;
     emit(GymChangeBottomSheetState());
+  }
+  bool myProfile=false;
+  void changeBottomProfile(){
+    myProfile =!myProfile;
+    emit(GymChangeProfileState());
+  }
+  bool language=false;
+  void changeBottomLanguage(){
+    language =!language;
+    emit(GymChangeProfileState());
+  }
+  bool selectLanguage=true;
+  void changeBottomSelectLanguage(){
+    selectLanguage =!selectLanguage;
+    emit(GymInitialState());
   }
 }

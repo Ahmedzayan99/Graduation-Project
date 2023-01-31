@@ -16,7 +16,7 @@ class ExercisesScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition:homeTrainingDummy[0].details.isNotEmpty,
+          condition:homeTrainingDummy.isNotEmpty,
           builder:(context) =>  Padding(
             padding: const EdgeInsets.all(20.0),
             child: GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -30,7 +30,7 @@ class ExercisesScreen extends StatelessWidget {
               shrinkWrap: true,
               children:List.generate(homeTrainingDummy.length,(index){
                 var homeDummyItem =  homeTrainingDummy[index];
-                return HomeTrainingItemWidget(selectTraining:homeDummyItem,);
+                return HomeTrainingItemWidget(Training:homeDummyItem,);
               }),),
           ),
           fallback: (context) => const Center(child:CircularProgressIndicator()),
