@@ -17,7 +17,7 @@ class AppString
   static String age = 'Age';
   static String male = 'Male';
   static String female = 'Female';
-  static String thisFiledFree = ' this filed free';
+  static String thisFiledFree = ' please enter your date';
   static String forgetThePassword = 'forget The Password';
   static String dontHaveAnAccount = 'Don\'t have an account?';
   static String becomeStrongerWithOurWorkoutPlans = 'Become Stronger with Our Workout Plans';

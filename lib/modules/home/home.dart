@@ -2,10 +2,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import '../models/home_images_model.dart';
-import '../shared/cubit/states.dart';
+import '../data/model/home_images_model.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blackgym/shared/cubit/cubit.dart';
+
+import '../shared/styles/colors_manager.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,117 +19,123 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
        return ConditionalBuilder(
           condition:imgList.isNotEmpty,
-          builder:(context) => Scaffold(
-              body: ListView(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 100),
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DefaultTextStyle(
-                          style: const TextStyle(
-                              fontSize: 40,
-                              color: Colors.white60,
-                              fontWeight: FontWeight.w800),
-                          child: AnimatedTextKit(
-                            animatedTexts: [
-                              WavyAnimatedText('Welcome',
-                                  speed: const Duration(milliseconds: 700)),
-                            ],
-                            totalRepeatCount: 100,
-                            pause: const Duration(milliseconds: 9000),
-                            isRepeatingAnimation: true,
-                            onTap: () {
-                              // print("Tap Event");
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 300.0,
-                        width: 500.0,
-                        child: CarouselSlider(
-                          items:imgList,
-                          options: CarouselOptions(
-                            viewportFraction:1.0 ,
-                            height: 250,
-                            initialPage: 0,
-                            scrollDirection: Axis.horizontal,
-                            enableInfiniteScroll: true,
-                            reverse: false,
-                            autoPlay: true,
-                            autoPlayInterval: const Duration(seconds:3),
-                            autoPlayAnimationDuration:const Duration(seconds:1),
-                            autoPlayCurve:Curves.fastOutSlowIn,
-                          ),
+          builder:(context) {
+            return Padding(
+              padding:const EdgeInsetsDirectional.only(top: 60.0),
+              child: Scaffold(
+                  body: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DefaultTextStyle(
+                            style: const TextStyle(
+                                fontSize: 40,
+                                color: Colors.white60,
+                                fontWeight: FontWeight.w800),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                WavyAnimatedText('Welcome',
+                                    speed: const Duration(milliseconds: 700)),
+                              ],
+                              totalRepeatCount: 100,
+                              pause: const Duration(milliseconds: 9000),
+                              isRepeatingAnimation: true,
+                              onTap: () {
+                                // print("Tap Event");
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      Center(
+                        child: SizedBox(
+                          height: 300.0,
+                          width: 500.0,
+                          child: CarouselSlider(
+                            items:imgList,
+                            options: CarouselOptions(
+                              viewportFraction:1.0 ,
+                              height: 250,
+                              initialPage: 0,
+                              scrollDirection: Axis.horizontal,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds:3),
+                              autoPlayAnimationDuration:const Duration(seconds:1),
+                              autoPlayCurve:Curves.fastOutSlowIn,
+                            ),
 
+                          ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedTextKit(
-                          animatedTexts: [
-                            TypewriterAnimatedText(
-                              'Never give up',
-                              textStyle: const TextStyle(
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white),
-                              speed: const Duration(milliseconds: 400),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedTextKit(
+                            animatedTexts: [
+                              TypewriterAnimatedText(
+                                'Never give up',
+                                textStyle: const TextStyle(
+                                    fontSize: 32.0,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white),
+                                speed: const Duration(milliseconds: 400),
+                              ),
+                            ],
+                            totalRepeatCount: 100,
+                            pause: const Duration(milliseconds: 1000),
+                            displayFullTextOnTap: true,
+                            stopPauseOnTap: true,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 50.0,
+                      ),
+                      Row(
+                        children: const [
+                          Expanded(
+                              child: Text(
+                                'LOSE WEIGHT BUILD MUSCLE',
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900),
+                                maxLines: 5,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 30),
                             ),
-                          ],
-                          totalRepeatCount: 100,
-                          pause: const Duration(milliseconds: 1000),
-                          displayFullTextOnTap: true,
-                          stopPauseOnTap: true,
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    Row(
-                      children: [
-                        const Expanded(
-                            child: Text(
-                              'LOSE WEIGHT BUILD MUSCLE',
+                            onPressed: () {
+                              GymCubit.get(context).changeIndex(1);
+                            },
+                            child: const Text(
+                              'Lets start',
                               style: TextStyle(
-                                  fontSize: 35,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900),
-                              maxLines: 5,
-                            ))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 30),
-                          ),
-                          onPressed: () {
-                            GymCubit.get(context).changeIndex(1);
-                          },
-                          child: const Text(
-                            'Lets start',
-                            style: TextStyle(
-                                color: Colors.yellow, fontWeight: FontWeight.w600),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                )
+                                  color: Colors.yellow, fontWeight: FontWeight.w600),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  )
               ),
-          fallback: (context) => const Center(child: CircularProgressIndicator()),
+            );
+          },
+          fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
         );
       },
     );

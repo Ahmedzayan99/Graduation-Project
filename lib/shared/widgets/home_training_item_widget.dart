@@ -1,5 +1,7 @@
-import 'package:blackgym/models/home_training_model.dart';
-import 'package:blackgym/shared/cubit/cubit.dart';
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:blackgym/data/model/home_training_model.dart';
+import 'package:blackgym/shareds/logic/home_logic/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,9 +16,7 @@ class HomeTrainingItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=> GymCubit(),
-      child:BlocConsumer<GymCubit,GymStates>(
+    return BlocConsumer<GymCubit,GymStates>(
               listener: (context, state) {},
               builder: (context, state) {
                 return SizedBox(
@@ -93,7 +93,7 @@ class HomeTrainingItemWidget extends StatelessWidget {
                     ],
                   ),
                 );
-              }),
-    );
+              });
+
   }
 }

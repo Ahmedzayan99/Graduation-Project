@@ -1,13 +1,24 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'colors_manager.dart';
 
 ThemeData getAppThemeData() => ThemeData(
+
+  fontFamily:'JosefinSans-Regular',
     scaffoldBackgroundColor:const Color.fromRGBO(255, 255, 255,0),
+
     //appBar Theme
-    appBarTheme:AppBarTheme(elevation: 0,
+    appBarTheme:AppBarTheme(
+      elevation: 0,
         color:Color.fromRGBO(255, 255, 255,0),
       titleTextStyle: TextStyle(color: ColorsManager.white,fontSize:20.0,fontWeight:FontWeight.bold ),
+      systemOverlayStyle:SystemUiOverlayStyle(statusBarColor: Colors.black,
+        statusBarIconBrightness:Brightness.light ,
+      ),
+
     ),
     //bottom Sheet theme
     bottomSheetTheme:const BottomSheetThemeData(
@@ -60,3 +71,5 @@ ThemeData getAppThemeData() => ThemeData(
           BorderSide(color: ColorsManager.primary, width: 1.5),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
     ));
+
+

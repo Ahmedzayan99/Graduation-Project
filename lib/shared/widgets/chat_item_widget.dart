@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../models/chat_model.dart';
-import '../../modules/login/chat/chats_person.dart';
+import '../../data/model/chat_model.dart';
+import '../../modules/chat/chats_person.dart';
 
 class ChatItemWidget extends StatelessWidget {
   final ChatModel users;

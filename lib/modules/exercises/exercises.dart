@@ -1,8 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../shared/cubit/cubit.dart';
-import '../shared/cubit/states.dart';
+import '../shared/logic/home_logic/cubit.dart';
+import '../shared/logic/home_logic/states.dart';
+import '../shared/styles/colors_manager.dart';
 import '../shared/widgets/home_training_item_widget.dart';
 import 'dummy/home_dummy.dart';
 
@@ -18,7 +19,7 @@ class ExercisesScreen extends StatelessWidget {
         return ConditionalBuilder(
           condition:homeTrainingDummy.isNotEmpty,
           builder:(context) =>  Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding:const EdgeInsetsDirectional.only(top: 60.0,start:20.0,end:20.0 ,bottom: 20.0,),
             child: GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1.0,
@@ -33,7 +34,7 @@ class ExercisesScreen extends StatelessWidget {
                 return HomeTrainingItemWidget(Training:homeDummyItem,);
               }),),
           ),
-          fallback: (context) => const Center(child:CircularProgressIndicator()),
+          fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
         );
       },
     );

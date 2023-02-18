@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../shared/widgets/chat_item_widget.dart';
-import '../../dummy/chat_dummy.dart';
+import '../../shared/widgets/chat_item_widget.dart';
+import 'dummy/chat_dummy.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -9,9 +9,11 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text(
+        title: const Text(
             'Chats',
             style: TextStyle(
+              fontSize: 25.0,
+              fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
@@ -55,13 +57,13 @@ class ChatScreen extends StatelessWidget {
               height: 20.0,
             ),**/
             ListView.separated(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 var chatDummy = users[index];
                 return ChatItemWidget(users: chatDummy);
               },
-              separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+              separatorBuilder: (context, index) => const SizedBox(height: 20.0,),
               itemCount: users.length,
             ),
 

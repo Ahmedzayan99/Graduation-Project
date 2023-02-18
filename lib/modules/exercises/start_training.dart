@@ -1,12 +1,11 @@
-import 'package:blackgym/modules/dummy/home_dummy.dart';
 import 'package:blackgym/shared/widgets/training_item_widget.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blackgym/shared/cubit/cubit.dart';
-import 'package:blackgym/shared/cubit/states.dart';
-import '../models/home_training_model.dart';
-import '../models/start_training_model.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
+import '../data/model/start_training_model.dart';
+import '../shared/styles/colors_manager.dart';
 
 class StartTraining extends StatelessWidget {
   final List<SelectTrain> data;
@@ -52,7 +51,7 @@ class StartTraining extends StatelessWidget {
 
                  ),
                ),
-               fallback: (context) => const Center(child:CircularProgressIndicator()),
+               fallback: (context) => Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
 
              );
 

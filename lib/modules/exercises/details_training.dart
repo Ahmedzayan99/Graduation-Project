@@ -2,14 +2,15 @@ import 'package:blackgym/modules/dummy/home_dummy.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blackgym/shared/cubit/cubit.dart';
-import 'package:blackgym/shared/cubit/states.dart';
-import '../models/start_training_model.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
+import '../data/model/start_training_model.dart';
 import '../shared/styles/colors_manager.dart';
 
-class detailsTraining extends StatelessWidget {
+// ignore: must_be_immutable
+class DetailsTraining extends StatelessWidget {
   late SelectTrain bigDetails;
-   detailsTraining({Key? key, required this.bigDetails}) : super(key: key);
+   DetailsTraining({Key? key, required this.bigDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class detailsTraining extends StatelessWidget {
                 Scaffold(backgroundColor: ColorsManager.black,
               appBar: AppBar(),
               body: Padding(
-                padding: EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(30.0),
                 child: SingleChildScrollView(
 
                   child: Column(
@@ -42,10 +43,10 @@ class detailsTraining extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/background1.png'),
                             fit: BoxFit.cover,opacity:100.0,
@@ -87,7 +88,7 @@ class detailsTraining extends StatelessWidget {
               ),
 
             ),
-            fallback: (context) => const Center(child:CircularProgressIndicator()),
+            fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
 
           );
 

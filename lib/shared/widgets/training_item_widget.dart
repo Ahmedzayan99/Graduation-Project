@@ -1,9 +1,10 @@
- import 'package:blackgym/models/home_training_model.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/start_training_model.dart';
+import '../../data/model/start_training_model.dart';
 import '../../modules/details_training.dart';
-import '../cubit/cubit.dart';
+import '../../shareds/logic/home_logic/cubit.dart';
 import '../cubit/states.dart';
 class TrainingItemWidget extends StatelessWidget {
   late SelectTrain train;
@@ -11,9 +12,7 @@ class TrainingItemWidget extends StatelessWidget {
      required this.train,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=> GymCubit(),
-        child:BlocConsumer<GymCubit,GymStates>(
+    return BlocConsumer<GymCubit,GymStates>(
         listener: (context, state) {},
         builder: (context, state){
     return Row(
@@ -63,7 +62,7 @@ class TrainingItemWidget extends StatelessWidget {
                     ),),
                 ),
                 TextButton(onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTraining(bigDetails:train,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsTraining(bigDetails:train,)));
                 },
                   child: const Text('Show more',
                     style: TextStyle(
@@ -76,7 +75,7 @@ class TrainingItemWidget extends StatelessWidget {
 
         ],
       );
-    }),
-    );
+    });
+
   }
 }

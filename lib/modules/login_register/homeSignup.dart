@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:blackgym/modules/login/login/login.dart';
-import 'package:blackgym/modules/login/register/signup.dart';
+import 'package:blackgym/modules/login/register/fisrst_step_register.dart';
 import 'package:blackgym/shared/styles/string_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +64,7 @@ class HomeSignUpScreen extends StatelessWidget {
                  shape: const StadiumBorder(),
                  color: ColorsManager.primary,
                  onPressed: () {
-                   Navigator.push(context, PageRouteBuilder(pageBuilder:(context, animation, secondaryAnimation) => const LoginScreen(),));
+                   Navigator.push(context, PageRouteBuilder(pageBuilder:(context, animation, secondaryAnimation) => LoginScreen(),));
                  },
                  child:  Text(AppString.logIn,
                      style:const TextStyle(

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "747375922749",
+    "project_id": "gymsystem-94ee5",
+    "storage_bucket": "gymsystem-94ee5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747375922749:android:c22e6ef300faa1ae692454",
+        "android_client_info": {
+          "package_name": "com.example.blackgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747375922749-8sj56ts64jvfho2jsliktl1p8tnrg0mq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blackgym",
+            "certificate_hash": "a01c6df0c917b429e692790b94a29ffd05a35d6c"
+          }
+        },
+        {
+          "client_id": "747375922749-7bci51fmfkq033pm3ddvl4n20fh7jrp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFV_WcOnCKrtTPGN__8lYoFRz0TRwD8pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747375922749-7bci51fmfkq033pm3ddvl4n20fh7jrp9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
