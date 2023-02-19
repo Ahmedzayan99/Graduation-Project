@@ -1,7 +1,8 @@
-import 'package:blackgym/modules/login/register/otp_screen.dart';
+import 'package:blackgym/modules/login_register/register/otp_screen.dart';
+import 'package:blackgym/modules/login_register/register/second_step_register.dart';
 import 'package:flutter/material.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import '../../../shared/styles/colors_manager.dart';
 import '../../../shared/styles/string_manager.dart';
 import '../../../shared/widgets/custom_text_form_filed.dart';
@@ -38,7 +39,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocConsumer<GymCubit,GymStates>(
+    return  BlocConsumer<AuthCubit,AuthStates>(
       listener:(context, state) {
         if (state is PhoneLoadingState) {
           showProgressIndicator(context);
@@ -47,7 +48,9 @@ class SignupScreen extends StatelessWidget {
 
 
           Navigator.pop(context);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>OTPScreen(phoneNumber: phoneNumberController.text.trim(),)), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>SignupUserScreen(phone:phoneNumberController.text.trim()),
+            //OTPScreen(phoneNumber: phoneNumberController.text.trim(),)
+          ), (route) => false);
         }
         if (state is PhoneErrorState) {
 
@@ -138,9 +141,10 @@ class SignupScreen extends StatelessWidget {
                         onPressed: () {
                           showProgressIndicator(context);
                           if(_formKey.currentState!.validate()) {
-                            Navigator.pop(context);
-                            GymCubit.get(context).submitPhoneNumber(
-                                phoneNumberController.text.trim());
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>SignupUserScreen(phone:phoneNumberController.text.trim())  ), (route) => false);
+                          //  Navigator.pop(context);
+                          //  AuthCubit.get(context).submitPhoneNumber(
+                       //         phoneNumberController.text.trim());
                           }
                           else {
                             Navigator.pop(context);

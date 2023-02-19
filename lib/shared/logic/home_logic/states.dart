@@ -16,80 +16,55 @@ class GymChangeProfileState extends GymStates{
 }
 class GymChangeLanguageState extends GymStates{
 }
-class GymChangeVisiblePasswordLoginState extends GymStates{
+
+
+class ProfileImagePickerSuccessState extends GymStates{
 }
-class GymChangeVisiblePassworRegisterdState extends GymStates{
+class ProfileImagePickerErrorState extends GymStates{
 }
 
-class GymRegisterLoadingState extends GymStates{
+class UploadProfileImageSuccessState extends GymStates{
 }
-class GymRegisterSuccessState extends GymStates{
+class UploadProfileImageErrorState extends GymStates{
 }
-class GymRegisterErrorState extends GymStates{
+
+class UserUpdateErrorState extends GymStates{
+}
+
+
+
+class GetUserLoadingState extends GymStates{
+}
+class GetUserSuccessState extends GymStates{
+}
+class GetUserErrorState extends GymStates
+{
   final String error;
-  GymRegisterErrorState(this.error);
+  GetUserErrorState(this.error);
 }
-class GymLoginLoadingState extends GymStates{
+
+class GetAllUserLoadingState extends GymStates{
 }
-class GymLoginSuccessState extends GymStates{
-  final String uId;
-  GymLoginSuccessState(this.uId);
+class GetAllUserSuccessState extends GymStates{
 }
-class GymLoginErrorState extends GymStates{
+class GetAllUserErrorState extends GymStates
+{
   final String error;
-  GymLoginErrorState(this.error);
+  GetAllUserErrorState(this.error);
 }
-class GymCreateUserSuccessState extends GymStates{
-  final String uId;
-  GymCreateUserSuccessState(this.uId);
+
+
+class SendMessageSuccessState extends GymStates{
 }
-class GymCreateUserErrorState extends GymStates{
-  final String error;
-  GymCreateUserErrorState(this.error);
+class SendMessageErrorState extends GymStates{
+}
+class GetMessageSuccessState extends GymStates {
 }
 
 
 
-class GymGetUserLoadingState extends GymStates{
-}
-class GymGetUserSuccessState extends GymStates{
-}
-class GymGetUserErrorState extends GymStates{
-  final String error;
-  GymGetUserErrorState(this.error);
-}
 
-class GymProfileImagePickerSuccessState extends GymStates{
-}
-class GymProfileImagePickerErrorState extends GymStates{
-}
 
-class GymUploadProfileImageSuccessState extends GymStates{
-}
-class GymUploadProfileImageErrorState extends GymStates{
-}
-
-class GymUserUpdateErrorState extends GymStates{
-}
-
-class GymSignOutSuccessState extends GymStates{
-}
-
-class GymSignOutErrorState extends GymStates{
-}
 ///////////////////////////////
 
 
-class PhoneAuthInitial extends GymStates {}
-
-class PhoneLoadingState extends GymStates{}
-
-class PhoneErrorState extends GymStates{
-  final String? error;
-
-  PhoneErrorState({required this.error});
-}
-
-class PhoneNumberSubmitted extends GymStates{}
-
-class PhoneOTPVerified extends GymStates{}

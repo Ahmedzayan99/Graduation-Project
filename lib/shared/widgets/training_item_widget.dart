@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:blackgym/model/start_training_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/model/start_training_model.dart';
-import '../../modules/details_training.dart';
-import '../../shareds/logic/home_logic/cubit.dart';
-import '../cubit/states.dart';
+import '../../modules/exercises/details_training.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
+import 'package:blackgym/shared/logic/home_logic//cubit.dart';
 class TrainingItemWidget extends StatelessWidget {
   late SelectTrain train;
    TrainingItemWidget({Key? key,

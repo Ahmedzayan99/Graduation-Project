@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import '../../modules/login/homeSignup.dart';
+import '../../modules/login_register//homeSignup.dart';
 import '../network/local/cache_helper.dart';
 
 String? uId = '';

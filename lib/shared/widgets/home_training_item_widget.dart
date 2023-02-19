@@ -1,12 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:blackgym/data/model/home_training_model.dart';
-import 'package:blackgym/shareds/logic/home_logic/cubit.dart';
+import 'package:blackgym/model/home_training_model.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../modules/start_training.dart';
-import '../cubit/states.dart';
+import '../../modules/exercises/start_training.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
 
 class HomeTrainingItemWidget extends StatelessWidget {
   final Train Training;

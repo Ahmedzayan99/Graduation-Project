@@ -10,8 +10,6 @@ class UserModel {
    String? height;
    String? fatPercentage;
    String? gender;
-
-
   UserModel({
       this.name,
      this.email,
@@ -52,7 +50,6 @@ class UserModel {
       'height':height,
       'fatPercentage':fatPercentage,
       'gender':gender,
-
     };
    }
 }

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
-import '../data/model/start_training_model.dart';
-import '../shared/styles/colors_manager.dart';
+import '../../model/start_training_model.dart';
+import '../../shared/styles/colors_manager.dart';
 
 class StartTraining extends StatelessWidget {
   final List<SelectTrain> data;

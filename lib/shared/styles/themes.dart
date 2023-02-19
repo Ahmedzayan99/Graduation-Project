@@ -9,7 +9,6 @@ ThemeData getAppThemeData() => ThemeData(
 
   fontFamily:'JosefinSans-Regular',
     scaffoldBackgroundColor:const Color.fromRGBO(255, 255, 255,0),
-
     //appBar Theme
     appBarTheme:AppBarTheme(
       elevation: 0,
@@ -70,6 +69,7 @@ ThemeData getAppThemeData() => ThemeData(
           borderSide:
           BorderSide(color: ColorsManager.primary, width: 1.5),
           borderRadius: const BorderRadius.all(Radius.circular(8))),
-    ));
+    )
+);
 
 

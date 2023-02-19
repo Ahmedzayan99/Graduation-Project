@@ -1,9 +1,11 @@
+// ignore_for_file: avoid_print, unnecessary_import, unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../shared/styles/colors_manager.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'second_step_register.dart';
 
@@ -33,18 +35,17 @@ class OTPScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GymCubit,GymStates>(
+    return BlocConsumer<AuthCubit,AuthStates>(
       listener:(context, state) {
         if (state is PhoneLoadingState) {
           showProgressIndicator(context);
         }
         if (state is PhoneOTPVerified) {
-          print("Bisho 33");
         Navigator.pop(context);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => SignupUserScreen(phone: phoneNumber,)), (route) => false);
         }
         if (state is PhoneErrorState) {
-          print("Bisho 44");
+
           Navigator.pop(context);
           String errorMsg = (state).error!;
           ScaffoldMessenger.of(context).showSnackBar(
@@ -141,8 +142,8 @@ class OTPScreen extends StatelessWidget {
                           {
                             showProgressIndicator(context);
                             if(formKey.currentState!.validate()){
-                              print("Bisho ${pinController.text}");
-                              GymCubit.get(context).submitOTP(pinController.text);
+                              print("${pinController.text}");
+                              AuthCubit.get(context).submitOTP(pinController.text);
                             }
                           },
                           style: ElevatedButton.styleFrom(

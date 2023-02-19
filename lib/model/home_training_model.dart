@@ -1,4 +1,5 @@
- import 'package:blackgym/data/models/start_training_model.dart';
+
+import 'package:blackgym/model/start_training_model.dart';
 
 class Train {
   late String image;

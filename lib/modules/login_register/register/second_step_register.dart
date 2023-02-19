@@ -8,8 +8,8 @@ import '../../../shared/styles/string_manager.dart';
 import '../../../shared/widgets/custom_text_form_filed.dart';
 import 'details_user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 class SignupUserScreen extends StatelessWidget {
   String phone;
   SignupUserScreen({Key? key, required this.phone,}) : super(key: key);
@@ -19,11 +19,11 @@ class SignupUserScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GymCubit,GymStates>(
+    return BlocConsumer<AuthCubit,AuthStates>(
         listener: (context, state) {
         },
         builder: (context, state) {
-          GymCubit cubit = GymCubit.get(context);
+          AuthCubit cubit = AuthCubit.get(context);
           return Container(
             width: double.infinity,
             height: double.infinity,
@@ -101,16 +101,16 @@ class SignupUserScreen extends StatelessWidget {
                           controller: passController,
                           textInputType: TextInputType.visiblePassword,
                           icon: IconlyBroken.lock,
-                          isPassword:GymCubit.get(context).isPasswordRegister,
+                          isPassword:AuthCubit.get(context).isPasswordRegister,
                           hintText:AppString.enterYourPassword,
                           suffixOnPressed: (){
-                            GymCubit.get(context).changePasswordRegisterVisible();
+                            AuthCubit.get(context).changePasswordRegisterVisible();
                           },
-                          suffixIcon: GymCubit.get(context).iconPasswordRegister,
+                          suffixIcon: AuthCubit.get(context).iconPasswordRegister,
                         ),
                         const SizedBox(height: 30.0,),
                         ConditionalBuilder(
-                          condition:state is!GymRegisterLoadingState,
+                          condition:state is!RegisterLoadingState,
                           fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
                           builder:(context) =>
                               MaterialButton(
@@ -121,7 +121,7 @@ class SignupUserScreen extends StatelessWidget {
                                 onPressed: () {
 
                                   if(_formKey.currentState!.validate())
-                                  {
+                                 {
                                     Navigator.pushAndRemoveUntil(context,
                                         MaterialPageRoute(builder: (context) =>
                                             SignupDetailsScreen(email:userNameController.text ,

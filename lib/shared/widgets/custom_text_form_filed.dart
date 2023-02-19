@@ -22,7 +22,7 @@ class CustomTextFormFiled extends StatelessWidget {
     this.suffixOnPressed,
     this.hintText,
     this.icon,
-    this.isPassword = true,
+    this.isPassword = false,
   }) : super(key: key);
 
   @override

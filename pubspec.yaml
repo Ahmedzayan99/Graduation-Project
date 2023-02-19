@@ -42,7 +42,17 @@ dependencies:
   bloc: ^8.1.0
   flutter_bloc: ^8.1.0
   carousel_slider: ^4.2.1
+  dio: ^4.0.6
+  shared_preferences: ^2.0.17
   animated_text_kit: ^4.2.2
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  fluttertoast: ^8.1.2
+  cloud_firestore: ^4.3.1
+  image_picker: ^0.8.6+1
+  firebase_storage: ^11.0.11
+  pin_code_fields: ^7.4.0
+
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +99,19 @@ flutter:
     - family: IconlyBroken
       fonts:
         - asset: assets/fonts/IconlyBroken.ttf
+
+
+
+    - family: hanimation
+      fonts:
+        - asset: assets/fonts/hanimation.ttf
+
+
+
+    - family: JosefinSans-Regular
+      fonts:
+        - asset: assets/fonts/JosefinSans-Regular.ttf
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

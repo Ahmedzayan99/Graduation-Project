@@ -1,14 +1,13 @@
 
 // ignore_for_file: prefer_typing_uninitialized_variables, file_names, unnecessary_null_comparison
-
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
+import '../../shared/logic/home_logic/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../shared/styles/colors_manager.dart';
-import '../shared/styles/iconly_broken.dart';
-import '../shared/styles/string_manager.dart';
-import '../shared/widgets/custom_text_form_filed.dart';
+import '../../shared/styles/colors_manager.dart';
+import '../../shared/styles/iconly_broken.dart';
+import '../../shared/styles/string_manager.dart';
+import '../../shared/widgets/custom_text_form_filed.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // ignore: must_be_immutable
 class EditProfileScreen extends StatelessWidget {
@@ -27,7 +26,7 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<GymCubit,GymStates>(
      listener: (context, state) {
-       if(state is GymGetUserSuccessState){
+       if(state is GetUserSuccessState){
          Fluttertoast.showToast(
            msg: 'successfully Updata ',
            backgroundColor: Colors.white,
@@ -51,9 +50,9 @@ class EditProfileScreen extends StatelessWidget {
              actions: [
                TextButton(onPressed: () {
                  if (profileImage!= null) {
-                      GymCubit.get(context).uploadProfileImage()
+                   GymCubit.get(context).uploadProfileImage()
                           .then((value) {
-                        GymCubit.get(context).updateUser(
+                     GymCubit.get(context).updateUser(
                           uId: userModel.uId.toString(),
                           height: heightController.text.isEmpty
                               ? userModel.height
@@ -78,6 +77,7 @@ class EditProfileScreen extends StatelessWidget {
                           gender: genderController.text.isEmpty
                               ? userModel.gender
                               : genderController.text,
+                       image: GymCubit.get(context).profileImageUrl,
                         );
                       });
                       }

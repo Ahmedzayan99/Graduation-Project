@@ -1,30 +1,33 @@
 
-import 'package:blackgym/modules/login/homeSignup.dart';
+// ignore_for_file: avoid_print
+
+import 'package:blackgym/layout/gym.dart';
+import 'package:blackgym/modules/login_register//homeSignup.dart';
+import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/network/local/cache_helper.dart';
+import 'package:blackgym/shared/styles/colors_manager.dart';
+import 'package:blackgym/shared/styles/iconly_broken.dart';
 import 'package:blackgym/shared/styles/string_manager.dart';
+import 'package:blackgym/shared/widgets/custom_text_form_filed.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
-import '../../../shared/network/local/cache_helper.dart';
-import '../../../shared/styles/colors_manager.dart';
-import '../../../shared/styles/iconly_broken.dart';
-import '../../../shared/widgets/custom_text_form_filed.dart';
-import '../../../layout/gym.dart';
-import '../register/fisrst_step_register.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
+import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 class LoginScreen extends StatelessWidget {
-   LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
    var userNameController = TextEditingController();
-   var passController = TextEditingController();
+     var passController = TextEditingController();
 
    final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<GymCubit,GymStates>(
+    return BlocConsumer<AuthCubit,AuthStates>(
           listener: (context, state) {
-            if(state is GymLoginErrorState){
+            if(state is LoginErrorState){
               Fluttertoast.showToast(
                 msg: 'The username or password is incorrect',
                 backgroundColor: Colors.red,
@@ -33,7 +36,7 @@ class LoginScreen extends StatelessWidget {
 
               print(state.error);
             }
-            if(state is GymLoginSuccessState){
+            if(state is LoginSuccessState){
               Fluttertoast.showToast(
                 msg: 'Login successfully',
                 backgroundColor: Colors.white,
@@ -41,18 +44,14 @@ class LoginScreen extends StatelessWidget {
               );
               CacheHelper.saveData(
                   key: 'uId',
-                  value:state.uId)
-                  .then((value) =>
-              {
-                GymCubit.get(context).getUserData(),
+                  value:state.uId);
               Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false),
-              });
+              MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
 
             }
           },
       builder: (context, state) {
-        GymCubit cubit = GymCubit.get(context);
+        AuthCubit cubit = AuthCubit.get(context);
       return  Container(
           width: double.infinity,
           height: double.infinity,
@@ -118,11 +117,11 @@ class LoginScreen extends StatelessWidget {
                       controller: passController,
                       textInputType: TextInputType.visiblePassword,
                       icon: IconlyBroken.lock,
-                      isPassword:GymCubit.get(context).isPasswordLogin,
+                      isPassword:AuthCubit.get(context).isPasswordLogin,
                       hintText:AppString.enterYourPassword,
-                      suffixIcon: GymCubit.get(context).iconPasswordLogin,
+                      suffixIcon: AuthCubit.get(context).iconPasswordLogin,
                       suffixOnPressed: (){
-                        GymCubit.get(context).changePasswordLoginVisible();
+                        AuthCubit.get(context).changePasswordLoginVisible();
                       },
                     ),
                     Align(
@@ -143,7 +142,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 13.0,),
                     ConditionalBuilder(
-                      condition:state is!GymLoginLoadingState,
+                      condition:state is!LoginLoadingState,
                       fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
                       builder:(context) =>  MaterialButton(
                         height: 54,
@@ -157,8 +156,6 @@ class LoginScreen extends StatelessWidget {
                               email: userNameController.text,
                               password: passController.text,
                             );
-
-
                           }
                         },
                         child:  Text(AppString.logIn,

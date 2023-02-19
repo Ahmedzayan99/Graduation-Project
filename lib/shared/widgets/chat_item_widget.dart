@@ -1,18 +1,17 @@
+import 'package:blackgym/model/user_model.dart';
 import 'package:flutter/material.dart';
-
-import '../../data/model/chat_model.dart';
 import '../../modules/chat/chats_person.dart';
 
 class ChatItemWidget extends StatelessWidget {
-  final ChatModel users;
-  const ChatItemWidget({Key? key, required this.users}) : super(key: key);
+    UserModel? users;
+   ChatItemWidget({Key? key, required this.users}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap:() {
-Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatsPersonScreen(),));
+Navigator.push(context, MaterialPageRoute(builder: (context) =>  ChatsPersonScreen(userModel:users ),));
       },
       child: Row(
         children: [
@@ -21,7 +20,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatsPerso
             children:  [
               CircleAvatar(
                 radius:30.0,
-                backgroundImage:NetworkImage(users.photos),
+                backgroundImage:NetworkImage('${users!.image}'),
 
               ),
               //    const CircleAvatar(radius: 7.0,
@@ -29,60 +28,19 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatsPerso
             ],
           ),
           const SizedBox(
-            width: 20.0,
+            width: 10.0,
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  users.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+            child: Text(
+              '${users!.name}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style:const TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
 
-                  ),
-                ),
-                const SizedBox(
-                  height: 5.0,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        users.message,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        width: 10.0,
-                        height: 10.0,
-                        decoration: const BoxDecoration(
-                          color: Colors.cyan,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      users.data,
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-
-
-              ],
+              ),
             ),
           )
         ],
@@ -90,3 +48,34 @@ Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatsPerso
     );
   }
 }
+/** Row(
+    children: [
+    Expanded(
+    child: Text(
+    '${users!.email}',
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: const TextStyle(
+    color: Colors.white,
+    ),
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+    child: Container(
+    width: 10.0,
+    height: 10.0,
+    decoration: const BoxDecoration(
+    color: Colors.cyan,
+    shape: BoxShape.circle,
+    ),
+    ),
+    ),
+    Text(
+    '${users!.height}',
+    style: const TextStyle(
+    color: Colors.white,
+    ),
+    )
+    ],
+    ),**/

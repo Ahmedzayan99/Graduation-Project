@@ -1,7 +1,8 @@
 
-import 'package:blackgym/models/home_training_model.dart';
 
-import 'package:blackgym/models/start_training_model.dart';
+import 'package:blackgym/model/home_training_model.dart';
+import 'package:blackgym/model/start_training_model.dart';
+
 List<Train> homeTrainingDummy = [
   Train(
     image: 'assets/images/abdominal muscles.png',

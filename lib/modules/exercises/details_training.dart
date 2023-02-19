@@ -1,11 +1,11 @@
+import 'package:blackgym/model/start_training_model.dart';
 import 'package:blackgym/modules/dummy/home_dummy.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
-import '../data/model/start_training_model.dart';
-import '../shared/styles/colors_manager.dart';
+import '../../shared/styles/colors_manager.dart';
 
 // ignore: must_be_immutable
 class DetailsTraining extends StatelessWidget {

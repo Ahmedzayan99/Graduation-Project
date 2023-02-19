@@ -1,10 +1,13 @@
 
-import 'package:blackgym/shared/cubit/states.dart';
+
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:blackgym/shared/cubit/cubit.dart';
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../shared/logic/authentication_logic/authentication_cubit.dart';
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);
@@ -28,7 +31,7 @@ class NewLayout extends StatelessWidget {
        child: Scaffold(
             key: _key,
             body: ConditionalBuilder(
-              condition:GymCubit.get(context).getdataDana.toString()=='dana',
+              condition:1==1,
               builder:(context) {
                 return cubit.screen[cubit.current];
               },
