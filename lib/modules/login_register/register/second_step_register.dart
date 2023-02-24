@@ -1,16 +1,18 @@
 // ignore_for_file: must_be_immutable, unused_local_variable
 
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:blackgym/shared/components.dart';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import '../../../shared/styles/colors_manager.dart';
 import '../../../shared/styles/iconly_broken.dart';
-import '../../../shared/styles/string_manager.dart';
 import '../../../shared/widgets/custom_text_form_filed.dart';
 import 'details_user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
-class SignupUserScreen extends StatelessWidget {
+class SignupUserScreen extends StatelessWidget{
   String phone;
   SignupUserScreen({Key? key, required this.phone,}) : super(key: key);
   var nameController = TextEditingController();
@@ -43,7 +45,7 @@ class SignupUserScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(AppString.name,
+                        Text("${'name'.tr(context)}",
                           style: TextStyle(
                             inherit: false,
                             color: ColorsManager.white,
@@ -54,17 +56,17 @@ class SignupUserScreen extends StatelessWidget {
                           isPassword: false,
                           validator: (p0) {
                             if (p0!.isEmpty) {
-                              return AppString.thisFiledFree;
+                              return "${'thisFieldRequired'.tr(context)}";
                             }
                             return null;
                           },
                           controller:nameController ,
                           textInputType: TextInputType.name,
-                          icon: IconlyBroken.profile,
-                          hintText:'Enter Your ${AppString.name}',
+                         icon:const Icon(IconlyBroken.profile,) ,
+                          hintText:"${'name'.tr(context)}",
                         ),
                         const SizedBox(height: 30.0,),
-                        Text(AppString.userName,
+                        Text("${'userName'.tr(context)}",
                           style: TextStyle(
                             inherit: false,
                             color: ColorsManager.white,
@@ -74,17 +76,21 @@ class SignupUserScreen extends StatelessWidget {
                         CustomTextFormFiled(
                           validator: (p0) {
                             if (p0!.isEmpty) {
-                              return AppString.thisFiledFree;
+                              return "${'thisFieldRequired'.tr(context)}";
+                            }
+                            else if(!RegExp(r"^[Aa-z-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]").hasMatch(p0))
+                            {
+                              return 'aaaaaaaaaaaa';
                             }
                             return null;
                           },
                           controller:userNameController ,
                           textInputType: TextInputType.emailAddress,
-                          icon: IconlyBroken.message,
-                          hintText:AppString.enterUserName,
+                          icon:const Icon(IconlyBroken.message,) ,
+                          hintText:"${'userName'.tr(context)}",
                         ),
                         const SizedBox(height: 30.0,),
-                        Text(AppString.password,
+                        Text("${'password'.tr(context)}",
                           style: TextStyle(
                             inherit: false,
                             color: ColorsManager.white,
@@ -94,15 +100,18 @@ class SignupUserScreen extends StatelessWidget {
                         CustomTextFormFiled(
                           validator: (p0) {
                             if (p0!.isEmpty) {
-                              return AppString.thisFiledFree;
+                              return "${'thisFieldRequired'.tr(context)}";
+                            }
+                            else if (p0.trim().length < 8) {
+                              return 'Password must be at least 8 characters in length';
                             }
                             return null;
                           },
                           controller: passController,
                           textInputType: TextInputType.visiblePassword,
-                          icon: IconlyBroken.lock,
+                          icon: const Icon(IconlyBroken.lock),
                           isPassword:AuthCubit.get(context).isPasswordRegister,
-                          hintText:AppString.enterYourPassword,
+                          hintText:"${'password'.tr(context)}",
                           suffixOnPressed: (){
                             AuthCubit.get(context).changePasswordRegisterVisible();
                           },
@@ -111,7 +120,7 @@ class SignupUserScreen extends StatelessWidget {
                         const SizedBox(height: 30.0,),
                         ConditionalBuilder(
                           condition:state is!RegisterLoadingState,
-                          fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
+                          fallback: (context) => defaultProgressIndicator(),
                           builder:(context) =>
                               MaterialButton(
                                 height: 54,
@@ -121,18 +130,19 @@ class SignupUserScreen extends StatelessWidget {
                                 onPressed: () {
 
                                   if(_formKey.currentState!.validate())
-                                 {
+                                  {
                                     Navigator.pushAndRemoveUntil(context,
                                         MaterialPageRoute(builder: (context) =>
-                                            SignupDetailsScreen(email:userNameController.text ,
+                                            SignupDetailsScreen(
+                                              email:userNameController.text.trim() ,
                                               name:nameController.text,
                                               password:passController.text,
                                               phone:phone,
                                             ),), (route) => false);
                                   }
                                 },
-                                child:  const Text('Next',
-                                    style:TextStyle(
+                                child:   Text("${'next'.tr(context)}",
+                                    style:const TextStyle(
                                       inherit: false,
                                       color:Colors.black,
                                       fontSize:20.0,

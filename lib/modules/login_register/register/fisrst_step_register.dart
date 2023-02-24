@@ -1,10 +1,9 @@
-import 'package:blackgym/modules/login_register/register/otp_screen.dart';
 import 'package:blackgym/modules/login_register/register/second_step_register.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import '../../../shared/styles/colors_manager.dart';
-import '../../../shared/styles/string_manager.dart';
 import '../../../shared/widgets/custom_text_form_filed.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,8 +44,6 @@ class SignupScreen extends StatelessWidget {
           showProgressIndicator(context);
         }
         if (state is PhoneNumberSubmitted) {
-
-
           Navigator.pop(context);
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>SignupUserScreen(phone:phoneNumberController.text.trim()),
             //OTPScreen(phoneNumber: phoneNumberController.text.trim(),)
@@ -81,57 +78,49 @@ class SignupScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppString.phoneNumber,
+                      Text("${'phoneNumber'.tr(context)}",
                         style: TextStyle(
                           inherit: false,
                           color: ColorsManager.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
                         ),),
                       Row(children: [
                         Expanded(
-                            flex: 1,
-                            child: Container(
-
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              alignment: AlignmentDirectional.center,
-                              decoration: BoxDecoration(
-
-                                  border: Border.all(
-                                    color:ColorsManager.primary,
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(6))),
-                              child: Text(
-                                '${generateCountryFlag()}+02',
-                                style: const TextStyle(fontSize: 18, letterSpacing: 2.0),
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(
-                          flex: 2,
+                          flex: 3,
                           child:CustomTextFormFiled(
                             isPassword: false,
                             validator: (value) {
                               if(value!.isEmpty)
                               {
-                                return 'Please enter your phone number!';
+                                return "${'thisFieldRequired'.tr(context)}";
                               }
                               else if(value.length < 11)
                               {
-                                return 'Too short for phone number !';
+                                return  "${'shortPhoneNumber'.tr(context)}";
+                              }
+                              else if(value.length >11)
+                              {
+                                return  "${'longPhoneNumber'.tr(context)}";
                               }
                               return null;
                             },
                             controller:phoneNumberController,
                             textInputType: TextInputType.phone,
-                            icon: Icons.phone,
-                            hintText: AppString.enterPhoneNumber,
+                            icon: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${generateCountryFlag()}+02',
+                                style:TextStyle(
+                                  color: ColorsManager.primary,
+                                  fontSize: 18,
+                                  letterSpacing: 2.0,
+                                ),
+                              ),
+                            ),
+                            hintText:"${'phoneNumber'.tr(context)}",
                           ),),
                       ],),
-
-
                       const SizedBox(height: 30.0,),
                       MaterialButton(
                         height: 54,
@@ -151,8 +140,8 @@ class SignupScreen extends StatelessWidget {
                             return;
                           }
                           },
-                        child:  const Text('Next',
-                            style:TextStyle(
+                        child:   Text("${'next'.tr(context)}",
+                            style:const TextStyle(
                               inherit: false,
                               color:Colors.black,
                               fontSize:20.0,

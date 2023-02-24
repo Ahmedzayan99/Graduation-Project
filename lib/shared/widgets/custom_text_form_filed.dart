@@ -9,7 +9,7 @@ class CustomTextFormFiled extends StatelessWidget {
   final String? Function(String?)? validator;
   final IconData? suffixIcon;
   final String? hintText;
-  final IconData? icon;
+  final Widget? icon;
   final Function? suffixOnPressed;
   final bool isPassword;
 
@@ -40,9 +40,7 @@ class CustomTextFormFiled extends StatelessWidget {
       ),
       decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: Icon(
-          icon,
-        ),
+        prefixIcon: icon ,
         suffixIcon: suffixIcon != null
             ? Padding(
                 padding: const EdgeInsets.only(left: 1, bottom: 1),

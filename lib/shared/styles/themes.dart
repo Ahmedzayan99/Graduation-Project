@@ -7,7 +7,7 @@ import 'colors_manager.dart';
 
 ThemeData getAppThemeData() => ThemeData(
 
-  fontFamily:'JosefinSans-Regular',
+  fontFamily:'AsapCondensed-Medium',
     scaffoldBackgroundColor:const Color.fromRGBO(255, 255, 255,0),
     //appBar Theme
     appBarTheme:AppBarTheme(
@@ -50,16 +50,16 @@ ThemeData getAppThemeData() => ThemeData(
       enabledBorder: OutlineInputBorder(
           borderSide:
           BorderSide(color: ColorsManager.primary, width: 1.5),
-          borderRadius: const BorderRadius.all(Radius.circular(8))),
+          borderRadius:  BorderRadius.all(Radius.circular(8))),
 
       /// Focused Border
       focusedBorder: OutlineInputBorder(
           borderSide:
           BorderSide(color: ColorsManager.primary, width: 1.5),
-          borderRadius: const BorderRadius.all(Radius.circular(8))),
+          borderRadius:  BorderRadius.all(Radius.circular(8))),
 
       /// Error Border
-      errorBorder: const OutlineInputBorder(
+      errorBorder:  OutlineInputBorder(
           borderSide:
           BorderSide(color: Colors.red, width: 1.5),
           borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -68,8 +68,9 @@ ThemeData getAppThemeData() => ThemeData(
       focusedErrorBorder: OutlineInputBorder(
           borderSide:
           BorderSide(color: ColorsManager.primary, width: 1.5),
-          borderRadius: const BorderRadius.all(Radius.circular(8))),
+          borderRadius:  BorderRadius.all(Radius.circular(8))),
     )
+
 );
 
 

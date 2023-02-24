@@ -1,13 +1,15 @@
 
 
-import 'package:blackgym/shared/styles/colors_manager.dart';
+import 'package:blackgym/shared/components.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../shared/logic/authentication_logic/authentication_cubit.dart';
+import '../shared/styles/iconly_broken.dart';
+
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);
@@ -15,9 +17,7 @@ class NewLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context)  {
 
-    return BlocConsumer <GymCubit,GymStates>(
-      listener: (context, state) {
-    },
+    return BlocBuilder <GymCubit,GymStates>(
       builder:(context, state) {
        GymCubit cubit = GymCubit.get(context);
      return  Container(
@@ -35,7 +35,7 @@ class NewLayout extends StatelessWidget {
               builder:(context) {
                 return cubit.screen[cubit.current];
               },
-              fallback:(context) =>Center(child:CircularProgressIndicator( color:ColorsManager.primary,)),
+              fallback:(context) =>defaultProgressIndicator(),
             ),
             bottomNavigationBar:
             /*Container(
@@ -55,7 +55,30 @@ class NewLayout extends StatelessWidget {
                     onTap: (index){
                       cubit.changeIndex(index);
                     },
-                  items:cubit.bottomItem
+                  items: [
+                    BottomNavigationBarItem(
+                    icon: const Icon(IconlyBroken.home),
+                    label: "${'home'.tr(context)}",
+                  ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(IconlyBroken.exercise_1),
+                      label:  "${'exercises'.tr(context)}",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(IconlyBroken.report),
+                      label:  "${'workouts'.tr(context)}",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(IconlyBroken.chat),
+                      label:  "${'chat'.tr(context)}",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(
+                        IconlyBroken.setting,
+                      ),
+                      label:"${'settings'.tr(context)}",
+                    ),
+       ]
                 ),
          //     ),
           //  ),

@@ -1,9 +1,9 @@
+import 'package:blackgym/shared/components.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared/logic/home_logic/cubit.dart';
 import '../../shared/logic/home_logic/states.dart';
-import '../../shared/styles/colors_manager.dart';
 import '../../shared/widgets/home_training_item_widget.dart';
 import '../dummy/home_dummy.dart';
 
@@ -34,7 +34,7 @@ class ExercisesScreen extends StatelessWidget {
                 return HomeTrainingItemWidget(Training:homeDummyItem,);
               }),),
           ),
-          fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
+          fallback: (context) => defaultProgressIndicator(),
         );
       },
     );

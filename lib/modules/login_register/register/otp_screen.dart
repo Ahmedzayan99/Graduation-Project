@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_print, unnecessary_import, unnecessary_string_interpolations
+// ignore_for_file: avoid_print, unnecessary_import, unnecessary_string_interpolations, must_be_immutable
 
+import 'package:blackgym/shared/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,9 @@ class OTPScreen extends StatelessWidget {
      AlertDialog alertDialog = AlertDialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      content: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ColorsManager.primary)),),
+      content: Center(
+        child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(ColorsManager.primary)),),
     );
 
     showDialog(
@@ -140,7 +143,7 @@ class OTPScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: ()
                           {
-                            showProgressIndicator(context);
+                            defaultProgressIndicator();
                             if(formKey.currentState!.validate()){
                               print("${pinController.text}");
                               AuthCubit.get(context).submitOTP(pinController.text);

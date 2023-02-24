@@ -1,3 +1,4 @@
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,9 @@ class ChatScreen extends StatelessWidget {
       builder:(context, state) {
         return Scaffold(
           appBar:AppBar(
-            title: const Text(
-              'Chats',
-              style: TextStyle(
+            title:  Text(
+              "${'chat'.tr(context)}",
+              style: const TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

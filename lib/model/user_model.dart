@@ -3,7 +3,6 @@ class UserModel {
    String? email;
    String? uId;
    String? phone;
-   bool? isEmailVerified;
    String? image;
    String? age;
    String? weight;
@@ -15,7 +14,6 @@ class UserModel {
      this.email,
      this.uId,
     this.phone,
-    this.isEmailVerified,
     this.image,
     this.age,
     this.weight,
@@ -29,7 +27,6 @@ class UserModel {
     email =json['email'];
     uId =json['uId'];
     phone =json['phone'];
-    isEmailVerified =json['isEmailVerified'];
     image =json['image'];
     age =json['age'];
     weight =json['weight'];
@@ -43,7 +40,6 @@ class UserModel {
       'email':email,
       'uId':uId,
       'phone':phone,
-      'isEmailVerified':isEmailVerified,
       'image':image,
       'age':age,
       'weight':weight,

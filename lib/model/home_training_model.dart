@@ -1,12 +1,10 @@
- import 'package:blackgym/data/models/start_training_model.dart';
-
+import 'package:blackgym/model/start_training_model.dart';
 class Train {
   late String image;
   late String lebol;
   late String details;
   late String id;
   List<SelectTrain> data;
-
 //  late SelectTrain data;
   Train({
     required this.id,
@@ -16,8 +14,3 @@ class Train {
     required this.data,
   });
   }
-
-
-
-
-

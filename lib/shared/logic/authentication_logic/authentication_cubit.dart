@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
   Color colorGender = ColorsManager.black;
   bool genderInitial = true;
-  String genderString = '';
+  String genderString = 'MALE';
 
   void changeGender({
     required bool gender,
@@ -134,7 +136,6 @@ class AuthCubit extends Cubit<AuthStates> {
   Future<void> submitOTP(String otpCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId.toString(), smsCode: otpCode);
-
     await signIn(credential);
   }
 
@@ -154,26 +155,25 @@ class AuthCubit extends Cubit<AuthStates> {
 
   //<<<<<<<<<<<<<<<<<Start the cubit of Register by firebase>>>>>>>>>>>>>>>>>>>>>>
   Future<void> userRegister({
-    required String name,
     required String email,
     required String password,
+    required String name,
     required String phone,
     // String? image,
   }) async {
     emit(RegisterLoadingState());
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: '$email@gym.com',
       password: password,
     )
         .then((value) {
-      createUser(
+      emit(RegisterSuccessState());
+       createUser(
         gender: genderString,
-        //  image: image,
         name: name,
         email: email,
         uId: value.user!.uid,
-        phone: phone,
+         phone: phone,
         image:
             "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
         height: '${heightInitial.round()}',
@@ -181,49 +181,50 @@ class AuthCubit extends Cubit<AuthStates> {
         fatPercentage: '${fatPercentageInitial.round()}',
         weight: '${weightInitial.round()}',
       );
-      print("bisho");
-      userLogin(email: email, password: password);
+
+      userLogin(
+          email: email,
+          password: password
+      );
     }).catchError((error) {
       emit(RegisterErrorState(error.toString()));
       print(error);
     });
   }
-
-  void ahmed() {}
-
   //<<<<<<<<<<<<<<<<<Start the cubit of createUser by firebase>>>>>>>>>>>>>>>>>>>>>>
-
   void createUser({
-    String? name,
-    String? email,
-    required String uId,
+    required String name,
+    required String email,
     required String phone,
-    required String height,
-    required String age,
-    required String image,
-    required String fatPercentage,
-    required String weight,
-    required String gender,
+    required String uId,
+    required  String height,
+    required  String age,
+    required  String image,
+    required  String fatPercentage,
+    required  String weight,
+    required  String gender,
   }) {
+    emit(CreateUserLoadingState());
     UserModel model = UserModel(
+      gender: genderString,
       name: name,
       email: email,
       uId: uId,
       phone: phone,
-      isEmailVerified: false,
-      height: height,
-      image: image,
+      image:
+      "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
+      height:height,
       age: age,
       fatPercentage: fatPercentage,
       weight: weight,
-      gender: gender,
+
     );
     FirebaseFirestore.instance
         .collection('Users')
         .doc(uId)
         .set(model.toMap())
         .then((value) {
-      print('67666');
+       emit(CreateUserSuccessState());
     }).catchError((error) {
       emit(CreateUserErrorState(error.toString()));
     });
@@ -241,10 +242,9 @@ class AuthCubit extends Cubit<AuthStates> {
           password: password,
         )
         .then((value) {
-          print(value.user?.email);
-
-          print("bisho ${CacheHelper.getDataIntoShPre(key: "uId")}");
-          print("bisho ${value.user?.uid}");
+      CacheHelper.saveData(
+          key: 'uId',
+          value:value.user?.uid);
 
           emit(LoginSuccessState(value.user!.uid));
         })

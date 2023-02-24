@@ -1,15 +1,12 @@
 // ignore_for_file: must_be_immutable, unnecessary_null_comparison
 
 import 'package:blackgym/layout/gym.dart';
-import 'package:blackgym/modules/login_register/login/login.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+import 'package:blackgym/shared/widgets/custom_defaultSlider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../shared/network/local/cache_helper.dart';
 import '../../../shared/styles/colors_manager.dart';
-import '../../../shared/styles/iconly_broken.dart';
-import '../../../shared/styles/string_manager.dart';
-import '../../../shared/widgets/custom_text_form_filed.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
@@ -31,14 +28,15 @@ class SignupDetailsScreen extends StatelessWidget {
     return BlocConsumer<AuthCubit,AuthStates>(
     listener: (context, state) {
       if(state is LoginSuccessState){
+        GymCubit.get(context).current =0;
         Fluttertoast.showToast(
-          msg: 'successfully registered',
+          msg: "${'doneSuccessfully'.tr(context)}",
           backgroundColor: Colors.white,
           textColor: Colors.black,
           timeInSecForIosWeb: 2,
         );
-          Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) =>  LoginScreen(),), (route) => false);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
 
       }
 
@@ -71,181 +69,59 @@ class SignupDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 30.0,),
+                  CustomDefaultSlider(
+                    textOfTitle:"${'height'.tr(context)}",
+                    showValue: '${cubit.heightInitial.round()}',
+                    textAlphabetic: "${'cm'.tr(context)}",
+                    value:cubit.heightInitial,
+                    min: 80,
+                    max: 240,
+                    onChanged:(value) {
+                      cubit.changeHeight(height:value);
 
-                  const SizedBox(
-                    height: 30.0,),
-                  Container(
-                    height: 125.0,
-                    width:  double.infinity,
-                    decoration: BoxDecoration(color: ColorsManager.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0,))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(AppString.height,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                              fontSize: 20.0),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline:TextBaseline.alphabetic,
-                          children: [
-                            Text('${cubit.heightInitial.round()}',
-                              style:  TextStyle(
-                                  color:  ColorsManager.primary,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 30.0),),
-                            const SizedBox(width:3.0,),
-                            Text('cm',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorsManager.primary,
-                                  fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                        Slider(activeColor: ColorsManager.primary,
-                          thumbColor:ColorsManager.primary,
-                          value:cubit.heightInitial,
-                          min: 80,
-                          max: 240,
-                          onChanged:(value) {
-                            cubit.changeHeight(height:value);
-                          },),
-                      ],
-                    ),
+                    },
                   ),
                   const SizedBox(
                     height: 30.0,),
-                  Container(height: 125.0,
-                    width:  double.infinity,
-                    decoration: BoxDecoration(color: ColorsManager.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0,))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(AppString.weight,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                              fontSize: 20.0),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline:TextBaseline.alphabetic,
-                          children: [
-                            Text('${cubit.weightInitial.round()}',
-                              style:  TextStyle(
-                                  color:  ColorsManager.primary,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 30.0),),
-                            const SizedBox(width:3.0,),
-                            Text('kg',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorsManager.primary,
-                                  fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                        Slider(activeColor: ColorsManager.primary,
-                          thumbColor:ColorsManager.primary,
-                          value:cubit.weightInitial,
-                          min: 40,
-                          max: 200,
-                          onChanged:(value) {
-                            cubit.changeWeight(weight: value);
-                          },),
-                      ],
-                    ),
+                  CustomDefaultSlider(
+                    textOfTitle:"${'weight'.tr(context)}",
+                    showValue: '${cubit.weightInitial.round()}',
+                    textAlphabetic: "${'kg'.tr(context)}",
+                    value:cubit.weightInitial,
+                    min: 40,
+                    max: 200,
+                    onChanged:(value) {
+                      cubit.changeWeight(weight:value);
+
+                    },
                   ),
                   const SizedBox(height: 30.0,),
-                  Container(height: 125.0,
-                    width:  double.infinity,
-                    decoration: BoxDecoration(color: ColorsManager.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0,))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(AppString.age,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                              fontSize: 20.0),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline:TextBaseline.alphabetic,
-                          children: [
-                            Text('${cubit.ageInitial.round()}',
-                              style:  TextStyle(
-                                  color:  ColorsManager.primary,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 30.0),),
-                            const SizedBox(width:3.0,),
-                            Text('year old',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorsManager.primary,
-                                  fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                        Slider(activeColor: ColorsManager.primary,
-                          thumbColor:ColorsManager.primary,
-                          value:cubit.ageInitial,
-                          min:12,
-                          max: 100,
-                          onChanged:(value) {
-                            cubit.changeAge(age:value);
-                          },),
-                      ],
-                    ),
+                  CustomDefaultSlider(
+                    textOfTitle:"${'age'.tr(context)}",
+                    showValue: '${cubit.ageInitial.round()}',
+                    textAlphabetic: "${'yearOld'.tr(context)}",
+                    value:cubit.ageInitial,
+                    min: 12,
+                    max: 100,
+                    onChanged:(value) {
+                      cubit.changeAge(age:value);
+
+                    },
                   ),
                   const SizedBox(height: 30.0,),
-                  Container(height: 125.0,
-                    width:  double.infinity,
-                    decoration: BoxDecoration(color: ColorsManager.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0,))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(AppString.fatPercentage,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: ColorsManager.white,
-                              fontSize: 20.0),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline:TextBaseline.alphabetic,
-                          children: [
-                            Text('${cubit.fatPercentageInitial.round()}',
-                              style:  TextStyle(
-                                  color:  ColorsManager.primary,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 30.0),),
-                            const SizedBox(width:3.0,),
-                            Text('%',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorsManager.primary,
-                                  fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                        Slider(activeColor: ColorsManager.primary,
-                          thumbColor:ColorsManager.primary,
-                          value:cubit.fatPercentageInitial,
-                          min: 1,
-                          max: 100,
-                          onChanged:(value) {
-                            cubit.changefatPercentaget(fatPercentage:value);
-                          },),
-                      ],
-                    ),
+                  CustomDefaultSlider(
+                    textOfTitle: "${'fatPercentage'.tr(context)}",
+                    showValue: '${cubit.fatPercentageInitial.round()}',
+                    textAlphabetic: '%',
+                    value:cubit.fatPercentageInitial,
+                    min: 1,
+                    max: 80,
+                    onChanged:(value) {
+                      cubit.changefatPercentaget(fatPercentage:value);
+
+                    },
                   ),
                   const SizedBox(height: 30.0,),
                   Row(
@@ -262,8 +138,8 @@ class SignupDetailsScreen extends StatelessWidget {
                               alignment: AlignmentDirectional.center ,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0,),
                                 color:cubit.genderInitial? ColorsManager.primary : ColorsManager.grey,),
-                              child:const Text('MALE',
-                                style: TextStyle(
+                              child: Text("${'male'.tr(context)}",
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25.0,
                                     color: Colors.white),),
@@ -283,8 +159,8 @@ class SignupDetailsScreen extends StatelessWidget {
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0,),
                                 color:cubit.genderInitial? ColorsManager.grey :ColorsManager.primary ,
                               ),
-                              child:const Text('FEMALE',
-                                style: TextStyle(
+                              child: Text("${'female'.tr(context)}",
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25.0,
                                     color: Colors.white),),
@@ -300,15 +176,15 @@ class SignupDetailsScreen extends StatelessWidget {
                     shape: const StadiumBorder(),
                     color: ColorsManager.primary,
                     onPressed: () {
-                              cubit.userRegister(
-                                email:email,
-                                password: password,
-                                name:name,
-                                phone: phone,
-                              );
+                      cubit.userRegister(
+                        email:email,
+                        password: password,
+                        name:name,
+                        phone: phone,
+                      );
                     },
-                    child: const Text('Finish',
-                        style: TextStyle(
+                    child:  Text("${'finish'.tr(context)}",
+                        style: const TextStyle(
                           inherit: false,
                           color: Colors.black,
                           fontSize: 20.0,

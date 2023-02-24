@@ -1,14 +1,13 @@
 
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, must_be_immutable
 
 import 'package:blackgym/layout/gym.dart';
-import 'package:blackgym/modules/login_register//homeSignup.dart';
 import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/shared/components.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/styles/iconly_broken.dart';
-import 'package:blackgym/shared/styles/string_manager.dart';
 import 'package:blackgym/shared/widgets/custom_text_form_filed.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -29,22 +28,18 @@ class LoginScreen extends StatelessWidget {
           listener: (context, state) {
             if(state is LoginErrorState){
               Fluttertoast.showToast(
-                msg: 'The username or password is incorrect',
+                msg: "${'usernamePasswordIncorrect'.tr(context)}",
                 backgroundColor: Colors.red,
                 textColor: Colors.black,
               );
-
-              print(state.error);
             }
             if(state is LoginSuccessState){
               Fluttertoast.showToast(
-                msg: 'Login successfully',
+                msg: "${'doneSuccessfully'.tr(context)}",
                 backgroundColor: Colors.white,
                 textColor: Colors.black,
               );
-              CacheHelper.saveData(
-                  key: 'uId',
-                  value:state.uId);
+              GymCubit.get(context).current =0;
               Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
 
@@ -70,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment:CrossAxisAlignment.start,
                   children:
                   [
-                    Text(AppString.loginToYourAccount,
+                    Text("${'loginToYourAccount'.tr(context)}",
                         style: TextStyle(
                           inherit: false,
                           color: ColorsManager.white,
@@ -79,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         )),
                     const SizedBox(height: 70,),
-                    Text(AppString.userName,
+                    Text("${'userName'.tr(context)}",
                       style: TextStyle(
                         inherit: false,
                         color: ColorsManager.white,
@@ -90,17 +85,18 @@ class LoginScreen extends StatelessWidget {
                     CustomTextFormFiled(
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppString.thisFiledFree;
+                          return "${'thisFieldRequired'.tr(context)}";
                         }
                         return null;
                       },
                       controller: userNameController,
-                      hintText:'${AppString.enterUserName} or ${AppString.password}',
+                      hintText:"${'userName'.tr(context)}",
                       textInputType: TextInputType.name,
-                      icon: IconlyBroken.message,
+                      icon:Icon(IconlyBroken.message,
+                      ),
                     ),
                     const SizedBox(height: 30,),
-                    Text(AppString.password,
+                    Text("${'password'.tr(context)}",
                       style: TextStyle(
                         inherit: false,
                         color: ColorsManager.white,
@@ -110,21 +106,22 @@ class LoginScreen extends StatelessWidget {
                     CustomTextFormFiled(
                       validator: (p0) {
                         if (p0!.isEmpty) {
-                          return AppString.thisFiledFree;
+                          return "${'thisFieldRequired'.tr(context)}";
+
                         }
                         return null;
                       },
                       controller: passController,
                       textInputType: TextInputType.visiblePassword,
-                      icon: IconlyBroken.lock,
+                      icon:Icon(IconlyBroken.lock,),
                       isPassword:AuthCubit.get(context).isPasswordLogin,
-                      hintText:AppString.enterYourPassword,
+                      hintText:"${'password'.tr(context)}",
                       suffixIcon: AuthCubit.get(context).iconPasswordLogin,
                       suffixOnPressed: (){
                         AuthCubit.get(context).changePasswordLoginVisible();
                       },
                     ),
-                    Align(
+                  /**  Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: TextButton(
                           onPressed: () {
@@ -132,18 +129,18 @@ class LoginScreen extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => const HomeSignUpScreen(),)
                         );
                       },
-                          child: Text( AppString.forgetThePassword,
+                          child: Text( "${'forgetThePassword'.tr(context)}",
                               style: TextStyle(
                                 inherit: false,
                                 color:ColorsManager.primary,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                               ))),
-                    ),
+                    ),**/
                     const SizedBox(height: 13.0,),
                     ConditionalBuilder(
                       condition:state is!LoginLoadingState,
-                      fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
+                      fallback: (context) =>  defaultProgressIndicator(),
                       builder:(context) =>  MaterialButton(
                         height: 54,
                         minWidth: double.infinity,
@@ -158,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                             );
                           }
                         },
-                        child:  Text(AppString.logIn,
+                        child:  Text("${'logIn'.tr(context)}",
                             style: TextStyle(
                               inherit: false,
                               color:ColorsManager.black,
@@ -172,7 +169,7 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         Text(AppString.dontHaveAnAccount,
+                         Text("${'dontHaveAnAccount'.tr(context)}",
                             maxLines: 1,
                             style: TextStyle(
                               inherit: false,
@@ -186,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                                   MaterialPageRoute(builder: (context) => SignupScreen(),)
                               );
                             },
-                            child: Text(AppString.logIn,
+                            child: Text("${'signUp'.tr(context)}",
                                 maxLines: 1,
                                 style: TextStyle(
                                   inherit: false,

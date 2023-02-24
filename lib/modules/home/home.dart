@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:blackgym/shared/components.dart';
 
 import '../../model/home_images_model.dart';
-import '../../shared/styles/colors_manager.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -135,7 +135,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           },
-          fallback: (context) =>  Center(child:CircularProgressIndicator(color:ColorsManager.primary,)),
+          fallback: (context) => defaultProgressIndicator(),
         );
       },
     );

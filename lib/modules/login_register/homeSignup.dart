@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
-import 'package:blackgym/shared/styles/string_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login/login.dart';
@@ -39,12 +39,12 @@ class HomeSignUpScreen extends StatelessWidget {
                     [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Text(AppString.becomeStrongerWithOurWorkoutPlans,
+                        child: Text("${'becomeStronger..'.tr(context)}",
                           maxLines: 2,
                           style: TextStyle(
                             inherit: false,
                             color: ColorsManager.white,
-                            fontSize: 20.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -52,12 +52,12 @@ class HomeSignUpScreen extends StatelessWidget {
                       const SizedBox(height: 10.0,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(AppString.throughThisApplicationYourHealth,
+                        child: Text("${'throughThisApplication'.tr(context)}",
                           maxLines: 4,
                           style: TextStyle(
                             inherit: false,
                             color: ColorsManager.white,
-                            fontSize: 14.0,
+                            fontSize: 12.0,
                             fontWeight: FontWeight.w400,
                           ),),
                       ),
@@ -75,7 +75,7 @@ class HomeSignUpScreen extends StatelessWidget {
                         context, animation, secondaryAnimation) =>
                         LoginScreen(),));
                   },
-                  child: Text(AppString.logIn,
+                  child: Text("${'logIn'.tr(context)}",
                       style: const TextStyle(
                         inherit: false,
                         color: Colors.black,
@@ -94,7 +94,7 @@ class HomeSignUpScreen extends StatelessWidget {
                         context, animation, secondaryAnimation) =>
                         SignupScreen(),));
                   },
-                  child: Text(AppString.signUp,
+                  child: Text("${'signUp'.tr(context)}",
                       style: const TextStyle(
                         inherit: false,
                         color: Colors.black,

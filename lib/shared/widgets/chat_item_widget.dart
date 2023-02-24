@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:blackgym/model/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../modules/chat/chats_person.dart';
@@ -5,8 +7,6 @@ import '../../modules/chat/chats_person.dart';
 class ChatItemWidget extends StatelessWidget {
     UserModel? users;
    ChatItemWidget({Key? key, required this.users}) : super(key: key);
-
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

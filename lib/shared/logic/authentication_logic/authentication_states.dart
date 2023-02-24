@@ -46,6 +46,16 @@ class RegisterErrorState extends AuthStates{
     RegisterErrorState(this.error);
 }
 
+class CreateUserLoadingState extends AuthStates{
+}
+class CreateUserSuccessState extends AuthStates{
+}
+class CreateUserErrorState extends AuthStates{
+  final String error;
+  CreateUserErrorState(this.error);
+}
+
+
 class LoginLoadingState extends AuthStates{
 }
 class LoginSuccessState extends AuthStates{
@@ -57,9 +67,5 @@ class LoginErrorState extends AuthStates{
   LoginErrorState(this.error);
 }
 
-class CreateUserErrorState extends AuthStates{
-  final String error;
-  CreateUserErrorState(this.error);
-}
 class SignOutSuccessState extends AuthStates{
 }

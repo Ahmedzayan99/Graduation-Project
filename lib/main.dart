@@ -18,7 +18,13 @@ void main() async {
   // bool? onBoarding = CacheHelper.getDataIntoShPre(key: 'Onboarding');
 
   uId = CacheHelper.getDataIntoShPre(key: 'uId');
+  var lang = CacheHelper.getDataIntoShPre(key: 'Lang');
 
+  if (lang != null) {
+    lang = lang;
+  } else {
+    lang = 'en';
+  }
   late Widget widget;
   if (uId != null) {
     widget = NewLayout();
@@ -37,5 +43,6 @@ void main() async {
   runApp(MyApp(
     //appRouter: AppRouter()
     startWidget: widget,
+    lang: lang,
   ));
 }
