@@ -8,9 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/gym.dart';
 import 'modules/login_register/homeSignup.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+await Firebase.initializeApp();
   //DioHelper.init();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();

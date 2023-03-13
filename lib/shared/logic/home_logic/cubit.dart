@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:blackgym/model/chat_model.dart';
 import 'package:blackgym/model/user_model.dart';
-import 'package:blackgym/modules/chat/chats.dart';
 import 'package:blackgym/modules/exercises/exercises.dart';
 import 'package:blackgym/modules/home/home.dart';
 import 'package:blackgym/modules/settings/settings.dart';
@@ -17,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
-
+import 'package:sqflite/sqflite.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
 
@@ -29,26 +28,17 @@ class GymCubit extends Cubit<GymStates> {
     const HomeScreen(),
     const ExercisesScreen(),
     const WorkoutsScreen(),
-    const ChatScreen(),
+    const HomeScreen(),
     SettingsScreen(),
   ];
 
   void changeIndex(int index) {
-    if (index == 3) {
-      getAllUser();
-    }
     if(index == 4 ){
-      print("BishoIndex $index");
       getUserData();
     }
 
     current = index;
     emit(GymChangeBottomNavBarState());
-  }
-
-  //<<<<<<<<<<<<<<<<<Start the cubit of BottomSheet >>>>>>>>>>>>>>>>>>>>>>
-  void changeBottomSheetState({required bool isShow}) {
-    emit(GymChangeBottomSheetState());
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of page Setting >>>>>>>>>>>>>>>>>>>>>>
@@ -265,83 +255,6 @@ class GymCubit extends Cubit<GymStates> {
     CacheHelper.removeUserData(key: 'uId');
   }
 
-  List<UserModel> users = [];
-
-  void getAllUser() {
-    users = [];
-    emit(GetAllUserLoadingState());
-    FirebaseFirestore.instance.collection('Users').get().then((value) {
-      for (var element in value.docs) {
-        if (element.data()['uId'] != userModel!.uId) {
-          users.add(UserModel.fromJson(element.data()));
-        }
-      }
-      emit(GetAllUserSuccessState());
-    }).catchError((error) {
-      emit(GetAllUserErrorState(error.toString()));
-      print(error);
-    });
-  }
-
-  void sendMessage({
-    required String receiverId,
-    required String dataTime,
-    required String text,
-  }) {
-    MessageModel model = MessageModel(
-      receiverId: receiverId,
-      dataTime: dataTime,
-      text: text,
-      senderId: userModel!.uId,
-    );
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userModel!.uId)
-        .collection('chats')
-        .doc(receiverId)
-        .collection('messages')
-        .add(model.toMap())
-        .then((value) {
-      emit(SendMessageSuccessState());
-    }).catchError((error) {
-      emit(SendMessageErrorState());
-    });
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(receiverId)
-        .collection('chats')
-        .doc(userModel!.uId)
-        .collection('messages')
-        .add(model.toMap())
-        .then((value) {
-      emit(SendMessageSuccessState());
-    }).catchError((error) {
-      emit(SendMessageErrorState());
-    });
-  }
-
-  List<MessageModel> messages = [];
-
-  void getMessage({
-    required String receiverId,
-  }) {
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userModel!.uId)
-        .collection('chats')
-        .doc(receiverId)
-        .collection('messages')
-        .orderBy('dataTime')
-        .snapshots()
-        .listen((event) {
-      messages = [];
-      for (var element in event.docs) {
-        messages.add(MessageModel.fromJson(element.data()));
-      }
-      emit(GetMessageSuccessState());
-    });
-  }
 
   List<String> dropDownButton = [
     'ar',
@@ -358,4 +271,134 @@ class GymCubit extends Cubit<GymStates> {
       emit(ChangeAppModeState());
     });
   }
+
+  void confirmPasswordReset (){
+    FirebaseAuth
+        .instance
+        .confirmPasswordReset(
+        code:'1112',
+        newPassword: '11111111')
+        .then((value) {
+      print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+    })
+        .catchError((Error){
+      print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      print(Error.toString());
+    });
+  }
+
+  //<<<<<<<<<<<<<<<<<Start the cubit of BottomSheet >>>>>>>>>>>>>>>>>>>>>>
+
+bool isBottomSheet = false;
+IconData iconShow = Icons.edit;
+void changeBottomSheetState({
+  required bool isShow,
+  required IconData icon,
+}) {
+  isBottomSheet = isShow;
+  iconShow = icon;
+  emit(ChangeBottomSheetState());
+}
+
+late Database database;
+List<Map> newTasks = [];
+List<Map> doneTasks = [];
+List<Map> archiveTasks = [];
+
+void createDatabase() {
+  print('Start **********************************');
+  openDatabase(
+    'GymApp.db',
+    version: 1,
+    onCreate: (database, version) {
+      print('DataBase Created ------------------------------------');
+      database.execute(
+          'CREATE TABLE task (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)'
+      )
+          .then((value) {
+        print('Table Created ====================================');
+      }).catchError((error) {
+        print('error when ${error.toString()}');
+      });
+    },
+    onOpen: (database) {
+      getFromDatabase(database);
+      print('DataBase Opened ________________________________________');
+    },
+  ).then((value) {
+    database = value;
+    emit(CreateDatabaseState());
+  });
+}
+
+insertToDatabase({
+  required String title,
+  required String time,
+  required String date,
+}) async {
+  await database.transaction((txn) async
+  {
+    await txn
+        .rawInsert(
+        'INSERT INTO task (title, date, time, status) VALUES("$title", "$date", "$time", "new")'
+    )
+        .then((value) {
+      print(' insert successfully');
+      emit(InsertDatabaseState());
+      getFromDatabase(database);
+    })
+        .catchError((error) {
+      print('when error${error.toString()}');
+    });
+  });
+}
+
+getFromDatabase(database) {
+  newTasks = [];
+  doneTasks = [];
+  archiveTasks = [];
+  emit(GetDatabaseLoadingState());
+  database.rawQuery('SELECT * FROM task').then((value) {
+    value.forEach((element) {
+      if (element['status'] == 'new'){
+        newTasks.add(element);
+
+      }
+
+      else if (element['status'] == 'done'){
+        doneTasks.add(element);
+
+      }
+
+      else archiveTasks.add(element);
+
+    });
+    emit(GetDatabaseState());
+  });
+}
+void updateToDatabase({
+  required String status,
+  required int id,
+})  {
+  database.rawUpdate(
+      'UPDATE task SET status = ? WHERE id = ?',
+      [status, id])
+      .then((value) {
+    getFromDatabase(database);
+    emit(UpdateDatabaseState());
+  });
+}
+
+void deleteFromDatabase(
+    {
+      required id ,
+    }
+    ) {
+  database
+      .rawDelete('DELETE FROM task WHERE id = ?', [id])
+      .then((value) {
+    getFromDatabase(database);
+    emit(DeleteDatabaseState());
+  });
+}
 }

@@ -73,4 +73,21 @@ class UpdateHeightState extends GymStates{
 
 
 
+class CreateDatabaseState extends GymStates{
+}
+class UpdateDatabaseState extends GymStates{
+}
+class DeleteDatabaseState extends GymStates{
+}
+class InsertDatabaseState extends GymStates{
+}
+class GetDatabaseLoadingState extends GymStates{
+}
+
+class GetDatabaseState extends GymStates{
+}
+class ChangeBottomSheetState extends GymStates{
+}
+
+
 ///////////////////////////////

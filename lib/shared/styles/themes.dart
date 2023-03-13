@@ -1,18 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'colors_manager.dart';
 
 ThemeData getAppThemeData() => ThemeData(
-
-  fontFamily:'AsapCondensed-Medium',
+       fontFamily:'JosefinSans-Regular',
     scaffoldBackgroundColor:const Color.fromRGBO(255, 255, 255,0),
     //appBar Theme
     appBarTheme:AppBarTheme(
       elevation: 0,
-        color:Color.fromRGBO(255, 255, 255,0),
+      color:Color.fromRGBO(255, 255, 255,0),
       titleTextStyle: TextStyle(color: ColorsManager.white,fontSize:20.0,fontWeight:FontWeight.bold ),
       systemOverlayStyle:SystemUiOverlayStyle(statusBarColor: Colors.black,
         statusBarIconBrightness:Brightness.light ,

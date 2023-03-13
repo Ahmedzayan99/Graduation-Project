@@ -59,7 +59,7 @@ class NewLayout extends StatelessWidget {
                     BottomNavigationBarItem(
                     icon: const Icon(IconlyBroken.home),
                     label: "${'home'.tr(context)}",
-                  ),
+                  ),9
                     BottomNavigationBarItem(
                       icon: const Icon(IconlyBroken.exercise_1),
                       label:  "${'exercises'.tr(context)}",
@@ -70,7 +70,7 @@ class NewLayout extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: const Icon(IconlyBroken.chat),
-                      label:  "${'chat'.tr(context)}",
+                      label:  "${'notes'.tr(context)}",
                     ),
                     BottomNavigationBarItem(
                       icon: const Icon(

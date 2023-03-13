@@ -40,5 +40,7 @@
   "shareWithFriends": "Share with Friends",
   "ourFacebook": " Our Facebook",
   "ourInstagram": "  Our Instagram",
-  "logOut": "Log Out"
+  "logOut": "Log Out",
+  "userNameMust": "userName must not contain '@.#%&'*+-/=?^`{|}~' ",
+  "notes": "Notes"
 }

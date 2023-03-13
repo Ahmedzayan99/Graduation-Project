@@ -70,10 +70,9 @@ class LoginScreen extends StatelessWidget {
                           inherit: false,
                           color: ColorsManager.white,
                           fontSize: 40,
-
                           fontWeight: FontWeight.w700,
                         )),
-                    const SizedBox(height: 70,),
+                    const SizedBox(height: 40,),
                     Text("${'userName'.tr(context)}",
                       style: TextStyle(
                         inherit: false,

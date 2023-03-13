@@ -30,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
      listener: (context, state) {
        if(state is GetUserSuccessState){
          Fluttertoast.showToast(
-           msg: 'successfully Updata ',
+           msg:"${'doneSuccessfully'.tr(context)}",
            backgroundColor: Colors.white,
            textColor: Colors.black,
          );
@@ -62,15 +62,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                        children: [
                           Align(
                            alignment: AlignmentDirectional.topStart,
-                           child: Container(clipBehavior: Clip.antiAliasWithSaveLayer,
+                           child: Container(
+                               clipBehavior: Clip.antiAliasWithSaveLayer,
                              decoration: BoxDecoration(
-                               border: Border.all(width: 2.5,color: ColorsManager.primary),
-                                 borderRadius: const BorderRadius.all(Radius.circular(10.0))
+
+                                 borderRadius: const BorderRadius.only(topRight:  Radius.circular(10.0),topLeft: Radius.circular(10.0))
                              ),
                                height: 160.0,
                                width: double.infinity,
                                child: const Image(
-                                 image:NetworkImage("https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?t=st=1675796011~exp=1675796611~hmac=7437f86970844e63b2fd176ed671bf9f8f93c25d6d945e20a871b4ef0206af1d"),fit:BoxFit.cover,)),
+                                 image:AssetImage(
+                                     'assets/images/gym.jpg'),fit:BoxFit.cover,)),
                          ),
                          CircleAvatar(
                            radius: 65.0,
@@ -247,7 +249,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                              CustomDefaultSlider(
                                textOfTitle:"${'weight'.tr(context)}",
                                showValue: '${GymCubit.get(context).weightInitial.round()}',
-                               textAlphabetic: "${'cm'.tr(context)}",
+                               textAlphabetic: "${'kg'.tr(context)}",
                                value:GymCubit.get(context).weightInitial ,
                                min: 0,
                                max: 240,
@@ -260,7 +262,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                              CustomDefaultSlider(
                                textOfTitle:"${'age'.tr(context)}",
                                showValue: '${GymCubit.get(context).ageInitial.round()}',
-                               textAlphabetic: "${'cm'.tr(context)}",
+                               textAlphabetic:"${'yearOld'.tr(context)}",
                                value:GymCubit.get(context).ageInitial ,
                                min: 0,
                                max: 240,
@@ -273,7 +275,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                              CustomDefaultSlider(
                                textOfTitle:"${'fatPercentage'.tr(context)}",
                                showValue: '${GymCubit.get(context).fatPercentageInitial.round()}',
-                               textAlphabetic: "${'cm'.tr(context)}",
+                               textAlphabetic: '%',
                                value:GymCubit.get(context).fatPercentageInitial ,
                                min: 0,
                                max: 240,

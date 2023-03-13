@@ -78,9 +78,13 @@ class SignupUserScreen extends StatelessWidget{
                             if (p0!.isEmpty) {
                               return "${'thisFieldRequired'.tr(context)}";
                             }
-                            else if(!RegExp(r"^[Aa-z-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]").hasMatch(p0))
+                            else if(RegExp(r"^[a-zA-Z0-9]+[.@#$%&'*+-/=?^`{|}~]").hasMatch(p0))
                             {
-                              return 'aaaaaaaaaaaa';
+                              return  "${'userNameMust'.tr(context)}";
+                            }
+                            else if(RegExp(r"^[@.#$%&'*+-/=?^`{|}~]").hasMatch(p0))
+                            {
+                              return  "${'userNameMust'.tr(context)}";
                             }
                             return null;
                           },

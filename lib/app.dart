@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..getAllUser()),
+        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(
