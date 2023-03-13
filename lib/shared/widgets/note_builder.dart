@@ -94,14 +94,14 @@ Widget buildTaskItem(Map model,context) => Dismissible(
               status: 'done',id: model['id'],
             );
           },
-          icon: const Icon(Icons.check_circle_outline_outlined),),
+          icon: const Icon(Icons.check_circle_outline_outlined,color: Colors.grey),),
         model['status']=='archive'?const SizedBox(): IconButton(
             onPressed:(){
               GymCubit.get(context).updateToDatabase(
                 status: 'archive', id: model['id'],
               );
             },
-            icon: const Icon(Icons.archive_outlined)),
+            icon: const Icon(Icons.archive_outlined,color: Colors.grey)),
       ],
     ),
   ),
