@@ -74,7 +74,7 @@ Widget buildTaskItem(Map model,context) => Dismissible(
               Text(
                 '${model['title']}',
                 style: const TextStyle(
-                  fontSize:18.0,
+                  fontSize:18.0,color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),),
               Text('${model['date']}',

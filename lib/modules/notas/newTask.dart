@@ -8,12 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../../shared/styles/colors_manager.dart';
-import '../../shared/widgets/custom_text_form_filed.dart';
 import '../../shared/widgets/note_builder.dart';
 import 'archivedTask.dart';
 import 'doneTask.dart';
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+class HoScreen extends StatelessWidget {
+  HoScreen({Key? key}) : super(key: key);
 
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -101,6 +100,12 @@ class HomeScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                          TextFormField(
+                           validator: (value) {
+                             if (value!.isEmpty) {
+                               return 'Enter time task';
+                             }
+                             return null;
+                           },
                         controller:titleController,
                         decoration:   InputDecoration(
                           hintText: 'Task Title',
@@ -108,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                           suffixIconColor:ColorsManager.black,
                           contentPadding: const EdgeInsets.all(8.0),
                           suffixIcon:IconButton(onPressed: (){},
-                              icon:  Icon(Icons.note_add,color: ColorsManager.grey,)
+                              icon:  Icon(Icons.title,color: ColorsManager.grey,)
                           ),
                           filled: false,
                           border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
@@ -159,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                               suffixIconColor:ColorsManager.black,
                               contentPadding: const EdgeInsets.all(8.0),
                               suffixIcon:IconButton(onPressed: (){},
-                                  icon:  Icon(Icons.note_add,color: ColorsManager.grey,)
+                                  icon:  Icon(Icons.access_time,color: ColorsManager.grey,)
                               ),
                               filled: false,
                               border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
@@ -189,6 +194,12 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0,),
                           TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter time task';
+                              }
+                              return null;
+                            },
                             onTap: () {
                               showDatePicker(
                                   context: context,
@@ -206,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                               suffixIconColor:ColorsManager.black,
                               contentPadding: const EdgeInsets.all(8.0),
                               suffixIcon:IconButton(onPressed: (){},
-                                  icon:  Icon(Icons.note_add,color: ColorsManager.grey,)
+                                  icon:  Icon(Icons.date_range,color: ColorsManager.grey,)
                               ),
                               filled: false,
                               border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
@@ -250,7 +261,7 @@ class HomeScreen extends StatelessWidget {
                 });
                 cubit.changeBottomSheetState(
                   isShow:true ,
-                  icon: Icons.add,);
+                  icon: Icons.note_add,);
               }
             },
             child: Icon(cubit.iconShow),),

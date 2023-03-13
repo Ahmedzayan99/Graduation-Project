@@ -15,8 +15,10 @@ class ArchivedTask extends StatelessWidget {
       {
         var tasks =GymCubit.get(context).archiveTasks;
 
-        return notesbuilder(
-            tasks:tasks
+        return Scaffold(appBar: AppBar(),
+          body: notesbuilder(
+              tasks:tasks
+          ),
         );
       },
     );

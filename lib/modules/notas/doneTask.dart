@@ -13,8 +13,11 @@ class DoneTask extends StatelessWidget {
       builder: (context, state)
       {
         var tasks =GymCubit.get(context).doneTasks;
-        return notesbuilder(
-            tasks:tasks
+        return Scaffold(
+          appBar: AppBar(),
+          body:notesbuilder(
+              tasks:tasks
+          ),
         );
       },
     );

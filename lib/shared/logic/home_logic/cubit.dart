@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:blackgym/model/chat_model.dart';
 import 'package:blackgym/model/user_model.dart';
 import 'package:blackgym/modules/exercises/exercises.dart';
 import 'package:blackgym/modules/home/home.dart';
+import 'package:blackgym/modules/notas/newTask.dart';
 import 'package:blackgym/modules/settings/settings.dart';
 import 'package:blackgym/modules/workouts/workouts.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
@@ -28,7 +28,7 @@ class GymCubit extends Cubit<GymStates> {
     const HomeScreen(),
     const ExercisesScreen(),
     const WorkoutsScreen(),
-    const HomeScreen(),
+     HoScreen(),
     SettingsScreen(),
   ];
 
