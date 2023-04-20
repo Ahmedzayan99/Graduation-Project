@@ -87,7 +87,6 @@ Widget buildTaskItem(Map model,context) => Dismissible(
         const SizedBox(
           width: 15.0,
         ),
-
         model['status']=='done'?const SizedBox():IconButton(
           onPressed:(){
             GymCubit.get(context).updateToDatabase(

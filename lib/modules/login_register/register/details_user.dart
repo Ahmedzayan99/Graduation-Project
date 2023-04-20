@@ -5,6 +5,7 @@ import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/widgets/custom_defaultSlider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../shared/styles/colors_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,9 +38,7 @@ class SignupDetailsScreen extends StatelessWidget {
         );
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
-
       }
-
       if(state is CreateUserErrorState){
         Fluttertoast.showToast(
           msg: state.error,
@@ -176,6 +175,7 @@ class SignupDetailsScreen extends StatelessWidget {
                     shape: const StadiumBorder(),
                     color: ColorsManager.primary,
                     onPressed: () {
+
                       cubit.userRegister(
                         email:email,
                         password: password,

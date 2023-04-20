@@ -1,7 +1,7 @@
 {
   "language": "Language",
   "signUp": "Sign Up",
-  "logIn": "LOGIN",
+  "logIn": "Log in",
   "userName" : "UserName",
   "password": "Password",
   "phoneNumber": "Phone Number",
@@ -42,5 +42,11 @@
   "ourInstagram": "  Our Instagram",
   "logOut": "Log Out",
   "userNameMust": "userName must not contain '@.#%&'*+-/=?^`{|}~' ",
-  "notes": "Notes"
+  "notes": "Notes",
+  "ChangeLanguage": "Choose Your language",
+  "chooseTheWayWant..": "Choose the way you want to train in ",
+  "willYouTrainIn..": "Will you train in our gym or online",
+  "online": "online",
+  "inYourGym": "in your gym"
+
 }

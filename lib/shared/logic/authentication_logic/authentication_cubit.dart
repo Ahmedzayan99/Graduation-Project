@@ -245,7 +245,6 @@ class AuthCubit extends Cubit<AuthStates> {
       CacheHelper.saveData(
           key: 'uId',
           value:value.user?.uid);
-
           emit(LoginSuccessState(value.user!.uid));
         })
         .then((value) {})

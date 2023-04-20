@@ -6,9 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'layout/gym.dart';
-import 'modules/login_register/homeSignup.dart';
-
-
+import 'modules/home/firstPage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 await Firebase.initializeApp();
@@ -30,7 +28,8 @@ await Firebase.initializeApp();
   if (uId != null) {
     widget = NewLayout();
   } else {
-    widget = const HomeSignUpScreen();
+    widget = const ChangeLanguageScreen();
+
   }
 
   //FirebaseAuth.instance.authStateChanges().listen((user) {

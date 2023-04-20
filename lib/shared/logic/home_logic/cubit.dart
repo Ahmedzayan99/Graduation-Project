@@ -27,7 +27,7 @@ class GymCubit extends Cubit<GymStates> {
   List<Widget> screen = [
     const HomeScreen(),
     const ExercisesScreen(),
-    const WorkoutsScreen(),
+     WorkoutsScreen(),
      HoScreen(),
     SettingsScreen(),
   ];
@@ -214,7 +214,6 @@ class GymCubit extends Cubit<GymStates> {
       gender: userModel?.gender,
     );
     emit(UpdateNameLoadingState());
-
     FirebaseFirestore.instance
         .collection('Users')
         .doc(userModel!.uId)
@@ -226,8 +225,6 @@ class GymCubit extends Cubit<GymStates> {
       emit(UserUpdateErrorState());
     });
   }
-
-
 
   UserModel? userModel;
   Future<void> getUserData() async {

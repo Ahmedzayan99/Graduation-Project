@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/modules/home/changeOnline.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
@@ -34,33 +34,26 @@ class HomeSignUpScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   child: Column(
-
                     children:
                     [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Text("${'becomeStronger..'.tr(context)}",
-                          maxLines: 2,
-                          style: TextStyle(
-                            inherit: false,
-                            color: ColorsManager.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text("${'becomeStronger..'.tr(context)}",
+                        maxLines: 2,
+                        style: TextStyle(
+                          inherit: false,
+                          color: ColorsManager.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 10.0,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text("${'throughThisApplication'.tr(context)}",
-                          maxLines: 4,
-                          style: TextStyle(
-                            inherit: false,
-                            color: ColorsManager.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w400,
-                          ),),
-                      ),
+                      Text("${'throughThisApplication'.tr(context)}",
+                        maxLines: 4,
+                        style: TextStyle(
+                          inherit: false,
+                          color: ColorsManager.white,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w400,
+                        ),),
                     ],
                   ),
                 ),
@@ -92,7 +85,7 @@ class HomeSignUpScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, PageRouteBuilder(pageBuilder: (
                         context, animation, secondaryAnimation) =>
-                        SignupScreen(),));
+                        const ChangePlaceScreen(),));
                   },
                   child: Text("${'signUp'.tr(context)}",
                       style: const TextStyle(
