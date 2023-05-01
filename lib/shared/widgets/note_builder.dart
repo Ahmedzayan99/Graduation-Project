@@ -1,10 +1,11 @@
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
+// ignore_for_file: must_be_immutable, avoid_print
+
+import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class notesbuilder extends StatelessWidget{
+class NotasBuilder extends StatelessWidget{
   List<Map> tasks;
-   notesbuilder({
+   NotasBuilder({
     Key? key,
     required this.tasks,
 

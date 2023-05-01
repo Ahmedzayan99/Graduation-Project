@@ -7,7 +7,8 @@ import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'layout/gym.dart';
+import 'modules/changeLanuage.dart';
+import 'modules/gym.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 // await Firebase.initializeApp();
@@ -27,7 +28,7 @@ void main() async {
   if (uId != null) {
     widget = NewLayout();
   } else {
-    widget =  NewLayout();
+    widget =  ChangeLanguageScreen();
 
   }
 

@@ -1,11 +1,12 @@
 
 // ignore_for_file: avoid_print, must_be_immutable
 
-import 'package:blackgym/layout/gym.dart';
-import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/modules/gym.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_states.dart';
+import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/styles/iconly_broken.dart';
 import 'package:blackgym/shared/widgets/custom_text_form_filed.dart';
@@ -13,8 +14,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
+import '../register/second_step_register.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
    var userNameController = TextEditingController();
@@ -152,8 +152,8 @@ class LoginScreen extends StatelessWidget {
                             //  email: userNameController.text,
                               //password: passController.text,
                            // );
-                            cubit.userLog(email: userNameController.text,
-                                          password: passController.text,);
+                            cubit.userLogin(email: userNameController.text.trim(),
+                                          password: passController.text.trim(),);
                           }
                         },
                         child:  Text("${'logIn'.tr(context)}",
@@ -181,7 +181,7 @@ class LoginScreen extends StatelessWidget {
                         TextButton(
                             onPressed: () {
                               Navigator.push( context,
-                                  MaterialPageRoute(builder: (context) => SignupScreen(),)
+                                  MaterialPageRoute(builder: (context) => SignupUserScreen(),)
                               );
                             },
                             child: Text("${'signUp'.tr(context)}",

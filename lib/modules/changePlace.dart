@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:blackgym/modules/login_register/register/fisrst_step_register.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_states.dart';
+import 'package:blackgym/modules/login_register/register/second_step_register.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,8 +72,7 @@ class ChangePlaceScreen extends StatelessWidget {
                       color: ColorsManager.primary,
                       onPressed: () {
                         Navigator.push(context, PageRouteBuilder(pageBuilder: (
-                            context, animation, secondaryAnimation) =>
-                            SignupScreen(),));
+                            context, animation, secondaryAnimation) =>SignupUserScreen(),));
                       },
                       child: Text("${'online'.tr(context)}",
                           style: const TextStyle(
@@ -92,7 +91,7 @@ class ChangePlaceScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context, PageRouteBuilder(pageBuilder: (
                             context, animation, secondaryAnimation) =>
-                            SignupScreen(),));
+                            SignupUserScreen(),));
                       },
                       child: Text("${'inYourGym'.tr(context)}",
                           style: const TextStyle(

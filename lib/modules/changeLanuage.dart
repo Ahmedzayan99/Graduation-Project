@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../login_register/homeSignup.dart';
+import 'login_register/homeSignup.dart';
 
 class ChangeLanguageScreen extends StatelessWidget {
   const ChangeLanguageScreen({Key? key}) : super(key: key);

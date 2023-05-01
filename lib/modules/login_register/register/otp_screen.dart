@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_print, unnecessary_import, unnecessary_string_interpolations, must_be_immutable
 
+import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_states.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../shared/styles/colors_manager.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'second_step_register.dart';
 
@@ -45,7 +45,7 @@ class OTPScreen extends StatelessWidget {
         }
         if (state is PhoneOTPVerified) {
         Navigator.pop(context);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => SignupUserScreen(phone: phoneNumber,)), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) => SignupUserScreen()), (route) => false);
         }
         if (state is PhoneErrorState) {
 

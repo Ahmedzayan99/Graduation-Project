@@ -1,12 +1,12 @@
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:blackgym/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'modules/login_register/cubit/authentication_cubit.dart';
 class MyApp extends StatelessWidget {
 //  final AppRouter appRouter;
   final Widget? startWidget;

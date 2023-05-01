@@ -1,9 +1,9 @@
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../shared/logic/home_logic/cubit.dart';
-import '../../shared/logic/home_logic/states.dart';
 import '../../shared/widgets/home_training_item_widget.dart';
 import '../dummy/home_dummy.dart';
 

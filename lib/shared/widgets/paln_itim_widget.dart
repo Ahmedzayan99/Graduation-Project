@@ -3,14 +3,12 @@
 import 'package:flutter/material.dart';
 import '../styles/colors_manager.dart';
 class NEWScreen extends StatefulWidget {
-  NEWScreen({Key? key,}) : super(key: key);
+  const NEWScreen({Key? key,}) : super(key: key);
   @override
   State<NEWScreen> createState() => _NEWScreenState();
 }
 class _NEWScreenState extends State<NEWScreen> {
   bool value=false;
-  bool Value=false;
-  bool _value=false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +21,7 @@ class _NEWScreenState extends State<NEWScreen> {
                             padding: const EdgeInsets.all(8.0),
                              child: Column(
                                children: [
-                                 Container(
+                                 SizedBox(
                                    height: 25.0,
                                    child: ListView.builder(
                                      shrinkWrap: true,

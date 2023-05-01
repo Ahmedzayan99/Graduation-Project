@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 
-import 'package:blackgym/modules/home/changeOnline.dart';
+import 'package:blackgym/modules/changePlace.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
-import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'cubit/authentication_cubit.dart';
 import 'login/login.dart';
 
 class HomeSignUpScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class HomeSignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<AuthCubit,AuthStates>(
       listener: (context, state) {},
     builder: (context, state) {

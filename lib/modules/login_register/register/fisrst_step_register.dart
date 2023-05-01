@@ -1,4 +1,4 @@
-import 'package:blackgym/modules/login_register/register/second_step_register.dart';
+/*import 'package:blackgym/modules/login_register/register/second_step_register.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_cubit.dart';
@@ -14,7 +14,7 @@ class SignupScreen extends StatelessWidget {
 
  void showProgressIndicator(BuildContext  context)
  {
-    AlertDialog alertDialog = AlertDialog(
+   AlertDialog alertDialog = AlertDialog(
      backgroundColor: Colors.transparent,
      elevation: 0,
      content: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ColorsManager.primary)),),
@@ -61,100 +61,87 @@ class SignupScreen extends StatelessWidget {
         }
       },
         builder: (context, state) {
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/abdominal muscles.png'),
-                  fit: BoxFit.fill,opacity: 150.0),),
-            child: Scaffold(
-              appBar:AppBar(),
-              body:Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("${'phoneNumber'.tr(context)}",
-                        style: TextStyle(
-                          inherit: false,
-                          color: ColorsManager.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),),
-                      Row(children: [
-                        Expanded(
-                          flex: 3,
-                          child:CustomTextFormFiled(
-                            isPassword: false,
-                            validator: (value) {
-                              if(value!.isEmpty)
-                              {
-                                return "${'thisFieldRequired'.tr(context)}";
-                              }
-                              else if(value.length < 11)
-                              {
-                                return  "${'shortPhoneNumber'.tr(context)}";
-                              }
-                              else if(value.length >11)
-                              {
-                                return  "${'longPhoneNumber'.tr(context)}";
-                              }
-                              return null;
-                            },
-                            controller:phoneNumberController,
-                            textInputType: TextInputType.phone,
-                            icon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '${generateCountryFlag()}+02',
-                                style:TextStyle(
-                                  color: ColorsManager.primary,
-                                  fontSize: 18,
-                                  letterSpacing: 2.0,
-                                ),
-                              ),
-                            ),
-                            hintText:"${'phoneNumber'.tr(context)}",
-                          ),),
-                      ],),
-                      const SizedBox(height: 30.0,),
-                      MaterialButton(
-                        height: 54,
-                        minWidth: double.infinity,
-                        shape: const StadiumBorder(),
-                        color: ColorsManager.primary,
-                        onPressed: () {
-                          showProgressIndicator(context);
-                          if(_formKey.currentState!.validate()) {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>SignupUserScreen(phone:phoneNumberController.text.trim())  ), (route) => false);
-                          //  Navigator.pop(context);
-                          //  AuthCubit.get(context).submitPhoneNumber(
-                       //         phoneNumberController.text.trim());
-                          }
-                          else {
-                            Navigator.pop(context);
-                            return;
-                          }
-                          },
-                        child:   Text("${'next'.tr(context)}",
-                            style:const TextStyle(
-                              inherit: false,
-                              color:Colors.black,
-                              fontSize:20.0,
-                              fontWeight: FontWeight.bold,
-                            )),
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("${'phoneNumber'.tr(context)}",
+                  style: TextStyle(
+                    inherit: false,
+                    color: ColorsManager.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                Row(
+                  children: [
+                  Expanded(
+                    flex: 3,
+                    child:CustomTextFormFiled(
+                      isPassword: false,
+                      validator: (value) {
+                        if(value!.isEmpty)
+                        {
+                          return "${'thisFieldRequired'.tr(context)}";
+                        }
+                        else if(value.length < 11)
+                        {
+                          return  "${'shortPhoneNumber'.tr(context)}";
+                        }
+                        else if(value.length >11)
+                        {
+                          return  "${'longPhoneNumber'.tr(context)}";
+                        }
+                        return null;
+                      },
+                      controller:phoneNumberController,
+                      textInputType: TextInputType.phone,
+                      icon: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${generateCountryFlag()}+02',
+                          style:TextStyle(
+                            color: ColorsManager.primary,
+                            fontSize: 18,
+                            letterSpacing: 2.0,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                      hintText:"${'phoneNumber'.tr(context)}",
+                    ),),
+                ],),
+                MaterialButton(
+                  height: 54,
+                  minWidth: double.infinity,
+                  shape: const StadiumBorder(),
+                  color: ColorsManager.primary,
+                  onPressed: () {
+                    showProgressIndicator(context);
+                    if(_formKey.currentState!.validate()) {
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder:(context) =>SignupUserScreen(phone:phoneNumberController.text.trim())  ), (route) => false);
+                    //  Navigator.pop(context);
+                    //  AuthCubit.get(context).submitPhoneNumber(
+                 //         phoneNumberController.text.trim());
+                    }
+                    else {
+                      Navigator.pop(context);
+                      return;
+                    }
+                    },
+                  child:   Text("${'next'.tr(context)}",
+                      style:const TextStyle(
+                        inherit: false,
+                        color:Colors.black,
+                        fontSize:20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ),
-              ),
+              ],
             ),
           );
         },
     );
   }
 }
+*/

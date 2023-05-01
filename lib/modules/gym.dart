@@ -1,15 +1,13 @@
 
 
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../shared/styles/iconly_broken.dart';
-
 class NewLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState>_key = GlobalKey();
   NewLayout({Key? key}) : super(key: key);

@@ -9,6 +9,7 @@ import 'package:blackgym/modules/home/home.dart';
 import 'package:blackgym/modules/notas/newTask.dart';
 import 'package:blackgym/modules/settings/settings.dart';
 import 'package:blackgym/modules/workouts/workouts.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,6 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:sqflite/sqflite.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
@@ -29,7 +29,7 @@ class GymCubit extends Cubit<GymStates> {
     const HomeScreen(),
     const ExercisesScreen(),
     WorkoutsScreen(),
-    HoScreen(),
+    NewTaskScreen(),
     SettingsScreen(),
   ];
 
@@ -287,10 +287,10 @@ class GymCubit extends Cubit<GymStates> {
         .then((value) {
       print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
     })
-        .catchError((Error) {
+        .catchError((error) {
       print(
           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-      print(Error.toString());
+      print(error.toString());
     });
   }
 
@@ -376,8 +376,9 @@ class GymCubit extends Cubit<GymStates> {
           doneTasks.add(element);
         }
 
-        else
+        else {
           archiveTasks.add(element);
+        }
       });
       emit(GetDatabaseState());
     });

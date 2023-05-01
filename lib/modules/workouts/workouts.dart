@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../shared/components.dart';
-import '../../shared/logic/home_logic/cubit.dart';
-import '../../shared/logic/home_logic/states.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
 import '../../shared/widgets/paln_itim_widget.dart';
@@ -52,11 +54,11 @@ class WorkoutsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                          children: [
-                            const SizedBox(width:10.0),
-                            const Text('MyPlan', style: TextStyle(color: Colors.white,fontSize: 16.0),),
-                            const Spacer(),
-                           const Icon(IconlyBroken.report,color:  Colors.grey,size: 40.0,)
+                          children: const [
+                            SizedBox(width:10.0),
+                            Text('MyPlan', style: TextStyle(color: Colors.white,fontSize: 16.0),),
+                            Spacer(),
+                           Icon(IconlyBroken.report,color:  Colors.grey,size: 40.0,)
                           ],
                         ),
                         const SizedBox(height: 20.0,),
@@ -98,38 +100,39 @@ class WorkoutsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10.0,),
-                Container(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  height: 340.0,
-                  decoration:BoxDecoration(
-                    borderRadius: const BorderRadiusDirectional.only(
-                        topEnd: Radius.circular(10),
-                        bottomStart: Radius.circular(10),
-                        topStart:Radius.circular(40.0),
-                        bottomEnd: Radius.circular(40.0,)
-                    ),
-                    color:ColorsManager.grey,
-                    backgroundBlendMode: BlendMode.screen,
-                  ) ,
-                  child: ConditionalBuilder(
-                    condition: alan.isNotEmpty,
-                    builder: (context) {
-                      return Padding(
-                        padding:  const EdgeInsets.all(20.0),
-                        child: ListView.separated(
-                            itemBuilder: (context, index) => NEWScreen(),
-                            separatorBuilder:(context, index) => const SizedBox(height: 20.0),
-                            itemCount:GymCubit.get(context).plans[1].play!.length),
-                      );
-                    },
-                    fallback:(context) {
-                      return Center(
-                        child: defaultProgressIndicator(),
-                      );
+                Expanded(
+                  child: Container(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration:BoxDecoration(
+                      borderRadius: const BorderRadiusDirectional.only(
+                          topEnd: Radius.circular(10),
+                          bottomStart: Radius.circular(10),
+                          topStart:Radius.circular(40.0),
+                          bottomEnd: Radius.circular(40.0,)
+                      ),
+                      color:ColorsManager.grey,
+                      backgroundBlendMode: BlendMode.screen,
+                    ) ,
+                    child: ConditionalBuilder(
+                      condition: alan.isNotEmpty,
+                      builder: (context) {
+                        return Padding(
+                          padding:  const EdgeInsets.all(20.0),
+                          child: ListView.separated(
+                              itemBuilder: (context, index) => const NEWScreen(),
+                              separatorBuilder:(context, index) => const SizedBox(height: 20.0),
+                              itemCount:GymCubit.get(context).plans[1].play!.length),
+                        );
+                      },
+                      fallback:(context) {
+                        return Center(
+                          child: defaultProgressIndicator(),
+                        );
 
-                    },
-                  )
-                  ,
+                      },
+                    )
+                    ,
+                  ),
                 ),
               ],
             ),

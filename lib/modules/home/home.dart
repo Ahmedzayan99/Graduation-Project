@@ -1,9 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/components.dart';
 

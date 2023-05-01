@@ -1,10 +1,10 @@
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../shared/network/local/cache_helper.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
-import '../../shared/logic/home_logic/cubit.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -105,7 +105,7 @@ class SettingsScreen extends StatelessWidget {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(10.0))),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.only(top:0,start:0,end:0,bottom: 15.0),
+                                  padding: const EdgeInsetsDirectional.only(top:0,start:0,end:0,bottom: 15.0),
                                   child: Column(
                                     children: [
                                       SizedBox(

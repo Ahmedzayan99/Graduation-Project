@@ -13,8 +13,9 @@ class DioHelper {
             // base Url For Online Groceries
             baseUrl: 'http://192.168.1.26:8000/api/',
             receiveDataWhenStatusError: true,
-            connectTimeout: const Duration(seconds: 60).inMilliseconds,
-            receiveTimeout: const Duration(seconds: 60).inMilliseconds,
+            // increase time connect
+            connectTimeout: const Duration(seconds: 120).inMilliseconds,
+            receiveTimeout: const Duration(seconds: 120).inMilliseconds,
             headers: {'Content-Type': 'application/json'}));
 
     dio.interceptors.add(LogInterceptor(
@@ -29,10 +30,11 @@ class DioHelper {
 
   //Function For Get Data
   static Future<Response> getData(
-      {required String url,
-      Map<String, dynamic>? query,
-      String lang = 'en',
-      String? accessToken}) async {
+      {
+        required String url,
+        Map<String, dynamic>? query,
+        String lang = 'en',
+        String? accessToken}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -46,18 +48,19 @@ class DioHelper {
   }
 
   // Function For Post Data
-  static Future<Response> postData(
-      {required String url,
-      Map<String, dynamic>? query,
-      String lang = 'en',
-      String? accessToken,
-      required Map<String, dynamic> data}) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Accept-Language': lang,
-      'Authorization': 'Bearer $accessToken'
-    };
+  static Future<Response> postData({
+        required String url,
+        Map<String, dynamic>? query,
+        String lang = 'en',
+        String? accessToken,
+        required Map<String, dynamic> data}) async
+         {
+              dio.options.headers = {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Accept-Language': lang,
+              'Authorization': 'Bearer $accessToken'
+          };
 
     return await dio.post(url, queryParameters: query, data: data);
   }

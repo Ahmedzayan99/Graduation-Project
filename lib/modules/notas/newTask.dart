@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_print, must_be_immutable, prefer_const_constructors
 
-import 'package:blackgym/shared/logic/home_logic/cubit.dart';
-import 'package:blackgym/shared/logic/home_logic/states.dart';
+// ignore_for_file: file_names, unnecessary_import, must_be_immutable
+
+import 'package:blackgym/shared/app_cubit/cubit.dart';
+import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +13,8 @@ import '../../shared/styles/colors_manager.dart';
 import '../../shared/widgets/note_builder.dart';
 import 'archivedTask.dart';
 import 'doneTask.dart';
-class HoScreen extends StatelessWidget {
-  HoScreen({Key? key}) : super(key: key);
+class NewTaskScreen extends StatelessWidget {
+   NewTaskScreen({Key? key}) : super(key: key);
 
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,21 +47,21 @@ class HoScreen extends StatelessWidget {
           appBar: AppBar(
               actions: [
                 IconButton(onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DoneTask(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DoneTask(),));
                 },
-                    icon: Icon(Icons.cloud_done_rounded)),
+                    icon: const Icon(Icons.cloud_done_rounded)),
                 IconButton(onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ArchivedTask(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ArchivedTask(),));
 
                 },
-                    icon: Icon(Icons.archive)),
+                    icon: const Icon(Icons.archive)),
 
               ]),
           body:ConditionalBuilder(
               condition: state is! GetDatabaseLoadingState,
               builder:(context) {
                 var tasks =GymCubit.get(context).newTasks;
-                return notesbuilder(
+                return NotasBuilder(
                     tasks:tasks
                 );
               },

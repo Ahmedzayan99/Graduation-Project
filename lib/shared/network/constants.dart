@@ -7,7 +7,7 @@ import '../network/local/cache_helper.dart';
 String? uId = '';
  const login = 'auth/login';
 
-final GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
+//final GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
 
 // Function For Navigate To Other Screens And Cant Return
 void signOut(context)

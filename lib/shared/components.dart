@@ -4,6 +4,28 @@ Widget defaultProgressIndicator ()=>Center(
 child: CircularProgressIndicator(
 color: ColorsManager.primary,
 ));
+String generateCountryFlag() {
+  String countryCode = 'eg';
+  String flag = countryCode.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
+          (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
+  return flag;
+}
+void showProgressIndicator(BuildContext  context)
+{
+  AlertDialog alertDialog = AlertDialog(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    content: Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ColorsManager.primary)),),
+  );
+
+  showDialog(
+      barrierColor: Colors.white.withOpacity(0),
+      barrierDismissible: false,
+      context: context, builder: (context)
+  {
+    return alertDialog;
+  });
+}
 /**
     import 'package:blackgym/shared/styles/colors_manager.dart';
     import 'package:blackgym/shared/styles/string_manager.dart';
