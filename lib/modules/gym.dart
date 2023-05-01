@@ -2,9 +2,7 @@
 
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
-import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../shared/styles/iconly_broken.dart';
@@ -28,14 +26,7 @@ class NewLayout extends StatelessWidget {
            fit:BoxFit. fill,opacity: 12.0, ),),
        child: Scaffold(
             key: _key,
-            body: ConditionalBuilder(
-              condition:1==1,
-              builder:(context) {
-                return cubit.screen[cubit.current];
-              },
-              fallback:(context) =>defaultProgressIndicator(),
-            ),
-
+            body:cubit.screen[cubit.current],
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomNavigationBar(
                   currentIndex:  cubit.current,
@@ -70,7 +61,7 @@ class NewLayout extends StatelessWidget {
                   ]
               ),
 
-       )
+       ),
      );
       },
     );

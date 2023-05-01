@@ -26,7 +26,6 @@ class DetailsTraining extends StatelessWidget {
               body: Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: SingleChildScrollView(
-
                   child: Column(
                     children: [
                       Container(

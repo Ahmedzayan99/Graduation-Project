@@ -27,8 +27,7 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {},
         builder:(context, state) {
           return MaterialApp(
-            locale:
-            GymCubit.get(context).lang =="en" ? const Locale("en"):const Locale("ar"),
+            locale: GymCubit.get(context).lang =="en" ? const Locale("en"):const Locale("ar"),
             supportedLocales: const [
               Locale("en"),
               Locale("ar"),
@@ -52,6 +51,7 @@ class MyApp extends StatelessWidget {
             home: startWidget,
             //startWidget ,
             theme: getAppThemeData(),
+
 
           );
         },

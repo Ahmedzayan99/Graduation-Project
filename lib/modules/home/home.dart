@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
+import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w800),
                             child: AnimatedTextKit(
                               animatedTexts: [
-                                WavyAnimatedText('Welcome',
+                                WavyAnimatedText("${'welcome'.tr(context)}",
                                     speed: const Duration(milliseconds: 700)),
                               ],
                               totalRepeatCount: 100,
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                           AnimatedTextKit(
                             animatedTexts: [
                               TypewriterAnimatedText(
-                                'Never give up',
+                                "${'neverGiveUp'.tr(context)}",
                                 textStyle: const TextStyle(
                                     fontSize: 32.0,
                                     fontWeight: FontWeight.w800,
@@ -97,10 +98,10 @@ class HomeScreen extends StatelessWidget {
                         height: 50.0,
                       ),
                       Row(
-                        children: const [
+                        children:  [
                           Expanded(
                               child: Text(
-                                'LOSE WEIGHT BUILD MUSCLE',
+                                "${'loseWeightBuildMuscle'.tr(context)}",
                                 style: TextStyle(
                                     fontSize: 28,
                                     color: Colors.white,

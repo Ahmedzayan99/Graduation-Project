@@ -14,3 +14,33 @@ class Train {
     required this.data,
   });
   }
+class TrainModel {
+   String? id;
+    String? lebol;
+    String? details;
+    String? image;
+   List<SelectTrain>? data;
+   TrainModel({
+     this.id,
+    this.lebol,
+    this.details,
+    this.image,
+    this.data,
+  });
+   TrainModel.fromJson(Map<String,dynamic> json){
+     id =json['id'];
+     lebol =json['lebol'];
+     details =json['details'];
+     image =json['image'];
+     data =json['data'];
+  }
+  Map<String,dynamic> toMap(){
+    return {
+      'id':id,
+      'lebol':lebol,
+      'details':details,
+      'image':image,
+      'data':data,
+    };
+  }
+}
