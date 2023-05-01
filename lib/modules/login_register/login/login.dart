@@ -91,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                       controller: userNameController,
                       hintText:"${'userName'.tr(context)}",
                       textInputType: TextInputType.name,
-                      icon:Icon(IconlyBroken.message,
+                      icon:const Icon(IconlyBroken.message,
                       ),
                     ),
                     const SizedBox(height: 30,),
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       controller: passController,
                       textInputType: TextInputType.visiblePassword,
-                      icon:Icon(IconlyBroken.lock,),
+                      icon:const Icon(IconlyBroken.lock,),
                       isPassword:AuthCubit.get(context).isPasswordLogin,
                       hintText:"${'password'.tr(context)}",
                       suffixIcon: AuthCubit.get(context).iconPasswordLogin,
@@ -148,10 +148,12 @@ class LoginScreen extends StatelessWidget {
                         onPressed:() {
                           if(_formKey.currentState!.validate())
                           {
-                            cubit.userLogin(
-                              email: userNameController.text,
-                              password: passController.text,
-                            );
+                          //  cubit.userLogin(
+                            //  email: userNameController.text,
+                              //password: passController.text,
+                           // );
+                            cubit.userLog(email: userNameController.text,
+                                          password: passController.text,);
                           }
                         },
                         child:  Text("${'logIn'.tr(context)}",

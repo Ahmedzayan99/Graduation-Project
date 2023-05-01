@@ -5,6 +5,7 @@ import '../../modules/login_register//homeSignup.dart';
 import '../network/local/cache_helper.dart';
 
 String? uId = '';
+ const login = 'auth/login';
 
 final GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
 

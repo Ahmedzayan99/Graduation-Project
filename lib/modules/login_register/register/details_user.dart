@@ -1,6 +1,7 @@
-// ignore_for_file: must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unnecessary_import
 
 import 'package:blackgym/layout/gym.dart';
+import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/widgets/custom_defaultSlider.dart';
@@ -28,7 +29,10 @@ class SignupDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit,AuthStates>(
     listener: (context, state) {
-      if(state is LoginSuccessState){
+      if(state is RegisterLoadingState) {
+        Center(child: defaultProgressIndicator());
+      }
+        if(state is LoginSuccessState){
         GymCubit.get(context).current =0;
         Fluttertoast.showToast(
           msg: "${'doneSuccessfully'.tr(context)}",
@@ -39,7 +43,7 @@ class SignupDetailsScreen extends StatelessWidget {
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
       }
-      if(state is CreateUserErrorState){
+      if(state is RegisterErrorState){
         Fluttertoast.showToast(
           msg: state.error,
           backgroundColor: Colors.red,
@@ -175,13 +179,14 @@ class SignupDetailsScreen extends StatelessWidget {
                     shape: const StadiumBorder(),
                     color: ColorsManager.primary,
                     onPressed: () {
-
-                      cubit.userRegister(
-                        email:email,
+                   /*   cubit.userRegister(
+                        email: email,
                         password: password,
-                        name:name,
+                        name: name,
                         phone: phone,
-                      );
+                      );*/
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) =>  NewLayout(),), (route) => false);
                     },
                     child:  Text("${'finish'.tr(context)}",
                         style: const TextStyle(

@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_print, must_be_immutable
+// ignore_for_file: avoid_print, must_be_immutable, prefer_const_constructors
 
 import 'package:blackgym/shared/logic/home_logic/cubit.dart';
 import 'package:blackgym/shared/logic/home_logic/states.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -200,12 +201,13 @@ class HoScreen extends StatelessWidget {
                               }
                               return null;
                             },
-                            onTap: () {
+                            onTap: ()
+                            {
                               showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
-                                  lastDate: DateTime.parse('2025-05-05')
+                                  lastDate: DateTime.parse('2025-05-05'),
                               ).then((value) {
                                 dateController.text=DateFormat.yMMMd().format(value!);
                               });
@@ -271,3 +273,16 @@ class HoScreen extends StatelessWidget {
   }
 
 }
+
+
+/*
+show picker of IOS
+      showCupertinoModalPopup(context: context,
+                                builder:(context) =>CupertinoDatePicker(onDateTimeChanged:(value) {
+
+                              },
+                                  mode: CupertinoDatePickerMode.date,
+                                backgroundColor: Colors.amberAccent,
+                                initialDateTime: DateTime.now(),
+                              ),);
+ */

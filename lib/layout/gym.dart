@@ -37,29 +37,18 @@ class NewLayout extends StatelessWidget {
               },
               fallback:(context) =>defaultProgressIndicator(),
             ),
-            bottomNavigationBar:
-            /*Container(
-              height: 75.0,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft:Radius.circular(25.0),
-                    topRight: Radius.circular(25.0)),
-                color:Color.fromRGBO(65, 65, 65, 1),
 
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 11.0,left: 4.0,right: 4.0),
-                child:*/
-            BottomNavigationBar(
-                    currentIndex:  cubit.current,
-                    onTap: (index){
-                      cubit.changeIndex(index);
-                    },
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: BottomNavigationBar(
+                  currentIndex:  cubit.current,
+                  onTap: (index){
+                    cubit.changeIndex(index);
+                  },
                   items: [
                     BottomNavigationBarItem(
-                    icon: const Icon(IconlyBroken.home),
-                    label: "${'home'.tr(context)}",
-                  ),
+                      icon: const Icon(IconlyBroken.home),
+                      label: "${'home'.tr(context)}",
+                    ),
                     BottomNavigationBarItem(
                       icon: const Icon(IconlyBroken.exercise_1),
                       label:  "${'exercises'.tr(context)}",
@@ -78,13 +67,44 @@ class NewLayout extends StatelessWidget {
                       ),
                       label:"${'settings'.tr(context)}",
                     ),
-       ]
-                ),
-         //     ),
-          //  ),
-          ),
+
+
+                  ]
+              ),
+
+       )
      );
       },
     );
-  }
-}
+  }}
+/*
+
+
+ floatingActionButton:
+         FloatingActionButton(
+           onPressed: () {  },
+           mini: true,
+           child: Icon(cubit.iconShow),),
+
+
+ BottomAppBar(
+              color: Color.fromRGBO(65, 65, 65, 1),
+              shape: CircularNotchedRectangle(),
+               notchMargin: 5.0,clipBehavior: Clip.antiAliasWithSaveLayer,
+
+
+
+Container(
+              height: 75.0,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft:Radius.circular(25.0),
+                    topRight: Radius.circular(25.0)),
+                color:Color.fromRGBO(65, 65, 65, 1),
+
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 11.0,left: 4.0,right: 4.0),
+                child:*/
+
+

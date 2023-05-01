@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'package:blackgym/shared/network/constants.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
+import 'package:blackgym/shared/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blackgym/shared/logic/authentication_logic/authentication_states.dart';
@@ -188,7 +190,7 @@ class AuthCubit extends Cubit<AuthStates> {
       );
     }).catchError((error) {
       emit(RegisterErrorState(error.toString()));
-      print(error);
+      print('rrrrrrrrrrrrrrrrr'+error);
     });
   }
   //<<<<<<<<<<<<<<<<<Start the cubit of createUser by firebase>>>>>>>>>>>>>>>>>>>>>>
@@ -226,6 +228,7 @@ class AuthCubit extends Cubit<AuthStates> {
         .then((value) {
        emit(CreateUserSuccessState());
     }).catchError((error) {
+      print('ccccccccccccccccccccccccccccccccccc'+error);
       emit(CreateUserErrorState(error.toString()));
     });
   }
@@ -245,14 +248,38 @@ class AuthCubit extends Cubit<AuthStates> {
       CacheHelper.saveData(
           key: 'uId',
           value:value.user?.uid);
-          emit(LoginSuccessState(value.user!.uid));
+          emit(LoginSuccessState());
         })
         .then((value) {})
         .catchError((error) {
           emit(LoginErrorState(error.toString()));
-          print(error);
+          print('lllllllllllllllllllllllllllllllllll'+error);
         });
   }
+
+  void userLog({
+    required String email,
+    required String password,
+  }) async {
+    emit(LoginLoadingState());
+    print('11111111111111');
+    DioHelper.postData(
+        url: login,
+        data: {
+          'email': email,
+          'password': password,
+        }
+    ).then((value) {
+      print('22222222');
+      print(value.data);
+      emit(LoginSuccessState());
+    }).catchError((error) {
+      print('3333333333');
+      emit(LoginErrorState(error.toString()));
+      print('Bisho'+error.toString());
+    });
+  }
+
 
 //<collection>
 

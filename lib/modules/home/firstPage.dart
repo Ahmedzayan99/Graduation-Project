@@ -31,7 +31,7 @@ class ChangeLanguageScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image(image: AssetImage('assets/images/Logo.png')),
+                    const Image(image: AssetImage('assets/images/Logo.png')),
                     const SizedBox(height: 40.0,),
                     Text("${'ChangeLanguage'.tr(context)}",
                       maxLines:1,
@@ -52,12 +52,12 @@ class ChangeLanguageScreen extends StatelessWidget {
                           GymCubit.get(context).changeLanguage(languageCode: 'ar');
                       Navigator.push(context, PageRouteBuilder(pageBuilder: (
                             context, animation, secondaryAnimation) =>
-                            HomeSignUpScreen(),));
+                            const HomeSignUpScreen(),));
                       },
                       child: Row(
                         children: [
                             Icon(Icons.language,color: ColorsManager.primary,  ),
-                          SizedBox(width: 20.0,),
+                          const SizedBox(width: 20.0,),
                           Text("اللغه العربيه",
                               style:  TextStyle(
                                 inherit: false,
@@ -78,13 +78,13 @@ class ChangeLanguageScreen extends StatelessWidget {
                         GymCubit.get(context).changeLanguage(languageCode: 'en');
                     Navigator.push(context, PageRouteBuilder(pageBuilder: (
                             context, animation, secondaryAnimation) =>
-                           HomeSignUpScreen(),));
+                           const HomeSignUpScreen(),));
                       },
                       child: Row(
 
                         children: [
                           Icon(Icons.language,color: ColorsManager.primary),
-                          SizedBox(width: 20.0,
+                          const SizedBox(width: 20.0,
                           ) ,
                           Text("English",
                               style:  TextStyle(
