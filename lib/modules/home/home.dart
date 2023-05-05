@@ -123,8 +123,8 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               GymCubit.get(context).changeIndex(1);
                             },
-                            child: const Text(
-                              'Lets start',
+                            child:  Text(
+                                "${'letsStart'.tr(context)}",
                               style: TextStyle(
                                   color: Colors.yellow, fontWeight: FontWeight.w600),
                             ),

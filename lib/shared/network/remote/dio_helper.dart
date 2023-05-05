@@ -11,7 +11,7 @@ class DioHelper {
         // Here Base Url
         BaseOptions(
             // base Url For Online Groceries
-            baseUrl: 'http://192.168.1.26:8000/api/',
+            baseUrl: 'http://gym-management-system-7amza.herokuapp.com',
             receiveDataWhenStatusError: true,
             // increase time connect
             connectTimeout: const Duration(seconds: 120).inMilliseconds,

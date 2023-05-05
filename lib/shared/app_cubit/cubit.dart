@@ -11,6 +11,7 @@ import 'package:blackgym/modules/settings/settings.dart';
 import 'package:blackgym/modules/workouts/workouts.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
+import 'package:blackgym/shared/network/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;

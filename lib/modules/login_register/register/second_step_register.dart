@@ -144,7 +144,7 @@ class SignupUserScreen extends StatelessWidget{
                                 controller:phoneNumberController,
                                 textInputType: TextInputType.phone,
                                 icon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Text(
                                     '${generateCountryFlag()}+02',
                                     style:TextStyle(

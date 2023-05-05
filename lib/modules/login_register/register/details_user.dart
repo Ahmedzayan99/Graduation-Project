@@ -6,11 +6,11 @@ import 'package:blackgym/modules/login_register/cubit/authentication_states.dart
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
+import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/widgets/custom_defaultSlider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../shared/styles/colors_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class SignupDetailsScreen extends StatelessWidget {
    String email;

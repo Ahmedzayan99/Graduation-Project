@@ -3,10 +3,10 @@
 import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
 import 'package:blackgym/modules/login_register/cubit/authentication_states.dart';
 import 'package:blackgym/shared/components.dart';
+import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../shared/styles/colors_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'second_step_register.dart';
 

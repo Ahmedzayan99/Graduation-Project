@@ -1,3 +1,5 @@
+import 'package:blackgym/modules/changeLanuage.dart';
+import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
@@ -19,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
     return BlocConsumer<GymCubit, GymStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          var userModel = GymCubit.get(context).userModel;
+          var userModel = AuthCubit.get(context).userModel;
           GymCubit cubit = GymCubit.get(context);
           return ConditionalBuilder(
             condition: state is! GetUserLoadingState,
@@ -693,7 +695,7 @@ class SettingsScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const HomeSignUpScreen(),
+                                            const ChangeLanguageScreen(),
                                       ),
                                       (route) => false);
                                 });

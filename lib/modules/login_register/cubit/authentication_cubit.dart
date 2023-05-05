@@ -1,13 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'package:blackgym/model/user_model.dart';
 import 'package:blackgym/shared/network/constants.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
+import 'package:blackgym/shared/styles/colors_manager.dart';
+import 'package:blackgym/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../model/user_model.dart';
-import '../../../shared/styles/colors_manager.dart';
-import '../../../shared/styles/iconly_broken.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'authentication_states.dart';
 class AuthCubit extends Cubit<AuthStates> {
@@ -232,7 +232,7 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of Login by firebase>>>>>>>>>>>>>>>>>>>>>>
-
+  UserModel? userModel;
   void userLogin({
     required String email,
     required String password,
@@ -248,6 +248,7 @@ class AuthCubit extends Cubit<AuthStates> {
     ).then((value) {
       print('22222222');
       print(value.data);
+      userModel = UserModel.fromJson(value.data()!);
       emit(LoginSuccessState());
     }).catchError((error) {
       print('3333333333');

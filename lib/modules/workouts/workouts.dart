@@ -25,12 +25,11 @@ class WorkoutsScreen extends StatelessWidget {
       },
       builder: (context, state) {
         var alan =GymCubit.get(context).plans;
-        SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+      //  SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+      //  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
         return Scaffold(
           appBar: AppBar(
           ),
-          resizeToAvoidBottomInset: false,
           body:Padding(
             padding: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
             child: Column(
