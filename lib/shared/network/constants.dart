@@ -5,7 +5,10 @@ import '../../modules/login_register//homeSignup.dart';
 import '../network/local/cache_helper.dart';
 
 String? uId = '';
+const register = '/api/auth/register';
  const login = '/api/auth/login';
+const muscles = '/api/muscles/all';
+const OonlyMuscles = '/api/muscle/exercises/';
 
 //final GlobalKey<ScaffoldState> loginScaffoldKey = GlobalKey<ScaffoldState>();
 

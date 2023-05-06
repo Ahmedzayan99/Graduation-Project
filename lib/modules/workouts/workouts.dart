@@ -71,7 +71,6 @@ class WorkoutsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20.0,),
                         DatePicker(
-                          border: const BorderSide(color: Colors.lightBlue,width: 2.0,),
                           locale: 'EN',
                           dateBarStartDay,
                           height:97.0,

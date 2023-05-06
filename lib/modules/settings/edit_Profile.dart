@@ -41,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
        var profileImage = GymCubit.get(context).profileImage;
        var profileImage1;
        if (profileImage==null){
-         profileImage1 = NetworkImage('${userModel?.image}');
+         profileImage1 = NetworkImage('{userModel?.image}');
        }
        else{
          profileImage1 = FileImage(profileImage);
@@ -166,7 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                              CustomTextFormFiled(
                                controller: nameController,
                                isPassword: false,
-                               hintText:'${userModel?.name}',
+                               hintText:'{userModel?.name}',
                                textInputType: TextInputType.name,
                                icon: const Icon(IconlyBroken.message),
                              ),
@@ -197,7 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                  shape: const StadiumBorder(),
                                  color: ColorsManager.primary,
                                  onPressed: () {
-                                   GymCubit.get(context).updateName(name: nameController.text);
+                                  // GymCubit.get(context).updateName(name: nameController.text);
                                  },
                                  child:   Text("${'upDate'.tr(context)}",
                                      style: const TextStyle(
@@ -294,7 +294,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                  shape: const StadiumBorder(),
                                  color: ColorsManager.primary,
                                  onPressed: () {
-                                   GymCubit.get(context).updateUserBady();
+                             //      GymCubit.get(context).updateUserBady();
                                  },
                                  child:   Text("${'upDate'.tr(context)}",
                                      style: TextStyle(

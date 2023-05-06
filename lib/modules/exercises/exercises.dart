@@ -17,23 +17,8 @@ class ExercisesScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition:homeTrainingDummy.isNotEmpty,
-          builder:(context) =>  Padding(
-            padding:const EdgeInsetsDirectional.only(top: 60.0,start:20.0,end:20.0 ,bottom: 20.0,),
-            child: GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.0,
-              mainAxisExtent: 370,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 14.0,
-            ),
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              children:List.generate(homeTrainingDummy.length,(index){
-                var homeDummyItem =  homeTrainingDummy[index];
-                return HomeTrainingItemWidget(Training:homeDummyItem,);
-              }),),
-          ),
+          condition:state is! GetAllMusclesLoading,
+          builder:(context) =>  const HomeTrainingItemWidget(),
           fallback: (context) => defaultProgressIndicator(),
         );
       },

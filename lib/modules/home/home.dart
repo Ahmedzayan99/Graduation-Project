@@ -260,7 +260,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "${workout.exercices} exercises",
+                      "${workout.exercices} muscles",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,

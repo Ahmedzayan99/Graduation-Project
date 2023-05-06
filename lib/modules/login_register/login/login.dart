@@ -18,12 +18,10 @@ import '../register/second_step_register.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
    var userNameController = TextEditingController();
-     var passController = TextEditingController();
-
+   var passController = TextEditingController();
    final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<AuthCubit,AuthStates>(
           listener: (context, state) {
             if(state is LoginErrorState){

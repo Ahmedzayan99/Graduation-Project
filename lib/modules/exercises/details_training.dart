@@ -10,8 +10,14 @@ import '../../shared/styles/colors_manager.dart';
 
 // ignore: must_be_immutable
 class DetailsTraining extends StatelessWidget {
-  late SelectTrain bigDetails;
-   DetailsTraining({Key? key, required this.bigDetails}) : super(key: key);
+final String? name;
+final String? image;
+final String? description;
+
+  const DetailsTraining({Key? key, required this.name,
+   required this.description,
+     required this.image,
+   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class DetailsTraining extends StatelessWidget {
         builder:(context, state) {
           return ConditionalBuilder(
             condition:homeTrainingDummy[1].data.isNotEmpty,
-            builder: (context) => 
+            builder: (context) =>
                 Scaffold(backgroundColor: ColorsManager.black,
               appBar: AppBar(),
               body: Padding(
@@ -38,7 +44,7 @@ class DetailsTraining extends StatelessWidget {
                               style: BorderStyle.solid),
                           borderRadius: BorderRadius.circular(15.0),
                           image: DecorationImage(
-                            image: AssetImage(bigDetails.image),
+                            image: NetworkImage(image.toString()),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -56,7 +62,7 @@ class DetailsTraining extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                           Text(
-                            bigDetails.lebol,
+                            name.toString(),
                             maxLines: 1,
                             overflow: TextOverflow.fade,
                             style: const TextStyle(
@@ -69,7 +75,7 @@ class DetailsTraining extends StatelessWidget {
                             height: 3.0,
                           ),
                           Text(
-                            bigDetails.details,
+                            description.toString(),
                             style:  TextStyle(
                               color: ColorsManager.grey,
                               fontWeight: FontWeight.w700,

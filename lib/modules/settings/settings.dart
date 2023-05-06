@@ -136,7 +136,7 @@ class SettingsScreen extends StatelessWidget {
                                             ColorsManager.primary,
                                             child: CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                  '${userModel?.image}'),
+                                                  '${userModel?.data!.name}'),
                                               radius: 50.0,
                                             ),
                                           ),
@@ -147,7 +147,7 @@ class SettingsScreen extends StatelessWidget {
                                         height: 10.0,
                                       ),
                                       Text(
-                                        '${userModel?.name}',
+                                        '${userModel?.data!.name}',
                                         style: const TextStyle(
                                           color: Color.fromRGBO(
                                               251, 251, 251, 1),
@@ -173,7 +173,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.email}',
+                                                    '${userModel?.data!.email}',
                                                     style: const TextStyle(
                                                       color: Color.fromRGBO(
                                                           251, 251, 251, 1),
@@ -204,7 +204,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.phone}',
+                                                    '${userModel?.data!.phoneNumber}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -238,7 +238,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.gender}',
+                                                    '${userModel?.data!.name}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -272,7 +272,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.age}',
+                                                    '${userModel?.data!.age}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -306,7 +306,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.weight}',
+                                                    '${userModel?.data!.weight}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -340,7 +340,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.height}',
+                                                    '${userModel?.data!.height}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -689,7 +689,7 @@ class SettingsScreen extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 GymCubit.get(context).logOut();
-                                CacheHelper.removeUserData(key: 'uId')
+                                CacheHelper.removeUserData(key: 'token')
                                     .then((value) {
                                   Navigator.pushAndRemoveUntil(
                                       context,

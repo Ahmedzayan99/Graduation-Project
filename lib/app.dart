@@ -5,7 +5,6 @@ import 'package:blackgym/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'modules/login_register/cubit/authentication_cubit.dart';
 class MyApp extends StatelessWidget {
 //  final AppRouter appRouter;
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()),
+        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()..getAllMuscles()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(

@@ -18,7 +18,7 @@ class ProfileImagePickerSuccessState extends GymStates {}
 
 class ProfileImagePickerErrorState extends GymStates {}
 
-class  UploadProfileImageLoadingState extends GymStates {}
+class UploadProfileImageLoadingState extends GymStates {}
 
 class UploadProfileImageSuccessState extends GymStates {}
 
@@ -27,8 +27,6 @@ class UploadProfileImageErrorState extends GymStates {}
 class UpdateNameLoadingState extends GymStates {}
 
 class UpdateUserBadyLoadingState extends GymStates {}
-
-
 
 class UserUpdateErrorState extends GymStates {}
 
@@ -60,34 +58,43 @@ class GetMessageSuccessState extends GymStates {}
 
 class ChangeAppModeState extends GymStates {}
 
+class UpdateFatPercentageState extends GymStates {}
 
+class UpdateAgeState extends GymStates {}
 
-class  UpdateFatPercentageState extends GymStates{
-}
-class  UpdateAgeState extends GymStates{
-}
-class  UpdateWeightState extends GymStates{
-}
-class UpdateHeightState extends GymStates{
-}
+class UpdateWeightState extends GymStates {}
 
+class UpdateHeightState extends GymStates {}
 
+class CreateDatabaseState extends GymStates {}
 
-class CreateDatabaseState extends GymStates{
-}
-class UpdateDatabaseState extends GymStates{
-}
-class DeleteDatabaseState extends GymStates{
-}
-class InsertDatabaseState extends GymStates{
-}
-class GetDatabaseLoadingState extends GymStates{
-}
+class UpdateDatabaseState extends GymStates {}
 
-class GetDatabaseState extends GymStates{
-}
-class ChangeBottomSheetState extends GymStates{
-}
+class DeleteDatabaseState extends GymStates {}
 
+class InsertDatabaseState extends GymStates {}
+
+class GetDatabaseLoadingState extends GymStates {}
+
+class GetDatabaseState extends GymStates {}
+
+class ChangeBottomSheetState extends GymStates {}
 
 ///////////////////////////////
+///ToDo: start Bisho
+
+class GetAllMusclesLoading extends GymStates {}
+class GetAllMusclesSuccess extends GymStates {}
+class GetAllMusclesError extends GymStates {
+  final String error;
+
+  GetAllMusclesError({required this.error});
+}
+
+class GetOnlyMusclesLoading extends GymStates {}
+class GetOnlyMusclesSuccess extends GymStates {}
+class GetOnlyMusclesError extends GymStates {
+  final String error;
+
+  GetOnlyMusclesError({required this.error});
+}

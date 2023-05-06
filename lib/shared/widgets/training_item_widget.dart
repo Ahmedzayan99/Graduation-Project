@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: must_be_immutable
 
 import 'package:blackgym/model/start_training_model.dart';
@@ -71,4 +72,4 @@ class TrainingItemWidget extends StatelessWidget {
       );
 
   }
-}
+}*/
