@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
+import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,25 +11,35 @@ import 'package:intl/intl.dart';
 import '../../shared/components.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
-import '../../shared/widgets/paln_itim_widget.dart';
 class WorkoutsScreen extends StatelessWidget {
-  var dateBarStartDay = DateTime.now();
-  var todayDateBeforeFormat = DateTime.now();
-  String? date = DateFormat('EEEE,dd MMMM').format((DateTime.now()));
+
   WorkoutsScreen({Key? key,}) : super(key: key);
+
+  var dateBarStartDay =DateTime.now();
+
+      //AuthCubit.get(context).userModel!.data!.createdAt;
+  var todayDateBeforeFormat = DateTime.now();
+
+  String? date = DateFormat('EEEE,dd MMMM').format((DateTime.now()));
+
+  DatePickerController? today;
+
+  bool value=false;
+
+  get index => null;
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
-    return BlocConsumer<GymCubit, GymStates>(
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
+    return BlocConsumer<GymCubit,GymStates>(
       listener: (context, state) {
       },
       builder: (context, state) {
-        var alan =GymCubit.get(context).plans;
-      //  SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-      //  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        var cubit = GymCubit.get(context);
+     SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
         return Scaffold(
-          appBar: AppBar(
-          ),
+          appBar: AppBar(),
           body:Padding(
             padding: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
             child: Column(
@@ -38,14 +48,14 @@ class WorkoutsScreen extends StatelessWidget {
                 Container(
                   clipBehavior:Clip.antiAliasWithSaveLayer ,
                   decoration:BoxDecoration(
-                      borderRadius: const BorderRadiusDirectional.only(
-                          topEnd: Radius.circular(10),
+                    borderRadius: const BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(10),
                         // ignore: prefer_const_constructors
                         bottomStart: Radius.circular(10),
                         topStart:Radius.circular(40.0),
-                      bottomEnd: Radius.circular(40.0,)
-                      ),
-                      color:ColorsManager.grey,
+                        bottomEnd: Radius.circular(40.0,)
+                    ),
+                    color:ColorsManager.grey,
                     backgroundBlendMode: BlendMode.screen,
                   ) ,
                   child: Padding(
@@ -57,7 +67,7 @@ class WorkoutsScreen extends StatelessWidget {
                             SizedBox(width:10.0),
                             Text('MyPlan', style: TextStyle(color: Colors.white,fontSize: 16.0),),
                             Spacer(),
-                           Icon(IconlyBroken.report,color:  Colors.grey,size: 40.0,)
+                            Icon(IconlyBroken.report,color:  Colors.grey,size: 40.0,)
                           ],
                         ),
                         const SizedBox(height: 20.0,),
@@ -71,7 +81,10 @@ class WorkoutsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20.0,),
                         DatePicker(
-                          border: const BorderSide(color: Colors.lightBlue,width: 2.0,),
+                          onDateChange: (selectedDate) {
+                            todayDateBeforeFormat =selectedDate;
+                            cubit.getPlan(id: '35',day:'${DateFormat('EEEE').format((selectedDate))}');
+                          },
                           locale: 'EN',
                           dateBarStartDay,
                           height:97.0,
@@ -99,52 +112,252 @@ class WorkoutsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10.0,),
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration:BoxDecoration(
-                      borderRadius: const BorderRadiusDirectional.only(
-                          topEnd: Radius.circular(10),
-                          bottomStart: Radius.circular(10),
-                          topStart:Radius.circular(40.0),
-                          bottomEnd: Radius.circular(40.0,)
+                ConditionalBuilder(
+                  condition: state is! GetPlanLoading,
+                  builder: (context) {
+                    return   Expanded(
+                      child: Container(
+                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration:BoxDecoration(
+                          borderRadius: const BorderRadiusDirectional.only(
+                              topEnd: Radius.circular(10),
+                              bottomStart: Radius.circular(10),
+                              topStart:Radius.circular(40.0),
+                              bottomEnd: Radius.circular(40.0,)
+                          ),
+                          color:ColorsManager.grey,
+                          backgroundBlendMode: BlendMode.screen,
+                        ) ,
+                        child: SingleChildScrollView(
+                           physics: BouncingScrollPhysics(),
+                          child: Padding(
+                            padding:  const EdgeInsets.all(20.0),
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap:true ,
+                              itemBuilder: (context, index) => Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color.fromRGBO(
+                                          248, 202, 89, 0.6470588235294118),
+                                      width: 1.5,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: cubit.value1 == false
+                                                || CacheHelper.getDataIntoShPre(key: "value1") == false
+                                                ?
+                                            const Icon(Icons.check_box_outline_blank,size: 37,):Icon(Icons.check_box,size: 37,
+                                              color: ColorsManager.primary,
+                                            ),
+                                          ),
+                                          cubit.planlModel?.data![index].exercise?.groups == 2 ||
+                                              cubit.planlModel?.data![index].exercise?.groups == 3 ||
+                                              cubit.planlModel?.data![index].exercise?.groups == 4 ?
+                                          Expanded(
+                                            child: cubit.value2 == false
+                                                || CacheHelper.getDataIntoShPre(key: "value2") == false
+                                                ?
+                                            const Icon(Icons.check_box_outline_blank,size: 37,):Icon(Icons.check_box,size: 37,
+                                              color: ColorsManager.primary,
+                                            ),
+                                          ):const SizedBox(),
+                                          cubit.planlModel?.data![index].exercise?.groups == 3 ||
+                                              cubit.planlModel?.data![index].exercise?.groups == 4?
+                                          Expanded(
+                                            child: cubit.value3 == false
+                                                || CacheHelper.getDataIntoShPre(key: "value3") == false
+                                                ?
+                                            const Icon(Icons.check_box_outline_blank,size: 37,):Icon(Icons.check_box,size: 37,
+                                            color: ColorsManager.primary,
+                                            ),
+                                          ):const SizedBox(),
+                                          cubit.planlModel?.data![index].exercise?.groups == 4 ?
+                                          Expanded(
+                                            child: cubit.value4 == false
+                                                || CacheHelper.getDataIntoShPre(key: "value4") == false
+                                                ?
+                                            const Icon(Icons.check_box_outline_blank,size: 37,):Icon(Icons.check_box,size: 37,
+                                              color: ColorsManager.primary,
+                                            ),
+                                          ):const SizedBox(),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15.0,),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  width: 157.0,
+                                                  height: 141.0,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: const Color.fromRGBO(
+                                                            248, 202, 89, 0.6470588235294118),
+                                                        width: 1.5,
+                                                        style: BorderStyle.solid),
+                                                    borderRadius: BorderRadius.circular(20.0),
+                                                    image:  DecorationImage(
+                                                      image: NetworkImage(
+cubit.planlModel!.data![index].exercise!.image as String),
+                                                      fit: BoxFit.cover,),
+                                                  ),
+                                                ),
+                                                TextButton(onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                  child: const Text('Show more',
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(255, 227, 40, 1),
+                                                    ),),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10.0,),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                InkWell(
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 37,
+                                                    decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
+                                                    margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
+                                                    child: const Align(
+                                                      alignment: AlignmentDirectional.center,
+                                                      child: Text(
+                                                        'set 1',
+                                                        style: TextStyle
+                                                          (
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold),),
+                                                    ),
+                                                  ),
+                                                  onTap: (){
+                                                      cubit.setValueCheckOne();
+                                                      print(index);
+                                                  },
+                                                ),
+                                                const SizedBox(height: 10),
+                                                cubit.planlModel?.data![index].exercise?.groups ==2||
+                                                    cubit.planlModel?.data![index].exercise?.groups ==3 ||
+                                                    cubit.planlModel?.data![index].exercise?.groups ==4 ?
+                                                InkWell(
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 37,
+                                                    decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
+                                                    margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
+                                                    child: const Align(
+                                                      alignment: AlignmentDirectional.center,
+                                                      child: Text(
+                                                        'set 2',
+                                                        style: TextStyle
+                                                          (
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold),),
+                                                    ),
+                                                  ),
+                                                  onTap: (){
+                                                    cubit.setValueCheckTwo();
+                                                  },
+                                                )
+                                                :const SizedBox(),
+                                                const SizedBox(height: 10),
+                                                cubit.planlModel?.data![index].exercise?.groups ==3 ||
+                                                    cubit.planlModel?.data![index].exercise?.groups ==4 ?
+                                                InkWell(
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 37,
+                                                    decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
+                                                    margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
+                                                    child: const Align(
+                                                      alignment: AlignmentDirectional.center,
+                                                      child: Text(
+                                                        'set 3',
+                                                        style: TextStyle
+                                                          (
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold),),
+                                                    ),
+                                                  ),
+                                                  onTap: (){
+                                                    cubit.setValueCheckThree();
+                                                    print(index);
+                                                  },
+                                                )
+                                                :const SizedBox(),
+                                                const SizedBox(height: 10),
+                                                cubit.planlModel?.data![index].exercise?.groups ==4 ?
+                                                InkWell(
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 37,
+                                                    decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
+                                                    margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
+                                                    child: const Align(
+                                                      alignment: AlignmentDirectional.center,
+                                                      child: Text(
+                                                        'set 4',
+                                                        style: TextStyle
+                                                          (
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold),),
+                                                    ),
+                                                  ),
+                                                  onTap: (){
+                                                    cubit.setValueCheckFour();
+                                                  },
+                                                ):const SizedBox(),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: 20,);},
+                              itemCount:cubit.planlModel!.data!.length ),
+                          ),
+                        ),
                       ),
-                      color:ColorsManager.grey,
-                      backgroundBlendMode: BlendMode.screen,
-                    ) ,
-                    child: ConditionalBuilder(
-                      condition: alan.isNotEmpty,
-                      builder: (context) {
-                        return Padding(
-                          padding:  const EdgeInsets.all(20.0),
-                          child: ListView.separated(
-                              itemBuilder: (context, index) => const NEWScreen(),
-                              separatorBuilder:(context, index) => const SizedBox(height: 20.0),
-                              itemCount:GymCubit.get(context).plans[1].play!.length),
-                        );
-                      },
-                      fallback:(context) {
-                        return Center(
-                          child: defaultProgressIndicator(),
-                        );
-
-                      },
-                    )
-                    ,
-                  ),
+                    );
+                  },
+                  fallback:(context) {
+                    return showProgressIndicator();
+                  },
                 ),
               ],
             ),
           ),
-
-
         );
       },
     );
   }
-
-
 }
+
 /**
  *   Widget NEWScreens(plays play, {bool value=false})=>Container(
     decoration: BoxDecoration(

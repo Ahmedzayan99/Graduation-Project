@@ -1,3 +1,4 @@
+
 import 'package:blackgym/modules/changeLanuage.dart';
 import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
 import 'package:blackgym/shared/app_cubit/cubit.dart';
@@ -6,6 +7,7 @@ import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../shared/network/local/cache_helper.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
@@ -136,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
                                             ColorsManager.primary,
                                             child: CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                  '${userModel?.image}'),
+                                                  'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/314626787_3314575728870605_1124156032507798946_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEPlqtBFqMrIFtYvfbj5nBOxaTxl7Tz0ZfFpPGXtPPRl8g4vRGM17kOpqLHR4ArOAbtKwiKXF7PFHu7Mpl2FcSD&_nc_ohc=ow7XZVKlwM0AX__uASX&_nc_oc=AQkoSOt-eI6kCCqOszHbQqgZMq0b8DmDZPwXpF366wIlpvfU_bLERaVlIHojfYJhw5Y&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBRDY6-lyCG83pwqJGyGB62iz1PPswJbXtGzaLiln6rRQ&oe=645ABF2C'),
                                               radius: 50.0,
                                             ),
                                           ),
@@ -147,7 +149,7 @@ class SettingsScreen extends StatelessWidget {
                                         height: 10.0,
                                       ),
                                       Text(
-                                        '${userModel?.name}',
+                                        '${userModel?.data!.name}',
                                         style: const TextStyle(
                                           color: Color.fromRGBO(
                                               251, 251, 251, 1),
@@ -173,7 +175,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.email}',
+                                                    '${userModel?.data!.email}',
                                                     style: const TextStyle(
                                                       color: Color.fromRGBO(
                                                           251, 251, 251, 1),
@@ -204,7 +206,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.phone}',
+                                                    '${userModel?.data!.phoneNumber}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -238,7 +240,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.gender}',
+                                                    '${userModel?.data!.name}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -272,7 +274,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.age}',
+                                                    '${userModel?.data!.age}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -306,7 +308,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.weight}',
+                                                    '${userModel?.data!.weight}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -340,7 +342,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.height}',
+                                                    '${userModel?.data!.height}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -375,7 +377,7 @@ class SettingsScreen extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const EditProfileScreen(),
+                                                        EditProfileScreen(),
                                                   ));
                                             },
                                             child:  Text(
@@ -598,14 +600,14 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 15.0),
                                 InkWell(
-                                  onTap: () {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeSignUpScreen(),
-                                        ),
-                                        (route) => false);
+                                  onTap: () async {
+                                    const  url ='https://www.facebook.com/ahmed.zayan99';
+                                    if(await canLaunch(url)){
+                                    await launch(url);
+                                        }
+                                    else{
+                                    throw Exception('Could not launch $url');
+                                    }
                                   },
                                   child: Row(
                                     crossAxisAlignment:
@@ -613,8 +615,7 @@ class SettingsScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 2.0,
+                                        padding: const EdgeInsetsDirectional.only(start:2.0,
                                         ),
                                         child: Icon(
                                           Icons.facebook,
@@ -639,25 +640,34 @@ class SettingsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 15.0),
                                 InkWell(
-                                  onTap: () {
-                                    cubit.confirmPasswordReset();
+                                  onTap: () async {
+                                    const  url ='https://www.instagram.com/ahmedzayan14/';
+                                    if(await canLaunch(url)){
+                                    await launch(url);
+                                    }
+                                    else{
+                                    throw Exception('Could not launch $url');
+                                    }
                                   },
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 2.0,
-                                        ),
-                                        child: Icon(
-                                          Icons.facebook,
-                                          color: ColorsManager.primary,
-                                        ),
+                                      Stack(
+                                        alignment: AlignmentDirectional.center,
+                                        children: [
+                                          Icon(
+                                            size: 30.0,
+                                            Icons.crop_square_outlined,
+                                            color: ColorsManager.primary,
+                                          ),
+                                          Icon(Icons.circle_outlined,size: 10.0,
+                                            color: ColorsManager.primary,)
+                                        ],
                                       ),
                                       const SizedBox(
-                                        width: 4.0,
+                                        width: 2.0,
                                       ),
                                       Text(
                                         "${'ourInstagram'.tr(context)}",
@@ -689,7 +699,7 @@ class SettingsScreen extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 GymCubit.get(context).logOut();
-                                CacheHelper.removeUserData(key: 'uId')
+                                CacheHelper.removeUserData(key: 'token')
                                     .then((value) {
                                   Navigator.pushAndRemoveUntil(
                                       context,

@@ -4,23 +4,23 @@ import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:blackgym/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'modules/login_register/cubit/authentication_cubit.dart';
 class MyApp extends StatelessWidget {
 //  final AppRouter appRouter;
   final Widget? startWidget;
   final String lang;
-  const MyApp({Key? key,
+  //final  String? token;
+  const MyApp({Key? key,flutter_localizations
     required this.startWidget,
-    required this.lang
+    required this.lang,
+    // required this.token,
   }) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()),
+        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()..getAllMuscles()..getPlan(id:'35'/*token*/,day:'${DateTime.now().day}')),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(
@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
             ],
             localizationsDelegates: const [
               AppLocalization.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
+              // GlobalMaterialLocalizations.delegate,
+           //   GlobalWidgetsLocalizations.delegate,
+           //   GlobalCupertinoLocalizations.delegate,
             ],
             localeResolutionCallback: (currentLang, supportLang) {
 

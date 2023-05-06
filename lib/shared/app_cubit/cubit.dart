@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, unnecessary_null_comparison, prefer_if_null_operators, avoid_types_as_parameter_names
 
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:blackgym/model/chat_model.dart';
+import 'package:blackgym/model/muscles/muscles.dart';
+import 'package:blackgym/model/muscles/only_muscle.dart';
+import 'package:blackgym/model/muscles/plan.dart';
 import 'package:blackgym/model/user_model.dart';
 import 'package:blackgym/modules/exercises/exercises.dart';
 import 'package:blackgym/modules/home/home.dart';
@@ -10,6 +13,7 @@ import 'package:blackgym/modules/notas/newTask.dart';
 import 'package:blackgym/modules/settings/settings.dart';
 import 'package:blackgym/modules/workouts/workouts.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
+import 'package:blackgym/shared/network/constants.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,12 +39,18 @@ class GymCubit extends Cubit<GymStates> {
   ];
 
   void changeIndex(int index) {
+
+    if (index == 1) {
+      getAllMuscles();
+    }
+  /*  if (index == 2) {
+      getPlan();
+    }*/
     if (index == 4) {
       getUserData();
     }
-
     current = index;
-    emit(GymChangeBottomNavBarState());
+  emit(GymChangeBottomNavBarState());
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of page Setting >>>>>>>>>>>>>>>>>>>>>>
@@ -65,9 +75,6 @@ class GymCubit extends Cubit<GymStates> {
     emit(GymInitialState());
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////
-
-  //<getData>
   double heightInitial = 120;
 
   void updateHeight({
@@ -108,13 +115,12 @@ class GymCubit extends Cubit<GymStates> {
     emit(UpdateFatPercentageState());
   }
 
-
   File? profileImage;
   var picker = ImagePicker();
 
   void getProfileImage() async {
     final XFile? pickedFile =
-    await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
       emit(ProfileImagePickerSuccessState());
@@ -128,17 +134,11 @@ class GymCubit extends Cubit<GymStates> {
     emit(UploadProfileImageLoadingState());
     await firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('Users/${Uri
-        .file(profileImage!.path)
-        .pathSegments
-        .last}')
+        .child('Users/${Uri.file(profileImage!.path).pathSegments.last}')
         .putFile(profileImage!)
         .then((value) {
-      value.ref.getDownloadURL()
-          .then((value) {
-        updateProfileImage(
-            image: value
-        );
+      value.ref.getDownloadURL().then((value) {
+     //   updateProfileImage(image: value);
       }).catchError((error) {
         emit(UploadProfileImageErrorState());
       });
@@ -146,8 +146,9 @@ class GymCubit extends Cubit<GymStates> {
       emit(UploadProfileImageErrorState());
     });
   }
+/*
 
-  void updateProfileImage({
+ void updateProfileImage({
     String? image,
   }) {
     UserModel model = UserModel(
@@ -173,7 +174,9 @@ class GymCubit extends Cubit<GymStates> {
       emit(UserUpdateErrorState());
     });
   }
+*/
 
+/*
   void updateUserBady({
     String? height,
     String? age,
@@ -191,7 +194,6 @@ class GymCubit extends Cubit<GymStates> {
       age: '${ageInitial.round()}',
       fatPercentage: '${fatPercentageInitial.round()}',
       weight: '${weightInitial.round()}',
-
     );
     emit(UpdateUserBadyLoadingState());
 
@@ -206,6 +208,8 @@ class GymCubit extends Cubit<GymStates> {
       emit(UserUpdateErrorState());
     });
   }
+*/
+/*
 
   void updateName({
     required String name,
@@ -234,6 +238,7 @@ class GymCubit extends Cubit<GymStates> {
       emit(UserUpdateErrorState());
     });
   }
+*/
 
   UserModel? userModel;
 
@@ -249,10 +254,9 @@ class GymCubit extends Cubit<GymStates> {
       emit(GetUserSuccessState());
     }).catchError((error) {
       emit(GetUserErrorState(error.toString()));
-      print(error);
+      print('ffffffffff'+error.toString());
     });
   }
-
 
 //
 
@@ -260,7 +264,6 @@ class GymCubit extends Cubit<GymStates> {
     await FirebaseAuth.instance.signOut();
     CacheHelper.removeUserData(key: 'uId');
   }
-
 
   List<String> dropDownButton = [
     'ar',
@@ -280,15 +283,11 @@ class GymCubit extends Cubit<GymStates> {
   }
 
   void confirmPasswordReset() {
-    FirebaseAuth
-        .instance
-        .confirmPasswordReset(
-        code: '1112',
-        newPassword: '11111111')
+    FirebaseAuth.instance
+        .confirmPasswordReset(code: '1112', newPassword: '11111111')
         .then((value) {
       print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
-    })
-        .catchError((error) {
+    }).catchError((error) {
       print(
           'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
       print(error.toString());
@@ -308,7 +307,6 @@ class GymCubit extends Cubit<GymStates> {
     iconShow = icon;
     emit(ChangeBottomSheetState());
   }
-
   late Database database;
   List<Map> newTasks = [];
   List<Map> doneTasks = [];
@@ -321,9 +319,9 @@ class GymCubit extends Cubit<GymStates> {
       version: 1,
       onCreate: (database, version) {
         print('DataBase Created ------------------------------------');
-        database.execute(
-            'CREATE TABLE task (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)'
-        )
+        database
+            .execute(
+                'CREATE TABLE task (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
             .then((value) {
           print('Table Created ====================================');
         }).catchError((error) {
@@ -339,24 +337,20 @@ class GymCubit extends Cubit<GymStates> {
       emit(CreateDatabaseState());
     });
   }
-
   insertToDatabase({
     required String title,
     required String time,
     required String date,
   }) async {
-    await database.transaction((txn) async
-    {
+    await database.transaction((txn) async {
       await txn
           .rawInsert(
-          'INSERT INTO task (title, date, time, status) VALUES("$title", "$date", "$time", "new")'
-      )
+              'INSERT INTO task (title, date, time, status) VALUES("$title", "$date", "$time", "new")')
           .then((value) {
         print(' insert successfully');
         emit(InsertDatabaseState());
         getFromDatabase(database);
-      })
-          .catchError((error) {
+      }).catchError((error) {
         print('when error${error.toString()}');
       });
     });
@@ -371,13 +365,9 @@ class GymCubit extends Cubit<GymStates> {
       value.forEach((element) {
         if (element['status'] == 'new') {
           newTasks.add(element);
-        }
-
-        else if (element['status'] == 'done') {
+        } else if (element['status'] == 'done') {
           doneTasks.add(element);
-        }
-
-        else {
+        } else {
           archiveTasks.add(element);
         }
       });
@@ -390,9 +380,7 @@ class GymCubit extends Cubit<GymStates> {
     required int id,
   }) {
     database.rawUpdate(
-        'UPDATE task SET status = ? WHERE id = ?',
-        [status, id])
-        .then((value) {
+        'UPDATE task SET status = ? WHERE id = ?', [status, id]).then((value) {
       getFromDatabase(database);
       emit(UpdateDatabaseState());
     });
@@ -401,159 +389,122 @@ class GymCubit extends Cubit<GymStates> {
   void deleteFromDatabase({
     required id,
   }) {
-    database
-        .rawDelete('DELETE FROM task WHERE id = ?', [id])
-        .then((value) {
+    database.rawDelete('DELETE FROM task WHERE id = ?', [id]).then((value) {
       getFromDatabase(database);
       emit(DeleteDatabaseState());
     });
   }
 
-  late List<plays> amed = [
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 4,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 2,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 1,),
-    plays(image: 'assets/images/gym.jpg',
-      uId: '',
-      set: 2,)
-  ];
 
-  List<Plan> plans =[
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-    Plan(
-        date:DateTime(2023,4,20,0,0,0,0,0) ,
-        uId:'ssss',
-        play: [
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-          plays(
-            uId: 'sss',
-            image:'assets/images/SITUP exercise.png',
-            set: 2,
-          ),
-        ]
-    ),
-  ];
+  //TODO : START BISHO\
+  PlanModel? planlModel;
+  Future<void> getPlan({
+    String? id,
+     String? day,
+}) async {
+    emit(GetPlanLoading());
+    await DioHelper.getData(url: api.plan(id: 35, day: day))
+        .then((value) {
+      planlModel = PlanModel.fromJson(value.data);
+      print("errorbisho");
+      print(planlModel.toString());
+      emit(GetPlanSuccess());
+    })
+        .catchError((error) {
+      emit(GetPlanError(error: error.toString()));
+      print('ssssssssssssssssssssssss'+error.toString());
+    });
+  }
+
+  MusclesModel? musclesModel;
+
+  Future<void> getAllMuscles() async {
+    emit(GetAllMusclesLoading());
+    await DioHelper.getData(url: muscles)
+        .then((value) {
+          musclesModel = MusclesModel.fromJson(value.data);
+          emit(GetAllMusclesSuccess());
+    })
+        .catchError((error) {
+          emit(GetAllMusclesError(error: error.toString()));
+    });
+  }
+
+  OnlyMucsleModel? onlyMucsleModel;
+
+  Future<void> getOnlyMuscles({
+  required int? id,
+}
+      ) async {
+    emit(GetOnlyMusclesLoading());
+    await DioHelper.getData(url: "$OonlyMuscles/$id")
+        .then((value) {
+      onlyMucsleModel = OnlyMucsleModel.fromJson(value.data);
+      emit(GetOnlyMusclesSuccess());
+    })
+        .catchError((error) {
+      emit(GetOnlyMusclesError(error: error.toString()));
+    });
+  }
+  Future<void> submit({
+    required String name,
+    required String email,
+    required String password,
+    required String phoneNumber,
+  }) async {
+
+   await DioHelper.postData(url:register , data: {
+      "name":name,
+      "email":email,
+      "password":password.toString(),
+      "phone_number":phoneNumber.toString(),
+     "height":'heightInitial.toString()',
+     "weight":'weightInitial.toString()',
+     "age":'ageInitial.toString()',
+     "fat_percentage":'fatPercentageInitial.toString()',
+    }).then((value) {
+      print("111111111111");
+      print("2222222222222");
+
+    }).catchError((error){
+      print('CreateUserErrorState$error');
+
+    });
+  }
+  bool value3=false;
+
+  void setValueCheckThree(){
+    value3 = !value3;
+    log(value3.toString());
+    value3 == true ?
+        CacheHelper.saveData(key: "value3", value: true):CacheHelper.removeUserData(key: "value3");
+      emit(ChangeValueCheckBox());
+  }
+  bool value1=false;
+
+  void setValueCheckOne(){
+    value1 = !value1;
+    log(value1.toString());
+    value1 == true ?
+    CacheHelper.saveData(key: "value1", value: true):CacheHelper.removeUserData(key: "value1");
+    emit(ChangeValueCheckBox());
+  }
+  bool value2=false;
+
+  void setValueCheckTwo(){
+    value2 = !value2;
+    log(value2.toString());
+    value2 == true ?
+    CacheHelper.saveData(key: "value2", value: true):CacheHelper.removeUserData(key: "value2");
+    emit(ChangeValueCheckBox());
+  }
+  bool value4=false;
+
+  void setValueCheckFour(){
+    value4 = !value4;
+    log(value4.toString());
+    value4 == true ?
+    CacheHelper.saveData(key: "value4", value: true):CacheHelper.removeUserData(key: "value4");
+    emit(ChangeValueCheckBox());
+  }
 }

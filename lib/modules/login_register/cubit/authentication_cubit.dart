@@ -1,15 +1,18 @@
 // ignore_for_file: avoid_print
 
+import 'package:blackgym/model/authentication/login.dart';
+import 'package:blackgym/model/authentication/register.dart';
 import 'package:blackgym/model/user_model.dart';
 import 'package:blackgym/shared/network/constants.dart';
+import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/styles/iconly_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'authentication_states.dart';
+
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
 
@@ -132,7 +135,6 @@ class AuthCubit extends Cubit<AuthStates> {
     print('CodeAutoRetrievalTimeout');
   }
 
-
   Future<void> submitOTP(String otpCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId.toString(), smsCode: otpCode);
@@ -154,7 +156,7 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of Register by firebase>>>>>>>>>>>>>>>>>>>>>>
-  Future<void> userRegister({
+/*  Future<void> userRegister({
     required String email,
     required String password,
     required String name,
@@ -162,18 +164,19 @@ class AuthCubit extends Cubit<AuthStates> {
     // String? image,
   }) async {
     emit(RegisterLoadingState());
-    FirebaseAuth.instance.createUserWithEmailAndPassword(
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
       email: '$email@gym.com',
       password: password,
     )
         .then((value) {
       emit(RegisterSuccessState());
-       createUser(
+      createUser(
         gender: genderString,
         name: name,
         email: email,
         uId: value.user!.uid,
-         phone: phone,
+        phone: phone,
         image:
             "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
         height: '${heightInitial.round()}',
@@ -182,27 +185,25 @@ class AuthCubit extends Cubit<AuthStates> {
         weight: '${weightInitial.round()}',
       );
 
-      userLogin(
-          email: email,
-          password: password
-      );
+      userLogin(email: email, password: password);
     }).catchError((error) {
       emit(RegisterErrorState(error.toString()));
       print('user register error$error');
     });
-  }
+  }*/
+
   //<<<<<<<<<<<<<<<<<Start the cubit of createUser by firebase>>>>>>>>>>>>>>>>>>>>>>
-  void createUser({
+/*  void createUser({
     required String name,
     required String email,
     required String phone,
     required String uId,
-    required  String height,
-    required  String age,
-    required  String image,
-    required  String fatPercentage,
-    required  String weight,
-    required  String gender,
+    required String height,
+    required String age,
+    required String image,
+    required String fatPercentage,
+    required String weight,
+    required String gender,
   }) {
     emit(CreateUserLoadingState());
     UserModel model = UserModel(
@@ -212,43 +213,42 @@ class AuthCubit extends Cubit<AuthStates> {
       uId: uId,
       phone: phone,
       image:
-      "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
-      height:height,
+          "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
+      height: height,
       age: age,
       fatPercentage: fatPercentage,
       weight: weight,
-
     );
     FirebaseFirestore.instance
         .collection('Users')
         .doc(uId)
         .set(model.toMap())
         .then((value) {
-       emit(CreateUserSuccessState());
+      emit(CreateUserSuccessState());
     }).catchError((error) {
       print('CreateUserErrorState$error');
       emit(CreateUserErrorState(error.toString()));
     });
-  }
+  }*/
 
   //<<<<<<<<<<<<<<<<<Start the cubit of Login by firebase>>>>>>>>>>>>>>>>>>>>>>
-  UserModel? userModel;
+  LoginModel? loginModel;
+UserModel? userModel;
   void userLogin({
-    required String email,
-    required String password,
+    required String? email,
+    required String? password,
   }) async {
     emit(LoginLoadingState());
     print('11111111111111');
-    DioHelper.postData(
-        url: login,
-        data: {
-          'email': email,
-          'password': password,
-        }
-    ).then((value) {
+    DioHelper.postData(url: login, data: {
+      'email': email,
+      'password': password,
+    }).then((value) {
       print('22222222');
-      print(value.data);
-      userModel = UserModel.fromJson(value.data()!);
+      loginModel = LoginModel.fromJson(value.data);
+      userModel =UserModel.fromJson(value.data);
+      print(userModel);
+      CacheHelper.saveData(key: "token", value: loginModel?.data?.id);
       emit(LoginSuccessState());
     }).catchError((error) {
       print('3333333333');
@@ -257,8 +257,8 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  ////////////////fire base Login//////////////////////////////////
-  /*  Future<void> userLogin({
+////////////////fire base Login//////////////////////////////////
+/*  Future<void> userLogin({
     required String email,
     required String password,
   }) async {
@@ -284,4 +284,33 @@ class AuthCubit extends Cubit<AuthStates> {
 
 //<collection>
 //<getData>
+  RegisterModel? registerModel;
+void createUser({
+  required String name,
+  required String email,
+  required String password,
+  required String phoneNumber,
+}){
+  emit(CreateUserLoadingState());
+  DioHelper.postData(url:register , data: {
+    "name":name,
+    "email":email,
+    "password":password.toString(),
+    "phone_number":phoneNumber.toString(),
+    "height":heightInitial.toString(),
+    "weight":weightInitial.toString(),
+    "age":ageInitial.toString(),
+    "fat_percentage":fatPercentageInitial.toString(),
+  }).then((value) {
+    print("111111111111");
+    print("111111111111");
+    registerModel = RegisterModel.fromJson(value.data);
+    print("2222222222222");
+    emit(CreateUserSuccessState(successMessage: registerModel!.message));
+    userLogin(email:email,password: password );
+  }).catchError((error){
+    print('CreateUserErrorState$error');
+    emit(CreateUserErrorState(error.toString()));
+  });
+}
 }

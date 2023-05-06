@@ -18,7 +18,7 @@ List<Train> homeTrainingDummy = [
       SelectTrain(
           image: 'assets/images/upper and lower muscles.gif',
           lebol: 'upper and lower muscles',
-          details:" upper and lower muscles - Responsible for exercising the lower and upper parts of the abdomen and for reducing the amount of fat in the two regions, which is preferable for this exercise to be in the morning every day, and it is preferable for the abdomen to be empty Combos and repsFour days of each weekNumber of groups: four group severy day - Number of group exercises: 15",
+          details:" upper and lower muscles - Responsible for exercising the lower and upper parts of the abdomen and for reducing the amount of fat in the two regions, which is preferable for this exercise to be in the morning every day, and it is preferable for the abdomen to be empty Combos and repsFour days of each weekNumber of groups: four group severy day - Number of group muscles: 15",
           id: '1',),
       ]
      ),
@@ -79,7 +79,7 @@ List<Train> homeTrainingDummy = [
   Train(
     image: 'assets/images/Back muscles .png',
     lebol: 'Back muscles',
-    details: 'These exercises focus on building the entire back muscles and strengthening the spine',
+    details: 'These muscles focus on building the entire back muscles and strengthening the spine',
     id: '6',
     data: [SelectTrain(
         image: 'Cable Curl exercise.gif',

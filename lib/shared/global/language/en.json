@@ -2,7 +2,7 @@
   "language": "Language",
   "signUp": "Sign Up",
   "logIn": "Log in",
-  "userName" : "UserName",
+  "userName" : "email",
   "password": "Password",
   "phoneNumber": "Phone Number",
   "name": "Name",

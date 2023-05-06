@@ -1,51 +1,75 @@
 class UserModel {
-   String? name;
-   String? email;
-   String? uId;
-   String? phone;
-   String? image;
-   String? age;
-   String? weight;
-   String? height;
-   String? fatPercentage;
-   String? gender;
-  UserModel({
-      this.name,
-     this.email,
-     this.uId,
-    this.phone,
-    this.image,
-    this.age,
-    this.weight,
-    this.height,
-    this.fatPercentage,
-    this.gender,
-
-  });
-  UserModel.fromJson(Map<String,dynamic> json){
-    name =json['name'];
-    email =json['email'];
-    uId =json['uId'];
-    phone =json['phone'];
-    image =json['image'];
-    age =json['age'];
-    weight =json['weight'];
-    height =json['height'];
-    fatPercentage =json['fatPercentage'];
-    gender =json['gender'];
+  bool? success;
+  String? message;
+  Data? data;
+  UserModel({this.success, this.message, this.data});
+  UserModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
-   Map<String,dynamic> toMap(){
+}
+class Data {
+  int? id;
+  String? name;
+  String? email;
+  String? phoneNumber;
+  int? height;
+  int? weight;
+  int? age;
+  int? fatPercentage;
+  String? accountStatus;
+  int? planId;
+  String? emailVerifiedAt;
+  String? apiToken;
+  String? createdAt;
+
+
+  Data(
+    {this.id,
+      this.name,
+      this.email,
+      this.phoneNumber,
+      this.height,
+      this.weight,
+      this.age,
+      this.fatPercentage,
+      this.accountStatus,
+      this.planId,
+      this.emailVerifiedAt,
+      this.apiToken,
+      this.createdAt,
+
+    });
+
+Data.fromJson(Map<String, dynamic> json) {
+id = json['id'];
+name = json['name'];
+email = json['email'];
+phoneNumber = json['phone_number'];
+height = json['height'];
+weight = json['weight'];
+age = json['age'];
+fatPercentage = json['fat_percentage'];
+accountStatus = json['account_status'];
+planId = json['plan_id'];
+emailVerifiedAt = json['email_verified_at'];
+apiToken = json['api_token'];
+
+}
+
+  Map<String,dynamic> toMap(){
     return {
       'name':name,
       'email':email,
-      'uId':uId,
-      'phone':phone,
-      'image':image,
+      'id':id,
+      'phone_number':phoneNumber,
       'age':age,
       'weight':weight,
       'height':height,
-      'fatPercentage':fatPercentage,
-      'gender':gender,
+      'fat_percentage':fatPercentage,
+    'created_at': createdAt,
     };
-   }
+  }
 }
+

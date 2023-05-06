@@ -61,6 +61,7 @@ class NewTaskScreen extends StatelessWidget {
               condition: state is! GetDatabaseLoadingState,
               builder:(context) {
                 var tasks =GymCubit.get(context).newTasks;
+
                 return NotasBuilder(
                     tasks:tasks
                 );

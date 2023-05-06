@@ -8,7 +8,6 @@ import 'package:blackgym/shared/styles/iconly_broken.dart';
 import 'package:blackgym/shared/widgets/custom_text_form_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:blackgym/shared/components.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'details_user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class SignupUserScreen extends StatelessWidget{
@@ -24,7 +23,7 @@ class SignupUserScreen extends StatelessWidget{
     return BlocConsumer<AuthCubit,AuthStates>(
         listener: (context, state) {
           if (state is PhoneLoadingState) {
-            showProgressIndicator(context);
+           // showProgressIndicator(context);
           }
           if (state is PhoneNumberSubmitted) {
             Navigator.pop(context);
@@ -96,14 +95,6 @@ class SignupUserScreen extends StatelessWidget{
                           validator: (p0) {
                             if (p0!.isEmpty) {
                               return "${'thisFieldRequired'.tr(context)}";
-                            }
-                            else if(RegExp(r"^[a-zA-Z0-9]+[.@#$%&'*+-/=?^`{|}~]").hasMatch(p0))
-                            {
-                              return  "${'userNameMust'.tr(context)}";
-                            }
-                            else if(RegExp(r"^[@.#$%&'*+-/=?^`{|}~]").hasMatch(p0))
-                            {
-                              return  "${'userNameMust'.tr(context)}";
                             }
                             return null;
                           },
@@ -186,39 +177,34 @@ class SignupUserScreen extends StatelessWidget{
                           suffixIcon: AuthCubit.get(context).iconPasswordRegister,
                         ),
                         const SizedBox(height: 30.0,),
-                        ConditionalBuilder(
-                          condition:state is!RegisterLoadingState,
-                          fallback: (context) => defaultProgressIndicator(),
-                          builder:(context) =>
-                              MaterialButton(
-                                height: 54,
-                                minWidth: double.infinity,
-                                shape: const StadiumBorder(),
-                                color: ColorsManager.primary,
-                                onPressed: () {
-                                  if(_formKey.currentState!.validate())
-                                  {
-                                  //  Navigator.pop(context);
-                                  //  AuthCubit.get(context).submitPhoneNumber(
-                                  //         phoneNumberController.text.trim());
-                                    Navigator.pushAndRemoveUntil(context,
-                                        MaterialPageRoute(builder: (context) =>
-                                            SignupDetailsScreen(
-                                              email:userNameController.text.trim() ,
-                                              name:nameController.text,
-                                              password:passController.text,
-                                              phone:phoneNumberController.text,
-                                            ),), (route) => false);
-                                  }
-                                },
-                                child:   Text("${'next'.tr(context)}",
-                                    style:const TextStyle(
-                                      inherit: false,
-                                      color:Colors.black,
-                                      fontSize:20.0,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
+                        MaterialButton(
+                          height: 54,
+                          minWidth: double.infinity,
+                          shape: const StadiumBorder(),
+                          color: ColorsManager.primary,
+                          onPressed: () {
+                            if(_formKey.currentState!.validate())
+                            {
+                              //  Navigator.pop(context);
+                              //  AuthCubit.get(context).submitPhoneNumber(
+                              //         phoneNumberController.text.trim());
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      SignupDetailsScreen(
+                                        email:userNameController.text.trim() ,
+                                        name:nameController.text,
+                                        password:passController.text,
+                                        phone:phoneNumberController.text,
+                                      ),), (route) => false);
+                            }
+                          },
+                          child:   Text("${'next'.tr(context)}",
+                              style:const TextStyle(
+                                inherit: false,
+                                color:Colors.black,
+                                fontSize:20.0,
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
                       ],
                     ),

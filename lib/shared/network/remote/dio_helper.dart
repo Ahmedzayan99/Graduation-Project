@@ -53,14 +53,14 @@ class DioHelper {
         Map<String, dynamic>? query,
         String lang = 'en',
         String? accessToken,
-        required Map<String, dynamic> data}) async
+        required Map<dynamic, dynamic> data}) async
          {
-              dio.options.headers = {
+/*              dio.options.headers = {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Accept-Language': lang,
               'Authorization': 'Bearer $accessToken'
-          };
+          };*/
 
     return await dio.post(url, queryParameters: query, data: data);
   }
