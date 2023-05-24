@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   final String lang;
   //final  String? token;
   const MyApp({Key? key,
+
     required this.startWidget,
     required this.lang,
     // required this.token,
