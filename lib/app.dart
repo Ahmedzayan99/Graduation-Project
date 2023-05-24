@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   final Widget? startWidget;
   final String lang;
   //final  String? token;
-  const MyApp({Key? key,flutter_localizations
+  const MyApp({Key? key,
     required this.startWidget,
     required this.lang,
     // required this.token,
