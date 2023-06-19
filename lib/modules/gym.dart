@@ -1,5 +1,6 @@
 
 
+
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
@@ -12,7 +13,6 @@ class NewLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context)  {
-
     return BlocBuilder <GymCubit,GymStates>(
       builder:(context, state) {
        GymCubit cubit = GymCubit.get(context);

@@ -11,7 +11,6 @@ class MyApp extends StatelessWidget {
   final String lang;
   //final  String? token;
   const MyApp({Key? key,
-
     required this.startWidget,
     required this.lang,
     // required this.token,
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..createDatabase()..getAllMuscles()..getPlan(id:'35'/*token*/,day:'${DateTime.now().day}')),
+        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..getAllMuscles()..getPlan(id:'35'/*token*/,day:'${DateTime.now().day}')..checkInternet()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(
@@ -51,9 +50,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: startWidget,
             //startWidget ,
-            theme: getAppThemeData(),
-
-
+            theme:getAppThemeData(),
           );
         },
       ),

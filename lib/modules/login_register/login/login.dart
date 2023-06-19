@@ -13,8 +13,8 @@ import 'package:blackgym/shared/widgets/custom_text_form_filed.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../register/second_step_register.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
    var userNameController = TextEditingController();
@@ -61,16 +61,56 @@ class LoginScreen extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment:CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children:
                   [
-                    Text("${'loginToYourAccount'.tr(context)}",
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                      SvgPicture.asset(
+                      'assets/images/Logo.svg',
+                       width:30.0,
+                        height: 30.0,
+                          ),
+                       Text(" BlackGym",
+                    style: TextStyle(
+                      inherit: true,
+                      color: ColorsManager.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),),
+                       ],
+                    ),
+                    const SizedBox(height: 40.0,),
+                    Center(
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/images/Daco_5096993.svg',
+                           color: ColorsManager.primary,
+                           width: 120.0,
+                            height:  120.0,
+                          ),
+                          const SizedBox(height: 5.0,),
+                          Text("Login",
+                            style: TextStyle(
+                              inherit: true,
+                              color: ColorsManager.white,
+                              fontSize:30,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                        ],
+                      ),
+                    ),
+                     /* Text("${'loginToYourAccount'.tr(context)}",
                         style: TextStyle(
                           inherit: false,
                           color: ColorsManager.white,
                           fontSize: 40,
                           fontWeight: FontWeight.w700,
-                        )),
-                    const SizedBox(height: 40,),
+                        )),*/
+                    const SizedBox(height: 30.0,),
                     Text("${'userName'.tr(context)}",
                       style: TextStyle(
                         inherit: false,
@@ -157,7 +197,7 @@ class LoginScreen extends StatelessWidget {
                         child:  Text("${'logIn'.tr(context)}",
                             style: TextStyle(
                               inherit: false,
-                              color:ColorsManager.black,
+                              color:ColorsManager.white,
                               fontSize:20.0,
                               fontWeight: FontWeight.bold,
                             )),
@@ -178,8 +218,10 @@ class LoginScreen extends StatelessWidget {
                             )),
                         TextButton(
                             onPressed: () {
-                              Navigator.push( context,
-                                  MaterialPageRoute(builder: (context) => SignupUserScreen(),)
+                              Fluttertoast.showToast(
+                                msg: "If you don't have an account, you can now visit us to create an account for you",
+                                backgroundColor: Colors.black,
+                                textColor: ColorsManager.primary,
                               );
                             },
                             child: Text("${'signUp'.tr(context)}",

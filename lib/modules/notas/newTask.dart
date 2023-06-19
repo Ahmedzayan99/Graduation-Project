@@ -11,7 +11,6 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/widgets/note_builder.dart';
-import 'archivedTask.dart';
 import 'doneTask.dart';
 class NewTaskScreen extends StatelessWidget {
    NewTaskScreen({Key? key}) : super(key: key);
@@ -45,23 +44,25 @@ class NewTaskScreen extends StatelessWidget {
           key: scaffoldKey,
           // ------appBer -----------
           appBar: AppBar(
+            title: Row(
+              children: [
+                Text(' Tasks',),
+            Icon(Icons.task,color: ColorsManager.primary),
+              ],
+            ),
               actions: [
                 IconButton(onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const DoneTask(),));
                 },
-                    icon: const Icon(Icons.cloud_done_rounded)),
-                IconButton(onPressed: () {
+                    icon:  Icon(Icons.task_alt_sharp,color: ColorsManager.primary),),
+             /*   IconButton(onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ArchivedTask(),));
-
-                },
-                    icon: const Icon(Icons.archive)),
-
+                }, icon:  Icon(Icons.archive,color: ColorsManager.primary,)),*/
               ]),
           body:ConditionalBuilder(
               condition: state is! GetDatabaseLoadingState,
               builder:(context) {
                 var tasks =GymCubit.get(context).newTasks;
-
                 return NotasBuilder(
                     tasks:tasks
                 );
@@ -70,7 +71,8 @@ class NewTaskScreen extends StatelessWidget {
                   child: CircularProgressIndicator()
               )),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
+            backgroundColor: ColorsManager.primary,
+              onPressed: () {
               if (cubit.isBottomSheet ) {
                 if (formKey.currentState!.validate()) {
                   cubit.insertToDatabase(
@@ -95,180 +97,181 @@ class NewTaskScreen extends StatelessWidget {
               else {
                 scaffoldKey.currentState!.showBottomSheet(
                       (context) =>Container(
-                    color:Colors.grey[300],
+                  //  color:Colors.grey[300],
                     padding: const EdgeInsets.all(20.0,),
                     child: Form(
                       key: formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                         TextFormField(
-                           validator: (value) {
-                             if (value!.isEmpty) {
-                               return 'Enter time task';
-                             }
-                             return null;
-                           },
-                        controller:titleController,
-                        decoration:   InputDecoration(
-                          hintText: 'Task Title',
-                          hintStyle: TextStyle(color: ColorsManager.grey),
-                          suffixIconColor:ColorsManager.black,
-                          contentPadding: const EdgeInsets.all(8.0),
-                          suffixIcon:IconButton(onPressed: (){},
-                              icon:  Icon(Icons.title,color: ColorsManager.grey,)
-                          ),
-                          filled: false,
-                          border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
-                          /// Enable Border
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide:
-                            BorderSide( width: 0),
-                          ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                           TextFormField(
+                             validator: (value) {
+                               if (value!.isEmpty) {
+                                 return 'Enter time task';
+                               }
+                               return null;
+                             },
+                          controller:titleController,
+                          decoration:   InputDecoration(
+                            hintText: 'Task Title',
+                            hintStyle: TextStyle(color: ColorsManager.black),
+                            suffixIconColor:ColorsManager.primary,
+                            contentPadding: const EdgeInsets.all(8.0),
+                            suffixIcon:IconButton(onPressed: (){},
+                                icon:  Icon(Icons.title,color: ColorsManager.primary,)
+                            ),
+                            filled: false,
+                            border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
+                            /// Enable Border
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide:
+                              BorderSide( width: 0),
+                            ),
 
-                          /// Focused Border
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide:
-                            BorderSide( width:0),
-                          ),
+                            /// Focused Border
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide:
+                              BorderSide( width:0),
+                            ),
 
-                          /// Error Border
-                          errorBorder:  const OutlineInputBorder(
-                            borderSide:
-                            BorderSide( width:0),
-                          ),
+                            /// Error Border
+                            errorBorder:  const OutlineInputBorder(
+                              borderSide:
+                              BorderSide( width:0),
+                            ),
 
-                          /// Focused Error Border
-                          focusedErrorBorder: const OutlineInputBorder(
-                            borderSide:BorderSide(width: 0),
+                            /// Focused Error Border
+                            focusedErrorBorder: const OutlineInputBorder(
+                              borderSide:BorderSide(width: 0),
+                            ),
                           ),
                         ),
-                      ),
-                          const SizedBox(height: 20.0,),
-                          TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Enter time task';
-                              }
-                              return null;
-                            },
-                            onTap: () {
-                              showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now())
-                                  .then((value){
-                                timeController.text = value!.format(context).toString();
-                              });
-                            },
-                            controller:timeController,
-                            decoration:   InputDecoration(
-                              hintText: 'Task Time',
-                              hintStyle: TextStyle(color: ColorsManager.grey),
-                              suffixIconColor:ColorsManager.black,
-                              contentPadding: const EdgeInsets.all(8.0),
-                              suffixIcon:IconButton(onPressed: (){},
-                                  icon:  Icon(Icons.access_time,color: ColorsManager.grey,)
-                              ),
-                              filled: false,
-                              border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
-                              /// Enable Border
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width: 0),
-                              ),
+                            const SizedBox(height: 20.0,),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter time task';
+                                }
+                                return null;
+                              },
+                              onTap: () {
+                                showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now())
+                                    .then((value){
+                                  timeController.text = value!.format(context).toString();
+                                });
+                              },
+                              controller:timeController,
+                              decoration:   InputDecoration(
+                                hintText: 'Task Time',
+                                hintStyle: TextStyle(color: ColorsManager.black),
+                                suffixIconColor:ColorsManager.primary,
+                                contentPadding: const EdgeInsets.all(8.0),
+                                suffixIcon:IconButton(onPressed: (){},
+                                    icon:  Icon(Icons.access_time,color: ColorsManager.primary,)
+                                ),
+                                filled: false,
+                                border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
+                                /// Enable Border
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width: 0),
+                                ),
 
-                              /// Focused Border
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width:0),
-                              ),
+                                /// Focused Border
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width:0),
+                                ),
 
-                              /// Error Border
-                              errorBorder:  const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width:0),
-                              ),
+                                /// Error Border
+                                errorBorder:  const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width:0),
+                                ),
 
-                              /// Focused Error Border
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderSide:BorderSide(width: 0),
+                                /// Focused Error Border
+                                focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide:BorderSide(width: 0),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20.0,),
-                          TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Enter time task';
-                              }
-                              return null;
-                            },
-                            onTap: ()
-                            {
-                              showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime.parse('2025-05-05'),
-                              ).then((value) {
-                                dateController.text=DateFormat.yMMMd().format(value!);
-                              });
-                            },
-                            controller:dateController,
-                            decoration:   InputDecoration(
-                              hintText: 'Task Date',
-                              hintStyle: TextStyle(color: ColorsManager.grey),
-                              suffixIconColor:ColorsManager.black,
-                              contentPadding: const EdgeInsets.all(8.0),
-                              suffixIcon:IconButton(onPressed: (){},
-                                  icon:  Icon(Icons.date_range,color: ColorsManager.grey,)
-                              ),
-                              filled: false,
-                              border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
-                              /// Enable Border
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width: 0),
-                              ),
+                            const SizedBox(height: 20.0,),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter time task';
+                                }
+                                return null;
+                              },
+                              onTap: ()
+                              {
+                                showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime.parse('2025-05-05'),
+                                ).then((value) {
+                                  dateController.text=DateFormat.yMMMd().format(value!);
+                                });
+                              },
+                              controller:dateController,
+                              decoration:   InputDecoration(
+                                hintText: 'Task Date',
+                                hintStyle: TextStyle(color: ColorsManager.black),
+                                suffixIconColor:ColorsManager.primary,
+                                contentPadding: const EdgeInsets.all(8.0),
+                                suffixIcon:IconButton(onPressed: (){},
+                                    icon:  Icon(Icons.date_range,color: ColorsManager.primary,)
+                                ),
+                                filled: false,
+                                border: const OutlineInputBorder(borderSide: BorderSide(width: 0)),
+                                /// Enable Border
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width: 0),
+                                ),
 
-                              /// Focused Border
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width:0),
-                              ),
+                                /// Focused Border
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width:0),
+                                ),
 
-                              /// Error Border
-                              errorBorder:  const OutlineInputBorder(
-                                borderSide:
-                                BorderSide( width:0),
-                              ),
+                                /// Error Border
+                                errorBorder:  const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide( width:0),
+                                ),
 
-                              /// Focused Error Border
-                              focusedErrorBorder: const OutlineInputBorder(
-                                borderSide:BorderSide(width: 0),
+                                /// Focused Error Border
+                                focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide:BorderSide(width: 0),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20.0,),
+                            const SizedBox(height: 20.0,),
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   elevation: 20.0,
-
                 ).closed.then((value) =>
                 {
                   cubit.changeBottomSheetState(
                       isShow:false ,
-                      icon: Icons.edit)
+                      icon: Icons.add_task_sharp)
                 });
                 cubit.changeBottomSheetState(
                   isShow:true ,
-                  icon: Icons.note_add,);
+                  icon: Icons.add_task_sharp,);
               }
             },
-            child: Icon(cubit.iconShow),),
+            child: Icon(cubit.iconShow,color: ColorsManager.black),),
         );
       },
     );

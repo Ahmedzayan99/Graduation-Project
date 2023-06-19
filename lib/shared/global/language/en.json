@@ -2,7 +2,7 @@
   "language": "Language",
   "signUp": "Sign Up",
   "logIn": "Log in",
-  "userName" : "email",
+  "userName" : "Email",
   "password": "Password",
   "phoneNumber": "Phone Number",
   "name": "Name",
@@ -31,8 +31,8 @@
   "home" : "Home",
   "workouts" : "Workouts",
   "exercises" : "Exercises",
-  "becomeStronger.." :" Become Stronger with Our Workout Plans",
-  "throughThisApplication" : "  Through this application, your health, weight, and height will be monitored, and through it, the plan will be developed, in front of a coach or without a coach.",
+  "becomeStronger..":"Become Stronger with Our Workout Plans",
+  "throughThisApplication" : "Through this application, your health, weight, and height will be monitored, and through it, the plan will be developed, in front of a coach.",
   "loginToYourAccount": "Login To Your Account",
   "upDate": "UPDATE",
   "myProfile": "My Profile",
@@ -51,5 +51,5 @@
   "welcome": "Welcome",
   "neverGiveUp": "Never give up",
   "loseWeightBuildMuscle": "LOSE WEIGHT BUILD MUSCLE",
-  "letsStart": "Lets start"
+  "letsStart": "Let's start"
 }

@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, unnecessary_null_comparison, prefer_if_null_operators, avoid_types_as_parameter_names
 
-import 'dart:developer';
+import 'dart:async';
 import 'dart:io';
-
+import 'dart:developer';
 import 'package:blackgym/model/muscles/muscles.dart';
 import 'package:blackgym/model/muscles/only_muscle.dart';
 import 'package:blackgym/model/muscles/plan.dart';
@@ -16,12 +16,13 @@ import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/network/constants.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
@@ -39,18 +40,18 @@ class GymCubit extends Cubit<GymStates> {
   ];
 
   void changeIndex(int index) {
-
     if (index == 1) {
+      checkInternet();
       getAllMuscles();
     }
-  /*  if (index == 2) {
-      getPlan();
-    }*/
+    if (index == 2) {
+      getPlan(id:'35'/*token*/,day:'${DateTime.now().day}');
+    }
     if (index == 4) {
       getUserData();
     }
     current = index;
-  emit(GymChangeBottomNavBarState());
+    emit(GymChangeBottomNavBarState());
   }
 
   //<<<<<<<<<<<<<<<<<Start the cubit of page Setting >>>>>>>>>>>>>>>>>>>>>>
@@ -59,6 +60,13 @@ class GymCubit extends Cubit<GymStates> {
   void changeBottomProfile() {
     myProfile = !myProfile;
     emit(GymChangeProfileState());
+  }
+
+  bool ourBranch = false;
+
+  void changeBottomBranch() {
+    ourBranch = !ourBranch;
+    emit(GymChangeBranchState());
   }
 
   bool language = false;
@@ -120,7 +128,7 @@ class GymCubit extends Cubit<GymStates> {
 
   void getProfileImage() async {
     final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+    await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
       emit(ProfileImagePickerSuccessState());
@@ -134,11 +142,14 @@ class GymCubit extends Cubit<GymStates> {
     emit(UploadProfileImageLoadingState());
     await firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('Users/${Uri.file(profileImage!.path).pathSegments.last}')
+        .child('Users/${Uri
+        .file(profileImage!.path)
+        .pathSegments
+        .last}')
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-     //   updateProfileImage(image: value);
+        //   updateProfileImage(image: value);
       }).catchError((error) {
         emit(UploadProfileImageErrorState());
       });
@@ -146,8 +157,8 @@ class GymCubit extends Cubit<GymStates> {
       emit(UploadProfileImageErrorState());
     });
   }
-/*
 
+/*
  void updateProfileImage({
     String? image,
   }) {
@@ -239,9 +250,7 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 */
-
-  UserModel? userModel;
-
+/*  UserModel? userModel;
   Future<void> getUserData() async {
     emit(GetUserLoadingState());
     await FirebaseFirestore.instance
@@ -254,23 +263,19 @@ class GymCubit extends Cubit<GymStates> {
       emit(GetUserSuccessState());
     }).catchError((error) {
       emit(GetUserErrorState(error.toString()));
-      print('ffffffffff'+error.toString());
+      print('ffffffffff' + error.toString());
     });
-  }
-
+  }*/
 //
-
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
     CacheHelper.removeUserData(key: 'uId');
   }
-
   List<String> dropDownButton = [
     'ar',
     'en',
   ];
   String lang = 'en';
-
   void changeLanguage({required String languageCode}) {
     if (languageCode.isNotEmpty) {
       lang = languageCode;
@@ -281,7 +286,6 @@ class GymCubit extends Cubit<GymStates> {
       emit(ChangeAppModeState());
     });
   }
-
   void confirmPasswordReset() {
     FirebaseAuth.instance
         .confirmPasswordReset(code: '1112', newPassword: '11111111')
@@ -293,11 +297,9 @@ class GymCubit extends Cubit<GymStates> {
       print(error.toString());
     });
   }
-
   //<<<<<<<<<<<<<<<<<Start the cubit of BottomSheet >>>>>>>>>>>>>>>>>>>>>>
-
   bool isBottomSheet = false;
-  IconData iconShow = Icons.edit;
+  IconData iconShow = Icons.add_task;
 
   void changeBottomSheetState({
     required bool isShow,
@@ -307,12 +309,13 @@ class GymCubit extends Cubit<GymStates> {
     iconShow = icon;
     emit(ChangeBottomSheetState());
   }
+
   late Database database;
   List<Map> newTasks = [];
   List<Map> doneTasks = [];
   List<Map> archiveTasks = [];
 
-  void createDatabase() {
+ void createDatabase() {
     print('Start **********************************');
     openDatabase(
       'GymApp.db',
@@ -321,7 +324,7 @@ class GymCubit extends Cubit<GymStates> {
         print('DataBase Created ------------------------------------');
         database
             .execute(
-                'CREATE TABLE task (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
+            'CREATE TABLE task (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
             .then((value) {
           print('Table Created ====================================');
         }).catchError((error) {
@@ -337,6 +340,7 @@ class GymCubit extends Cubit<GymStates> {
       emit(CreateDatabaseState());
     });
   }
+ // Task? taskList;
   insertToDatabase({
     required String title,
     required String time,
@@ -345,26 +349,45 @@ class GymCubit extends Cubit<GymStates> {
     await database.transaction((txn) async {
       await txn
           .rawInsert(
-              'INSERT INTO task (title, date, time, status) VALUES("$title", "$date", "$time", "new")')
+          'INSERT INTO task (title, date, time, status) VALUES("$title", "$date", "$time", "new")')
           .then((value) {
         print(' insert successfully');
         emit(InsertDatabaseState());
-        getFromDatabase(database);
+        getFromDatabase(database).then((value) =>
+          (value) {
+         // taskList = Task.fromMap(value);
+        //print('ffffffffffffffffffffffffffffffffffffffffffffff$taskList');
+
+          });
       }).catchError((error) {
         print('when error${error.toString()}');
       });
     });
   }
 
-  getFromDatabase(database) {
+  List<int>? keys = [];
+  Future<void> getFromDatabase(database) async {
     newTasks = [];
     doneTasks = [];
     archiveTasks = [];
     emit(GetDatabaseLoadingState());
     database.rawQuery('SELECT * FROM task').then((value) {
+
+      // taskList.add(value);
       value.forEach((element) {
         if (element['status'] == 'new') {
+      // taskList = Task.fromMap(element);
+          //  keys!.add(element['id']);
           newTasks.add(element);
+      //    print(newTasks.toString());
+   /*    return Task(
+         id: newTasks.first['id'],
+         title: newTasks.first['title'],
+         date: newTasks.first['date'],
+         time: newTasks.first['time'],
+         status: newTasks.first['status'],
+       );*/
+     //  print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${taskList.toString()}');
         } else if (element['status'] == 'done') {
           doneTasks.add(element);
         } else {
@@ -397,11 +420,19 @@ class GymCubit extends Cubit<GymStates> {
 
 
   //TODO : START BISHO\
+
+  var todayDateBeforeFormat = DateTime.now();
+  var dateBarStartDay = DateTime.now();
+  DatePickerController? today;
+  String? date = DateFormat('EEEE,dd MMMM').format((DateTime.now()));
+
+
   PlanModel? planlModel;
+
   Future<void> getPlan({
     String? id,
-     String? day,
-}) async {
+    String? day,
+  }) async {
     emit(GetPlanLoading());
     await DioHelper.getData(url: api.plan(id: 35, day: day))
         .then((value) {
@@ -412,7 +443,7 @@ class GymCubit extends Cubit<GymStates> {
     })
         .catchError((error) {
       emit(GetPlanError(error: error.toString()));
-      print('ssssssssssssssssssssssss'+error.toString());
+      print('ssssssssssssssssssssssss' + error.toString());
     });
   }
 
@@ -422,20 +453,19 @@ class GymCubit extends Cubit<GymStates> {
     emit(GetAllMusclesLoading());
     await DioHelper.getData(url: muscles)
         .then((value) {
-          musclesModel = MusclesModel.fromJson(value.data);
-          emit(GetAllMusclesSuccess());
+      musclesModel = MusclesModel.fromJson(value.data);
+      emit(GetAllMusclesSuccess());
     })
         .catchError((error) {
-          emit(GetAllMusclesError(error: error.toString()));
+      emit(GetAllMusclesError(error: error.toString()));
     });
   }
 
   OnlyMucsleModel? onlyMucsleModel;
 
   Future<void> getOnlyMuscles({
-  required int? id,
-}
-      ) async {
+    required int? id,
+  }) async {
     emit(GetOnlyMusclesLoading());
     await DioHelper.getData(url: "$OonlyMuscles/$id")
         .then((value) {
@@ -446,65 +476,106 @@ class GymCubit extends Cubit<GymStates> {
       emit(GetOnlyMusclesError(error: error.toString()));
     });
   }
+
+  UserModel? userModel;
+  Future<void> getUserData() async {
+    emit(GetUserLoadingState());
+    await DioHelper.getData(url: user)
+        .then((value) {
+      userModel = UserModel.fromJson(value.data);
+      emit(GetUserSuccessState());
+    })
+        .catchError((error) {
+      emit(GetUserErrorState(error: error.toString()),);
+      print(error.toString());
+    });
+  }
+
+
   Future<void> submit({
     required String name,
     required String email,
     required String password,
     required String phoneNumber,
   }) async {
-
-   await DioHelper.postData(url:register , data: {
-      "name":name,
-      "email":email,
-      "password":password.toString(),
-      "phone_number":phoneNumber.toString(),
-     "height":'heightInitial.toString()',
-     "weight":'weightInitial.toString()',
-     "age":'ageInitial.toString()',
-     "fat_percentage":'fatPercentageInitial.toString()',
+    await DioHelper.postData(url: register, data: {
+      "name": name,
+      "email": email,
+      "password": password.toString(),
+      "phone_number": phoneNumber.toString(),
+      "height": 'heightInitial.toString()',
+      "weight": 'weightInitial.toString()',
+      "age": 'ageInitial.toString()',
+      "fat_percentage": 'fatPercentageInitial.toString()',
     }).then((value) {
       print("111111111111");
       print("2222222222222");
-
-    }).catchError((error){
+    }).catchError((error) {
       print('CreateUserErrorState$error');
-
     });
   }
-  bool value3=false;
 
-  void setValueCheckThree(){
+
+  bool value1 = false;
+
+  void setValueCheckOne() {
+    value1 = !value1;
+    // log(value1.toString());
+    //  value1 == true ?
+    // CacheHelper.saveData(key: "value1", value: true):CacheHelper.removeUserData(key: "value1");
+    emit(ChangeValueCheckBox());
+  }
+
+  bool value2 = false;
+
+  void setValueCheckTwo() {
+    value2 = !value2;
+    //  log(value2.toString());
+    //  value2 == true ?
+    //   CacheHelper.saveData(key: "value2", value: true):CacheHelper.removeUserData(key: "value2");
+    emit(ChangeValueCheckBox());
+  }
+
+  bool value3 = false;
+
+  void setValueCheckThree() {
     value3 = !value3;
     log(value3.toString());
     value3 == true ?
-        CacheHelper.saveData(key: "value3", value: true):CacheHelper.removeUserData(key: "value3");
-      emit(ChangeValueCheckBox());
-  }
-  bool value1=false;
-
-  void setValueCheckOne(){
-    value1 = !value1;
-    log(value1.toString());
-    value1 == true ?
-    CacheHelper.saveData(key: "value1", value: true):CacheHelper.removeUserData(key: "value1");
+    CacheHelper.saveData(key: "value3", value: true) : CacheHelper
+        .removeUserData(key: "value3");
     emit(ChangeValueCheckBox());
   }
-  bool value2=false;
 
-  void setValueCheckTwo(){
-    value2 = !value2;
-    log(value2.toString());
-    value2 == true ?
-    CacheHelper.saveData(key: "value2", value: true):CacheHelper.removeUserData(key: "value2");
-    emit(ChangeValueCheckBox());
-  }
-  bool value4=false;
+  bool value4 = false;
 
-  void setValueCheckFour(){
+  void setValueCheckFour() {
     value4 = !value4;
     log(value4.toString());
     value4 == true ?
-    CacheHelper.saveData(key: "value4", value: true):CacheHelper.removeUserData(key: "value4");
+    CacheHelper.saveData(key: "value4", value: true) : CacheHelper
+        .removeUserData(key: "value4");
     emit(ChangeValueCheckBox());
   }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  bool? internet;
+
+  Future<Timer> checkInternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        internet = true;
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      internet = false;
+      print('not connented');
+    }
+    return Timer(Duration(seconds: 2), () {
+      checkInternet();
+    });
+  }
 }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////

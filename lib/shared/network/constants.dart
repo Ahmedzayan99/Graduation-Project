@@ -8,7 +8,8 @@ String? uId = '';
 const register = '/api/auth/register';
  const login = '/api/auth/login';
 const muscles = '/api/muscles/all';
-const OonlyMuscles = '/api/muscle/exercises/';
+const  OonlyMuscles = '/api/muscle/exercises/';
+const  user = '/api/auth/user/41';
 class api{
   static String  plan({
      int? id,

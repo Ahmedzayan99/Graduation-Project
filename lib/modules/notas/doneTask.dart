@@ -2,6 +2,7 @@
 // ignore_for_file: file_names
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
+import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/widgets/note_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,14 @@ class DoneTask extends StatelessWidget {
       {
         var tasks =GymCubit.get(context).doneTasks;
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: Row(
+              children: [
+                Text('DaneTasks',),
+                Icon(Icons.task,color: ColorsManager.primary),
+              ],
+            ),
+          ),
           body:NotasBuilder(
               tasks:tasks
           ),

@@ -18,12 +18,17 @@ ThemeData getAppThemeData() => ThemeData(
 
     ),
     //bottom Sheet theme
-    bottomSheetTheme:const BottomSheetThemeData(
-        elevation: 10.0,
+    bottomSheetTheme: BottomSheetThemeData(
+        elevation: 20.0,
+        showDragHandle:true ,
         constraints: BoxConstraints.expand(
-            height: 500.0,
-            width: double.infinity),
-        backgroundColor: Color.fromRGBO(53, 53, 53,0)),
+            height: 299.0,
+            width: double.infinity,
+        ),
+
+      backgroundColor:Color.fromRGBO(166, 163, 163, 0.8666666666666667),
+      dragHandleColor: ColorsManager.primary,
+    ),
     //bottom Navigation theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: Color.fromRGBO(248, 202, 89, 1),

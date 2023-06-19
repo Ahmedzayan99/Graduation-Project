@@ -12,17 +12,25 @@ class ExercisesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GymCubit,GymStates>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         var cubit = GymCubit.get(context);
-
-        return ConditionalBuilder(
+       if(cubit.internet!) {
+         return ConditionalBuilder(
           condition:cubit.musclesModel!.data!.isNotEmpty,
           builder:(context) =>  const HomeTrainingItemWidget(),
           fallback: (context) => showProgressIndicator(),
         );
-      },
+       }
+       else {
+             return Center(
+               child: Icon(
+                 Icons.signal_wifi_connected_no_internet_4,
+                 color: Colors.amber,
+                 size: 200.0,),
+             );
+            }
+      }
     );
   }
 }

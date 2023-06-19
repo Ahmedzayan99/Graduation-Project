@@ -1,18 +1,18 @@
 
-import 'package:blackgym/modules/changeLanuage.dart';
-import 'package:blackgym/modules/login_register/cubit/authentication_cubit.dart';
+import 'dart:ui';
+
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../shared/network/local/cache_helper.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'edit_Profile.dart';
 import '../login_register/homeSignup.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
     return BlocConsumer<GymCubit, GymStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          var userModel = AuthCubit.get(context).userModel;
+          var userModel = GymCubit.get(context).userModel;
           GymCubit cubit = GymCubit.get(context);
           return ConditionalBuilder(
             condition: state is! GetUserLoadingState,
@@ -138,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
                                             ColorsManager.primary,
                                             child: CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                  'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/314626787_3314575728870605_1124156032507798946_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEPlqtBFqMrIFtYvfbj5nBOxaTxl7Tz0ZfFpPGXtPPRl8g4vRGM17kOpqLHR4ArOAbtKwiKXF7PFHu7Mpl2FcSD&_nc_ohc=ow7XZVKlwM0AX__uASX&_nc_oc=AQkoSOt-eI6kCCqOszHbQqgZMq0b8DmDZPwXpF366wIlpvfU_bLERaVlIHojfYJhw5Y&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBRDY6-lyCG83pwqJGyGB62iz1PPswJbXtGzaLiln6rRQ&oe=645ABF2C'),
+                                                  '${userModel?.data!.imageUrl}'),
                                               radius: 50.0,
                                             ),
                                           ),
@@ -161,7 +161,6 @@ class SettingsScreen extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
-
                                           Row(
                                             children: [
                                               Text("${'userName'.tr(context)}",
@@ -240,7 +239,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.data!.name}',
+                                                    '${userModel?.data!.gender}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -359,9 +358,110 @@ class SettingsScreen extends StatelessWidget {
                                           const SizedBox(
                                             height: 20.0,
                                           ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'fatPercentage'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.data!.fatPercentage}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Coash Name',
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                     '${userModel?.data!.coashName}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(children: [
+                                                Text(
+                                                  "Subscription",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.data!.membership}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          const SizedBox(
+                                              height: 20.0,
+                                            ),
                                         ],),
                                       ),
-                                      Row(
+                                  /*    Row(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                         mainAxisAlignment:
@@ -391,7 +491,7 @@ class SettingsScreen extends StatelessWidget {
                                                 )),
                                           ),
                                         ],
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -400,6 +500,113 @@ class SettingsScreen extends StatelessWidget {
                           else
                             const SizedBox(),
                           const SizedBox(height: 15.0),
+                          // Container(
+                          //   width: double.infinity,
+                          //   height: 40.0,
+                          //   decoration: BoxDecoration(
+                          //       color: ColorsManager.grey,
+                          //       borderRadius: const BorderRadius.all(
+                          //           Radius.circular(10.0))),
+                          //   child: InkWell(
+                          //     onTap: () {
+                          //       cubit.changeBottomLanguage();
+                          //     },
+                          //     child: Row(
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       mainAxisAlignment: MainAxisAlignment.start,
+                          //       children: [
+                          //         Padding(
+                          //           padding: const EdgeInsets.only(left: 2.0),
+                          //           child: Icon(
+                          //             Icons.language_sharp,
+                          //             color: ColorsManager.primary,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 4.0,
+                          //         ),
+                          //         Text(
+                          //           "${'language'.tr(context)}",
+                          //           maxLines: 1,
+                          //           overflow: TextOverflow.ellipsis,
+                          //           style: TextStyle(
+                          //             color: ColorsManager.white,
+                          //             fontWeight: FontWeight.w700,
+                          //             fontSize: 18,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 40.0,
+                          //         ),
+                          //         Expanded(
+                          //           child: Row(
+                          //             mainAxisAlignment: MainAxisAlignment.end,
+                          //             children: [
+                          //               cubit.language
+                          //                   ? Icon(
+                          //                       Icons.expand_more,
+                          //                       color: ColorsManager.white,
+                          //                     )
+                          //                   : Icon(
+                          //                       Icons.navigate_next,
+                          //                       color: ColorsManager.white,
+                          //                     ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // cubit.language
+                          //     ? Padding(
+                          //       padding: const EdgeInsets.only(top: 15.0),
+                          //       child: Container(
+                          //   width: double.infinity,
+                          //   height: 50.0,
+                          //   decoration: BoxDecoration(
+                          //         color: ColorsManager.grey,
+                          //         borderRadius: const BorderRadius.all(
+                          //             Radius.circular(10.0))),
+                          //         child: Padding(
+                          //           padding: const EdgeInsetsDirectional.only(start: 35.0),
+                          //           child: DropdownButton(
+                          //             isExpanded:true ,
+                          //             dropdownColor: ColorsManager.grey,
+                          //             iconEnabledColor: Colors.white,
+                          //             iconDisabledColor: Colors.white,
+                          //             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                          //             style: const TextStyle(
+                          //             color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //
+                          //   ),
+                          //             underline: const SizedBox(
+                          //           width: double.infinity,
+                          //           height: 1.0,
+                          //   ),
+                          //             value: cubit.lang,
+                          //             icon: const Icon(
+                          //           Icons.keyboard_arrow_down,
+                          //   ),
+                          //             items:cubit
+                          //             .dropDownButton
+                          //             .map((String items) {
+                          //           return DropdownMenuItem(
+                          //             value: items,
+                          //               child: Text(
+                          //                 items.toUpperCase(),
+                          //               ),
+                          //           );
+                          //   }).toList(),
+                          //             onChanged: (value) {
+                          //           cubit.changeLanguage(languageCode: value!);
+                          //   },
+                          // ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //     : const SizedBox(),
                           Container(
                             width: double.infinity,
                             height: 40.0,
@@ -409,7 +616,7 @@ class SettingsScreen extends StatelessWidget {
                                     Radius.circular(10.0))),
                             child: InkWell(
                               onTap: () {
-                                cubit.changeBottomLanguage();
+                                cubit.changeBottomBranch();
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -417,8 +624,7 @@ class SettingsScreen extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left: 2.0),
-                                    child: Icon(
-                                      Icons.language_sharp,
+                                    child: Icon(Icons.place_outlined,
                                       color: ColorsManager.primary,
                                     ),
                                   ),
@@ -426,7 +632,7 @@ class SettingsScreen extends StatelessWidget {
                                     width: 4.0,
                                   ),
                                   Text(
-                                    "${'language'.tr(context)}",
+                                    "Our branches",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -442,15 +648,15 @@ class SettingsScreen extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        cubit.language
+                                        cubit.myProfile
                                             ? Icon(
-                                                Icons.expand_more,
-                                                color: ColorsManager.white,
-                                              )
+                                          Icons.expand_more,
+                                          color: ColorsManager.white,
+                                        )
                                             : Icon(
-                                                Icons.navigate_next,
-                                                color: ColorsManager.white,
-                                              ),
+                                          Icons.navigate_next,
+                                          color: ColorsManager.white,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -458,55 +664,59 @@ class SettingsScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          cubit.language
-                              ? Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: Container(
-                            width: double.infinity,
-                            height: 50.0,
-                            decoration: BoxDecoration(
+                          if(cubit.ourBranch)
+                           Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration: BoxDecoration(
                                   color: ColorsManager.grey,
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(10.0))),
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.only(start: 35.0),
-                                    child: DropdownButton(
-                                      isExpanded:true ,
-                                      dropdownColor: ColorsManager.grey,
-                                      iconEnabledColor: Colors.white,
-                                      iconDisabledColor: Colors.white,
-                                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                                      style: const TextStyle(
-                                      color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.only(top:0,start:0,end:0,bottom: 15.0),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 8.0,),
+                                          Text("Beni Suef:3New Street, next to Al-Jamal Store, second floor",
+                                            style: const TextStyle(
+                                              color: Color.fromRGBO(
+                                                  251, 251, 251, 1),
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w700
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                                color: ColorsManager.primary,
+                                                height: 2.0,
+                                                width: 150.0,
+                                                alignment: AlignmentDirectional.center,
+                                            ),
+                                          ),
+                                          Text("Shubra El Kheima:5Mohamed Awad Street, off El Nass Street, next to El Mahrousa Café, second floor",
+                                            style: const TextStyle(
+                                              color: Color.fromRGBO(
+                                                  251, 251, 251, 1),
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],),
+                                    ),
 
-                            ),
-                                      underline: const SizedBox(
-                                    width: double.infinity,
-                                    height: 1.0,
-                            ),
-                                      value: cubit.lang,
-                                      icon: const Icon(
-                                    Icons.keyboard_arrow_down,
-                            ),
-                                      items:cubit
-                                      .dropDownButton
-                                      .map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                        child: Text(
-                                          items.toUpperCase(),
-                                        ),
-                                    );
-                            }).toList(),
-                                      onChanged: (value) {
-                                    cubit.changeLanguage(languageCode: value!);
-                            },
-                          ),
-                                  ),
+                                  ],
                                 ),
-                              )
-                              : const SizedBox(),
+                              ),
+                            ),
+                          )
+                            else
+                              const SizedBox(),
                           const SizedBox(height: 15.0),
                           Container(
                             width: double.infinity,
@@ -654,17 +864,15 @@ class SettingsScreen extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Stack(
-                                        alignment: AlignmentDirectional.center,
-                                        children: [
-                                          Icon(
-                                            size: 30.0,
-                                            Icons.crop_square_outlined,
-                                            color: ColorsManager.primary,
-                                          ),
-                                          Icon(Icons.circle_outlined,size: 10.0,
-                                            color: ColorsManager.primary,)
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.only(start:4.0,
+                                        ),
+                                        child:SvgPicture.asset(
+                                          'assets/images/instagram-logo-A807AD378B-seeklogo.com.svg',
+                                          color: ColorsManager.primary,
+                                          width:22.0,
+                                          height: 22.0,
+                                        ),
                                       ),
                                       const SizedBox(
                                         width: 2.0,
@@ -701,13 +909,13 @@ class SettingsScreen extends StatelessWidget {
                                 GymCubit.get(context).logOut();
                                 CacheHelper.removeUserData(key: 'token')
                                     .then((value) {
-                                  Navigator.pushAndRemoveUntil(
+                                 /* Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             const ChangeLanguageScreen(),
                                       ),
-                                      (route) => false);
+                                      (route) => false);*/
                                 });
                               },
                               child: Row(

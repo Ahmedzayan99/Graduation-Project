@@ -121,8 +121,11 @@ class HomeScreen extends StatelessWidget {
                               textStyle: const TextStyle(fontSize: 30),
                             ),
                             onPressed: () {
-                              GymCubit.get(context).changeIndex(1);
-                            },
+                           //   print(GymCubit.get(context).taskList.toString());
+                       //           Navigator.push(context,
+                            //   MaterialPageRoute(builder: (context) =>TaskListPage(),),);
+                         //    GymCubit.get(context).changeIndex(1);
+                           },
                             child:  Text(
                                 "${'letsStart'.tr(context)}",
                               style: TextStyle(
