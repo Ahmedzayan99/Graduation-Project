@@ -31,7 +31,7 @@ class StartTraining extends StatelessWidget {
                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                        child: Column(
                        children: [
-                           if(cubit.onlyMucsleModel!.data!.isNotEmpty)
+                           if(cubit.onlyMucsleModel1!.data!.isNotEmpty)
                              ListView.separated(
                                  shrinkWrap:true,
                                  physics: const NeverScrollableScrollPhysics(),
@@ -52,7 +52,7 @@ class StartTraining extends StatelessWidget {
                                                  style: BorderStyle.solid),
                                              borderRadius: BorderRadius.circular(20.0),
                                              image: DecorationImage(
-                                               image: NetworkImage(cubit.onlyMucsleModel!.data![index].image.toString()),
+                                               image: NetworkImage(cubit.onlyMucsleModel1!.data![index].image.toString()),
                                                fit: BoxFit.cover,),
 
                                            ),
@@ -64,7 +64,7 @@ class StartTraining extends StatelessWidget {
                                            crossAxisAlignment: CrossAxisAlignment.start,
                                            mainAxisAlignment: MainAxisAlignment.start,
                                            children: [
-                                             Text(cubit.onlyMucsleModel!.data![index].name.toString(),
+                                             Text(cubit.onlyMucsleModel1!.data![index].name.toString(),
                                                maxLines: 1,
                                                overflow: TextOverflow.fade,
                                                style: const TextStyle(
@@ -74,7 +74,7 @@ class StartTraining extends StatelessWidget {
                                                ),),
                                              SizedBox(
                                                height: 93.0,
-                                               child: Text(cubit.onlyMucsleModel!.data![index].description.toString(),
+                                               child: Text(cubit.onlyMucsleModel1!.data![index].description.toString(),
                                                  maxLines: 4,
                                                  overflow: TextOverflow.ellipsis,
                                                  style: const TextStyle(
@@ -103,11 +103,11 @@ class StartTraining extends StatelessWidget {
                                    );
                                  },
                                  separatorBuilder:(context, index) => const SizedBox(height: 10.0,),
-                                 itemCount: cubit.onlyMucsleModel!.data!.length)
+                                 itemCount: cubit.onlyMucsleModel1!.data!.length)
                            else
                              Center(
                                child: Icon(Icons.hourglass_empty_rounded,
-                                size: 70.0,
+                                size: 20.0,
                                  color: ColorsManager.primary),
                              ),
                          ],

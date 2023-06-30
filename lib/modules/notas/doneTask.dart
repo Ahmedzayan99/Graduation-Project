@@ -4,6 +4,7 @@ import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/styles/colors_manager.dart';
 import 'package:blackgym/shared/widgets/note_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class DoneTask extends StatelessWidget {
@@ -15,19 +16,27 @@ class DoneTask extends StatelessWidget {
       listener:(context, state) {} ,
       builder: (context, state)
       {
-        var tasks =GymCubit.get(context).doneTasks;
         return Scaffold(
           appBar: AppBar(
             title: Row(
               children: [
-                Text('DaneTasks',),
+                Text('Dane',),
                 Icon(Icons.task,color: ColorsManager.primary),
               ],
             ),
           ),
-          body:NotasBuilder(
-              tasks:tasks
-          ),
+            body: ConditionalBuilder(
+            condition: state is! GetDatabaseLoadingState,
+            builder:(context) {
+              return NotasBuilder(
+                tasks:GymCubit.get(context).taskdane!,
+              );
+            },
+            fallback:(context) => const Center(
+                child: CircularProgressIndicator()
+            )
+        ),
+
         );
       },
     );

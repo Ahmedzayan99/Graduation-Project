@@ -174,7 +174,7 @@ class LoginScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                               ))),
                     ),**/
-                    const SizedBox(height: 13.0,),
+                    const SizedBox(height: 20.0,),
                     ConditionalBuilder(
                       condition:state is!LoginLoadingState,
                       fallback: (context) =>  defaultProgressIndicator(),
@@ -204,7 +204,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20.0,),
-                    Row(
+               /*     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -233,7 +233,7 @@ class LoginScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ))),
                       ],
-                    ),
+                    ),*/
                   ],
                 ),
               ),

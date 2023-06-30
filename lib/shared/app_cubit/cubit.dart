@@ -2,7 +2,10 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:developer';
+import 'dart:math';
+import 'dart:ui';
+import 'package:blackgym/model/home_training_model.dart';
+import 'package:blackgym/model/muscles/all_exercises.dart';
 import 'package:blackgym/model/muscles/muscles.dart';
 import 'package:blackgym/model/muscles/only_muscle.dart';
 import 'package:blackgym/model/muscles/plan.dart';
@@ -16,6 +19,8 @@ import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/network/constants.dart';
 import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/network/remote/dio_helper.dart';
+import 'package:blackgym/shared/styles/iconly_broken.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +31,8 @@ import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
+
+  get index => null;
 
   static GymCubit get(context) => BlocProvider.of(context);
 
@@ -45,10 +52,16 @@ class GymCubit extends Cubit<GymStates> {
       getAllMuscles();
     }
     if (index == 2) {
-      getPlan(id:'35'/*token*/,day:'${DateTime.now().day}');
+      getOnlyMuscles(id: 4);
+      getUserData();
+
+      //'${DateFormat('EEEE').format((DateTime.now()))}');
     }
     if (index == 4) {
       getUserData();
+    }
+    if (index == 3) {
+      getNotes();
     }
     current = index;
     emit(GymChangeBottomNavBarState());
@@ -66,6 +79,35 @@ class GymCubit extends Cubit<GymStates> {
 
   void changeBottomBranch() {
     ourBranch = !ourBranch;
+    emit(GymChangeBranchState());
+  }
+
+  IconData iconPasswordLogin = IconlyBroken.hide;
+  bool isPasswordLogin = true;
+
+  void changePasswordLoginVisible() {
+    isPasswordLogin = !isPasswordLogin;
+    iconPasswordLogin =
+    isPasswordLogin ? IconlyBroken.hide : Icons.remove_red_eye_rounded;
+    emit(GymChangeVisiblePasswordEditState());
+  }
+  IconData iconPasswordConfirmLogin = IconlyBroken.hide;
+  bool isPasswordConfirmLogin = true;
+
+  void changePasswordConfirmVisible() {
+    isPasswordConfirmLogin = !isPasswordConfirmLogin;
+    iconPasswordConfirmLogin =
+    isPasswordConfirmLogin ? IconlyBroken.hide : Icons.remove_red_eye_rounded;
+    emit(GymChangeVisiblePasswordConfirmEditState());
+  }
+
+  bool isPasswordRegister = true;
+  IconData iconPasswordRegister = IconlyBroken.hide;
+
+  bool EvaluateCoach = false;
+
+  void changeBottomEvaluateCoach() {
+    EvaluateCoach = !EvaluateCoach;
     emit(GymChangeBranchState());
   }
 
@@ -125,7 +167,6 @@ class GymCubit extends Cubit<GymStates> {
 
   File? profileImage;
   var picker = ImagePicker();
-
   void getProfileImage() async {
     final XFile? pickedFile =
     await picker.pickImage(source: ImageSource.gallery);
@@ -142,13 +183,15 @@ class GymCubit extends Cubit<GymStates> {
     emit(UploadProfileImageLoadingState());
     await firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('Users/${Uri
+        .child('ahmed/${Uri
         .file(profileImage!.path)
         .pathSegments
         .last}')
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
+        print(value);
+        updateProfileImage(image: value);
         //   updateProfileImage(image: value);
       }).catchError((error) {
         emit(UploadProfileImageErrorState());
@@ -158,34 +201,60 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-/*
+
  void updateProfileImage({
     String? image,
   }) {
-    UserModel model = UserModel(
-      image: image,
-      name: userModel?.name,
-      email: userModel?.email,
-      phone: userModel?.phone,
-      height: userModel?.height,
-      age: userModel?.age,
-      uId: userModel?.uId,
-      fatPercentage: userModel?.fatPercentage,
-      weight: userModel?.weight,
-      gender: userModel?.gender,
-    );
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userModel!.uId)
-        .update(model.toMap())
-        .then((value) {
+      DioHelper.postData(url:updateProfil , data: {
+        "user_id":userModel!.users!.id,
+      "name":userModel!.users!.name,
+      "email":  'Ahmed.zayan14@gmail.com',
+      "password":'123456789',
+      "phone_number":userModel!.users!.phoneNumber,
+      "height":userModel!.users!.height,
+      "weight":userModel!.users!.weight,
+      "age":userModel!.users!.age,
+      "fat_percentage":userModel!.users!.fatPercentage,
+        "image_url":image,
+        "gender":userModel!.users!.gender,
+        "membership":'paid',
+        "coash_name":userModel!.users!.coashName
+
+      }).then((value) {
       profileImage = null;
       getUserData();
     }).catchError((error) {
       emit(UserUpdateErrorState());
     });
   }
-*/
+
+  void updateProfilePassword({
+    String? password,
+  }) {
+    emit(UpdateUserPasswordLoadingState());
+    DioHelper.postData(url:updateProfil , data: {
+      "user_id":userModel!.users!.id,
+      "name":userModel!.users!.name,
+      "email":  'Ahmed.zayan99@gmail.com',
+      "password":password,
+      "phone_number":userModel!.users!.phoneNumber,
+      "height":userModel!.users!.height,
+      "weight":userModel!.users!.weight,
+      "age":userModel!.users!.age,
+      "fat_percentage":userModel!.users!.fatPercentage,
+      "image_url":userModel!.users!.imageUrl,
+      "gender":userModel!.users!.gender,
+      "membership":'paid',
+      "coash_name":userModel!.users!.coashName
+
+    }).then((value) {
+      getUserData();
+    }).catchError((error) {
+      emit(UpdateUserPasswordErrorState());
+    });
+  }
+
+
 
 /*
   void updateUserBady({
@@ -309,7 +378,7 @@ class GymCubit extends Cubit<GymStates> {
     iconShow = icon;
     emit(ChangeBottomSheetState());
   }
-
+// Todo:Start database
   late Database database;
   List<Map> newTasks = [];
   List<Map> doneTasks = [];
@@ -365,14 +434,12 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-  List<int>? keys = [];
   Future<void> getFromDatabase(database) async {
     newTasks = [];
     doneTasks = [];
     archiveTasks = [];
     emit(GetDatabaseLoadingState());
     database.rawQuery('SELECT * FROM task').then((value) {
-
       // taskList.add(value);
       value.forEach((element) {
         if (element['status'] == 'new') {
@@ -426,18 +493,18 @@ class GymCubit extends Cubit<GymStates> {
   DatePickerController? today;
   String? date = DateFormat('EEEE,dd MMMM').format((DateTime.now()));
 
-
   PlanModel? planlModel;
-
-  Future<void> getPlan({
-    String? id,
-    String? day,
-  }) async {
+  String? planid;
+  Future<void> getPlan(
+  //{ int? id,
+ //   String? day,}
+  ) async {
     emit(GetPlanLoading());
-    await DioHelper.getData(url: api.plan(id: 35, day: day))
+    await DioHelper.getData(url: api)
         .then((value) {
       planlModel = PlanModel.fromJson(value.data);
-      print("errorbisho");
+      planid = value.data['exercises'];
+      print('errorbisho$planid');
       print(planlModel.toString());
       emit(GetPlanSuccess());
     })
@@ -448,7 +515,6 @@ class GymCubit extends Cubit<GymStates> {
   }
 
   MusclesModel? musclesModel;
-
   Future<void> getAllMuscles() async {
     emit(GetAllMusclesLoading());
     await DioHelper.getData(url: muscles)
@@ -461,15 +527,33 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-  OnlyMucsleModel? onlyMucsleModel;
-
-  Future<void> getOnlyMuscles({
-    required int? id,
+  AllExercises? onlyMucsleModel;
+  Future<void> getOnlyMuscles({ required int? id,
   }) async {
     emit(GetOnlyMusclesLoading());
-    await DioHelper.getData(url: "$OonlyMuscles/$id")
+    await DioHelper.getData(url:alllexercises)
         .then((value) {
-      onlyMucsleModel = OnlyMucsleModel.fromJson(value.data);
+      onlyMucsleModel = AllExercises.fromJson(value.data);
+     // final items =onlyMucsleModel!.data![index] as dynamic;
+   //   final filteritem =items!.where((items) => items['id']=='4').toList();
+   //   print('ffffiiiilllll${filteritem}');
+      emit(GetOnlyMusclesSuccess());
+    })
+        .catchError((error) {
+      emit(GetOnlyMusclesError(error: error.toString()));
+    });
+  }
+
+
+  OnlyMucsleModel? onlyMucsleModel1;
+  Future<void> getOnlyMuscles1({
+    required int? id,
+  }      ) async {
+    emit(GetOnlyMusclesLoading());
+    await DioHelper.getData(url:'${OonlyMuscles}$id')
+        .then((value) {
+      onlyMucsleModel1 = OnlyMucsleModel.fromJson(value.data);
+
       emit(GetOnlyMusclesSuccess());
     })
         .catchError((error) {
@@ -480,11 +564,16 @@ class GymCubit extends Cubit<GymStates> {
   UserModel? userModel;
   Future<void> getUserData() async {
     emit(GetUserLoadingState());
+    await DioHelper.getData(url: user.oneUser(id: CacheHelper.getDataIntoShPre(key:'token'))).then((value) {
+      userModel = UserModel.fromJson(value.data);
+      print(userModel!);
+      emit(GetUserSuccessState());
+    })/*;
     await DioHelper.getData(url: user)
         .then((value) {
       userModel = UserModel.fromJson(value.data);
       emit(GetUserSuccessState());
-    })
+    })*/
         .catchError((error) {
       emit(GetUserErrorState(error: error.toString()),);
       print(error.toString());
@@ -515,7 +604,6 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-
   bool value1 = false;
 
   void setValueCheckOne() {
@@ -540,7 +628,7 @@ class GymCubit extends Cubit<GymStates> {
 
   void setValueCheckThree() {
     value3 = !value3;
-    log(value3.toString());
+    log(value3.toString() as num);
     value3 == true ?
     CacheHelper.saveData(key: "value3", value: true) : CacheHelper
         .removeUserData(key: "value3");
@@ -551,12 +639,144 @@ class GymCubit extends Cubit<GymStates> {
 
   void setValueCheckFour() {
     value4 = !value4;
-    log(value4.toString());
+    log(value4.toString() as num);
     value4 == true ?
     CacheHelper.saveData(key: "value4", value: true) : CacheHelper
         .removeUserData(key: "value4");
     emit(ChangeValueCheckBox());
   }
+/*  Future<void> CreateNotes({
+   required String title,
+   required String time,
+    required String data,
+  }) async {
+    emit(CreateNotesLoadingState());
+    final model = Notes(
+      data: data,
+      status: 'new',
+      time:time ,
+      title: title,
+        id:'2'
+     );
+    FirebaseFirestore.instance
+        .collection('Notes')
+        .doc('2')
+        .collection('Note')
+        .add(model.toMap())
+        .then((value) {
+      emit(CreateNotesSuccess());
+    }).catchError((error) {
+      print('CreateUserErrorState$error');
+      emit(CreateNotesError());
+    });
+  }*/
+  Future<void> createNotes(
+  {
+  required String data,
+    required String time,
+   // required String status,
+    required String title,
+}
+      ) async {
+    emit(CreateNotesLoadingState());
+    Notes model = Notes(
+      id: '${Random().nextInt(1000)}',
+      data: date,
+      status: 'now',
+      time: time,
+      title: title,
+    );
+    FirebaseFirestore.instance
+        .collection('Notes')
+        .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
+        .collection('Note')
+        .doc('${model.id}')
+        .set(model.toMap())
+        .then((value) {
+          print(model.id);
+      emit(CreateNotesSuccess());
+    }).catchError((error) {
+      print('CreateUserErrorState$error');
+      emit(CreateNotesError());
+    });
+  }
+
+  List<Notes>? task;
+  List<Notes>? taskdane;
+  void getNotes (){
+    emit(gNotesLoadingState());
+    FirebaseFirestore.instance
+        .collection('Notes')
+        .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
+        .collection('Note')
+        .snapshots().listen((event) {
+          task=[];
+          taskdane=[];
+            event.docs.forEach((element) {
+              if(element.data()['status']=='now') {
+                task!.add(Notes.fromJson(element.data()));
+              }
+              else{
+                  taskdane!.add(Notes.fromJson(element.data()));
+              }
+            });
+          emit(greateNotesSuccess());
+    });
+  }
+  void deleteNotes (
+     {
+  required String id,
+}
+      ){
+
+    emit(gNotesLoadingState());
+    FirebaseFirestore.instance
+        .collection('Notes')
+        .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
+        .collection('Note')
+        .doc('${id}')
+        .delete()
+        .then((value) {
+            emit(CreateNotesSuccess());
+    }).catchError((error) {
+      print('CreateUserErrorState$error');
+      emit(CreateNotesError());
+    });
+  }
+  void updateNotes (
+      {
+        required String data,
+        required String time,
+        required String id,
+        required String title,
+      }
+      ){
+    emit(gNotesLoadingState());
+    Notes model = Notes(
+      id: id,
+      data: data,
+      status: 'done',
+      time: time,
+      title: title,
+    );
+    FirebaseFirestore.instance
+        .collection('Notes')
+        .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
+        .collection('Note')
+        .doc('${id}')
+        .update(model.toMap())
+        .then((value) {
+      emit(CreateNotesSuccess());
+    }).catchError((error) {
+      print('CreateUserErrorState$error');
+      emit(CreateNotesError());
+    });
+  }
+
+
+  // final modelw;
+   List<Notes> modelw = [] ;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   bool? internet;
@@ -576,6 +796,7 @@ class GymCubit extends Cubit<GymStates> {
       checkInternet();
     });
   }
+
 }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////

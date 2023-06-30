@@ -1,46 +1,26 @@
-import 'package:blackgym/model/start_training_model.dart';
-class Train {
-  late String image;
-  late String lebol;
-  late String details;
-  late String id;
-  List<SelectTrain> data;
-//  late SelectTrain data;
-  Train({
-    required this.id,
-    required this.image,
-    required this.lebol,
-    required this.details,
-    required this.data,
-  });
-  }
-class TrainModel {
-   String? id;
-    String? lebol;
-    String? details;
-    String? image;
-   List<SelectTrain>? data;
-   TrainModel({
-     this.id,
-    this.lebol,
-    this.details,
-    this.image,
-    this.data,
-  });
-   TrainModel.fromJson(Map<String,dynamic> json){
-     id =json['id'];
-     lebol =json['lebol'];
-     details =json['details'];
-     image =json['image'];
-     data =json['data'];
+class Notes {
+  String? title;
+  String? data;
+  String? time;
+  String? status;
+  String? id;
+
+  Notes({this.title, this.data, this.time,this.status,this.id});
+
+  Notes.fromJson(Map<String, dynamic> json,) {
+    title = json['title'];
+    data = json['data'];
+    time = json['time'];
+    status = json['status'];
+     id = json['id'];
   }
   Map<String,dynamic> toMap(){
     return {
-      'id':id,
-      'lebol':lebol,
-      'details':details,
-      'image':image,
+      'title':title,
       'data':data,
+      'time':time,
+      'status':status,
+      'id':id,
     };
   }
 }

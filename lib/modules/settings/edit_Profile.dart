@@ -3,7 +3,6 @@
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
-import 'package:blackgym/shared/widgets/custom_defaultSlider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import '../../shared/components.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,9 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-    var nameController = TextEditingController();
+    var confirmController = TextEditingController();
     var passController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
 
     @override
   Widget build(BuildContext context) {
@@ -31,7 +31,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
        if(state is GetUserSuccessState){
          Fluttertoast.showToast(
            msg:"${'doneSuccessfully'.tr(context)}",
-           backgroundColor: Colors.white,
+           backgroundColor: Colors.green,
+           textColor: Colors.black,
+         );
+       }
+       if(state is UserUpdateErrorState){
+         Fluttertoast.showToast(
+           msg:"An Update problem",
+           backgroundColor: Colors.red,
+           textColor: Colors.black,
+         );
+       }
+       if(state is UpdateUserPasswordErrorState){
+         Fluttertoast.showToast(
+           msg:"An Update problem",
+           backgroundColor: Colors.red,
            textColor: Colors.black,
          );
        }
@@ -41,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
        var profileImage = GymCubit.get(context).profileImage;
        var profileImage1;
        if (profileImage==null){
-         profileImage1 = NetworkImage('{userModel?.image}');
+         profileImage1 = NetworkImage('${userModel?.users!.imageUrl}');
        }
        else{
          profileImage1 = FileImage(profileImage);
@@ -81,9 +95,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                alignment: AlignmentDirectional.bottomEnd,
                                children: [
                                  CircleAvatar(
-                                   backgroundImage:profileImage1 ?? const NetworkImage("https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?t=st=1675796011~exp=1675796611~hmac=7437f86970844e63b2fd176ed671bf9f8f93c25d6d945e20a871b4ef0206af1d"),
+                                   backgroundImage:profileImage1,
                                    radius: 62.0,
-
                                  ),
                                   CircleAvatar(
                                     backgroundColor: Colors.white,
@@ -135,86 +148,144 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                    ],),
                          ),
                    const SizedBox(height: 20.0,),
-                   Container(
-                     height: 280,
-                     decoration: BoxDecoration(
-                         border: Border.all(
-                           width: 2.0,
-                           color: ColorsManager.primary,
-                         )),
-                     child: Padding(
-                       padding: const EdgeInsets.all(10.0),
-                       child: Column(
-                           children: [
-                             Text('About profile',
-                               textAlign:TextAlign.center,
-                               style: TextStyle(
-                                 color: ColorsManager.white,
-                                 fontSize: 18.0,
+                   Form(
+                     key: _formKey,
+                     child: Container(
+                       clipBehavior: Clip.antiAliasWithSaveLayer,
+                       decoration: BoxDecoration(
+                           border: Border.all(
+                             width: 2.0,
+                             color: ColorsManager.primary,
+                           ),
+                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                       child: Padding(
+                         padding: const EdgeInsets.all(10.0),
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Row(
+                                 children: [
+                                   Text('Change the Password',
+                                     textAlign:TextAlign.start,
+                                     style: TextStyle(
+                                       color: Colors.red,
+                                       fontSize: 18.0,
+                                       fontWeight: FontWeight.bold
+                                     ),
+                                   ),
+                                   SizedBox(width: 3.0,),
+                                   Icon(Icons.password_outlined,color: ColorsManager.primary,)
+                                 ],
                                ),
-                             ),
-                             const SizedBox(
-                               height: 20.0,),
-                             Text(
-                               "${'name'.tr(context)}",
-                               style: TextStyle(
-                                 inherit: false,
-                                 color: ColorsManager.white,
-                                 fontSize: 18,
-                                 fontWeight: FontWeight.w700,
-                               ),),
-                             CustomTextFormFiled(
-                               controller: nameController,
-                               isPassword: false,
-                               hintText:'{userModel?.name}',
-                               textInputType: TextInputType.name,
-                               icon: const Icon(IconlyBroken.message),
-                             ),
-                            /* const SizedBox(height: 15.0,),
-                             Text(
-                               "${'phoneNumber'.tr(context)}",
-                               style: TextStyle(
-                                 inherit: false,
-                                 color: ColorsManager.white,
-                                 fontSize: 18,
-                                 fontWeight: FontWeight.w700,
-                               ),),
-                             CustomTextFormFiled(
-                               controller: phoneController,
-                               isPassword: false,
-                               hintText:'${userModel?.phone}',
-                               textInputType: TextInputType.phone,
-                               icon: Icon(IconlyBroken.message),
-                             ),
-                             const SizedBox(height: 15.0,),*/
-                             const  SizedBox(height: 29.0,),
-                             ConditionalBuilder(
-                               condition:state is!UpdateNameLoadingState,
-                               fallback: (context) => defaultProgressIndicator(),
-                               builder:(context) => MaterialButton(
-                                 height: 54,
-                                 minWidth: double.infinity,
-                                 shape: const StadiumBorder(),
-                                 color: ColorsManager.primary,
-                                 onPressed: () {
-                                  // GymCubit.get(context).updateName(name: nameController.text);
+                               const SizedBox(
+                                 height: 20.0,),
+                               Text(' New Password',
+                                 style: TextStyle(
+                                   inherit: false,
+                                   color: ColorsManager.white,
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w700,
+                                 ),),
+                               CustomTextFormFiled(
+                                 validator: (p0) {
+                                   if (p0!.isEmpty) {
+                                     return "${'thisFieldRequired'.tr(context)}";
+
+                                   }
+                                   return null;
                                  },
-                                 child:   Text("${'upDate'.tr(context)}",
-                                     style: const TextStyle(
-                                       inherit: false,
-                                       color: Colors.black,
-                                       fontSize: 20.0,
-                                       fontWeight: FontWeight.bold,
-                                     )),
+                                 controller: passController,
+                                 textInputType: TextInputType.visiblePassword,
+                                 icon:const Icon(IconlyBroken.lock,),
+                                 isPassword:GymCubit.get(context).isPasswordLogin,
+                                 hintText:"New password",
+                                 suffixIcon: GymCubit.get(context).iconPasswordLogin,
+                                 suffixOnPressed: (){
+                                   GymCubit.get(context).changePasswordLoginVisible();
+                                 },
                                ),
-                             ),
+                               const SizedBox(
+                                 height: 20.0,),
+                               Text(' Confirm Password',
+                                 style: TextStyle(
+                                   inherit: false,
+                                   color: ColorsManager.white,
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w700,
+                                 ),),
+                               CustomTextFormFiled(
+                                 validator: (p0) {
+                                   if (p0!.isEmpty) {
+                                      return "${'thisFieldRequired'.tr(context)}";
+                                    }
+                                   else if(p0! != passController.text){
+                                     return 'ddddddd';
+                                   }
+                                   return null;
+                                 },
+                                 controller: confirmController,
+                                 textInputType: TextInputType.visiblePassword,
+                                 icon:const Icon(IconlyBroken.lock,),
+                                 isPassword:GymCubit.get(context).isPasswordConfirmLogin,
+                                 hintText:"Confirm password",
+                                 suffixIcon: GymCubit.get(context).iconPasswordConfirmLogin,
+                                 suffixOnPressed: (){
+                                   GymCubit.get(context).changePasswordConfirmVisible();
+                                 },
+                               ),
+                              /* const SizedBox(height: 15.0,),
+                               Text(
+                                 "${'phoneNumber'.tr(context)}",
+                                 style: TextStyle(
+                                   inherit: false,
+                                   color: ColorsManager.white,
+                                   fontSize: 18,
+                                   fontWeight: FontWeight.w700,
+                                 ),),
+                               CustomTextFormFiled(
+                                 controller: phoneController,
+                                 isPassword: false,
+                                 hintText:'${userModel?.phone}',
+                                 textInputType: TextInputType.phone,
+                                 icon: Icon(IconlyBroken.message),
+                               ),
+                               const SizedBox(height: 15.0,),*/
+                               const  SizedBox(height: 29.0,),
+                               ConditionalBuilder(
+                                 condition:state is!UpdateUserPasswordLoadingState,
+                                 fallback: (context) => defaultProgressIndicator(),
+                                 builder:(context) => MaterialButton(
+                                   height: 54,
+                                   minWidth: double.infinity,
+                                   shape: const StadiumBorder(),
+                                   color: ColorsManager.primary,
+                                   onPressed: () {
+                                     if(_formKey.currentState!.validate())
+                                     {GymCubit.get(context).updateProfilePassword(password: passController.text);
+                                       //  cubit.userLogin(
+                                       //  email: userNameController.text,
+                                       //password: passController.text,
+                                       // );
 
-                           ]),
+                                     }
+                                    // GymCubit.get(context).updateName(name: nameController.text);
+                                   },
+                                   child:   Text("${'upDate'.tr(context)}",
+                                       style: const TextStyle(
+                                         inherit: false,
+                                         color: Colors.black,
+                                         fontSize: 20.0,
+                                         fontWeight: FontWeight.bold,
+                                       )),
+                                 ),
+                               ),
+
+                             ]),
+                       ),
+
                      ),
-
                    ),
-                   const SizedBox(height: 40.0,),
-                   Container(
+               /*    Container(
                      height: 900.0,
                      decoration: BoxDecoration(
                          border: Border.all(
@@ -308,7 +379,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                            ]),
                      ),
-                   ),
+                   ),*/
                  ],
                ),
              ),

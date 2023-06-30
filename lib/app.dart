@@ -8,11 +8,9 @@ import 'modules/login_register/cubit/authentication_cubit.dart';
 class MyApp extends StatelessWidget {
 //  final AppRouter appRouter;
   final Widget? startWidget;
-  final String lang;
   //final  String? token;
   const MyApp({Key? key,
     required this.startWidget,
-    required this.lang,
     // required this.token,
   }) : super(key: key);
   // This widget is the root of your application.
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..changeLanguage(languageCode: lang)..getAllMuscles()..getPlan(id:'35'/*token*/,day:'${DateTime.now().day}')..checkInternet()),
+        BlocProvider(create:(context) => GymCubit()..getAllMuscles()..getUserData()..createDatabase()..getPlan()..checkInternet()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(

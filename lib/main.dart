@@ -1,7 +1,6 @@
 
 // ignore_for_file: prefer_const_constructors, avoid_print
 import 'dart:async';
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:blackgym/app.dart';
 import 'package:blackgym/modules/login_register/homeSignup.dart';
@@ -27,13 +26,35 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 }
 
+/*
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+exports.sendTaskNotification = firebase-functions.firestore
+ .document('tasks/{taskId}')
+.onCreate(async (snapshot, context) => {
+const task = snapshot.data();
+const message = {
+  notification: {
+    title: 'Task Reminder',
+    body: `You have a new task: ${task.name}`,
+  },
+  topic: 'task_reminders',
+};
+await admin.messaging().send(message);
+});
+*/
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp().then((value) {
     print('FIRRRRRRRRRRRRRRRRRR');
   });
-  var tokeni = FirebaseMessaging.instance.getToken();
+  var tokeni ;
+  FirebaseMessaging.instance.getToken().then((value) {
+    tokeni = value;
+    print(value.toString());
+  });
   print(tokeni.toString());
   FirebaseMessaging.onMessage.listen((event) {
     print('on message');
@@ -53,6 +74,15 @@ void main() async {
       textColor: Colors.black,
     );
   });
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+  FirebaseMessaging.instance.setAutoInitEnabled(true);
+  FirebaseMessaging.instance.sendMessage(
+    collapseKey: tokeni,
+    messageType: 'fff',
+    messageId: 'hggg',
+    to: tokeni,
+    ttl: 3
+  );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   Bloc.observer = MyBlocObserver();
@@ -65,20 +95,24 @@ void main() async {
     print('Error NotifyHelper${Error.toString()}');
   });
   // bool? onBoarding = CacheHelper.getDataIntoShPre(key: 'Onboarding');
-  var lang = CacheHelper.getDataIntoShPre(key: 'Lang');
+  //var lang = CacheHelper.getDataIntoShPre(key: 'Lang');
   var token = CacheHelper.getDataIntoShPre(key: 'token');
   var userModel = CacheHelper.getDataIntoShPre(key: 'userModel');
 
-  if (lang != null) {
-    lang = lang;
-  } else {
-    lang = 'en';
-  }
   late Widget widget;
   if (token != null) {
-    widget = NewLayout();
-    print(userModel);
-  } else {
+    widget = AnimatedSplashScreen(
+      splashIconSize: 160,
+      duration: 4000,
+      splashTransition: SplashTransition.fadeTransition,
+      backgroundColor: ColorsManager.primary,
+      nextScreen:  NewLayout(),
+      splash:SvgPicture.asset(
+          'assets/images/Logo.svg'
+      ),
+    );
+  }
+  else {
     widget = AnimatedSplashScreen(
       splashIconSize: 160,
       duration: 4000,
@@ -88,8 +122,7 @@ void main() async {
       splash:SvgPicture.asset(
           'assets/images/Logo.svg'
       ),
-    );
-       // alignment: AlignmentDirectional.center
+    );// alignment: AlignmentDirectional.center
   }
   //FirebaseAuth.instance.authStateChanges().listen((user) {
   //if (user == null) {
@@ -101,7 +134,6 @@ void main() async {
   runApp(MyApp(
     //appRouter: AppRouter()
     startWidget: widget,
-    lang: lang,
     //token: token,
   ));
 }

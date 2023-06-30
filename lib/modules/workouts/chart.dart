@@ -8,7 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActivityScreen extends StatefulWidget {
-  ActivityScreen({super.key});
+  double? Regularity;
+  double? Feeding ;
+  double? Training;
+  double? Response;
+  double? Total ;
+   ActivityScreen({Key? key,this.Regularity,this.Feeding,this.Training,this.Response,this.Total}) : super(key: key);
 
   List<Color> get availableColors =><Color>[
   ColorsManager.primary  ,
@@ -17,27 +22,21 @@ class ActivityScreen extends StatefulWidget {
   ColorsManager.primary,
   ColorsManager.primary,
   ];
-
   final Color barBackgroundColor =
       ColorsManager.primary;
-  final Color barColor = ColorsManager.black;
+  final Color barColor = Colors.cyan;
   final Color touchedBarColor = ColorsManager.white;
 
   @override
-  State<StatefulWidget> createState() => ActivityScreenState();
-  }
+  State<ActivityScreen> createState() => _ActivityScreenState();
+}
 
-  class ActivityScreenState extends State<ActivityScreen> {
+  class _ActivityScreenState extends State<ActivityScreen> {
+
+
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
   bool isPlaying = false;
-
-  double Regularity =9.0;
-  double Feeding =9.0;
-  double Training =7.0;
-  double Response =2.0;
-  double Total =2.0;
-
   @override
   Widget build(BuildContext context) {
   return  Container(
@@ -54,7 +53,6 @@ class ActivityScreen extends StatefulWidget {
       color:ColorsManager.grey,
       backgroundBlendMode: BlendMode.screen,
     ) ,
-
       child: AspectRatio(
       aspectRatio: 1,
       child: Stack(
@@ -65,7 +63,7 @@ class ActivityScreen extends StatefulWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
        Text(
-      'Evaluation',
+      'Rating',
       style: TextStyle(
       color: ColorsManager.white,
       fontSize: 18,
@@ -76,7 +74,7 @@ class ActivityScreen extends StatefulWidget {
       height: 10,
       ),
       Text(
-      '*Evaluation within a week',
+      '*Rating within a week',
       style: TextStyle(
       color: ColorsManager.primary,
       fontSize: 14,
@@ -84,7 +82,7 @@ class ActivityScreen extends StatefulWidget {
       ),
       ),
       Text(
-          '*Evaluation from your trainer',
+          '*Rating from your trainer',
           style: TextStyle(
             color: ColorsManager.primary,
             fontSize: 14,
@@ -98,7 +96,13 @@ class ActivityScreen extends StatefulWidget {
       child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: BarChart(
-      isPlaying ? randomData() : mainBarData(),
+      isPlaying ? randomData() : mainBarData(
+          Feeding: widget.Feeding,
+        Regularity:  widget.Regularity!,
+          Response:  widget.Response!,
+        Total: widget.Total,
+        Training: widget.Training,
+      ),
       swapAnimationDuration: animDuration,
       ),
       ),
@@ -144,25 +148,37 @@ class ActivityScreen extends StatefulWidget {
   );
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
-               List<BarChartGroupData> showingGroups() => List.generate(5, (i) {
+               List<BarChartGroupData> showingGroups({
+                 double? Regularity ,
+                 double? Feeding ,
+                 double? Training,
+                 double? Response,
+                 double? Total,
+               })=> List.generate(5, (i) {
   switch (i) {
   case 0:
-  return makeGroupData(0,Regularity, isTouched: i == touchedIndex);
+  return makeGroupData(0,Regularity! as double, isTouched: i == touchedIndex);
   case 1:
-  return makeGroupData(1, Feeding, isTouched: i == touchedIndex);
+  return makeGroupData(1, Feeding! as double, isTouched: i == touchedIndex);
   case 2:
-  return makeGroupData(2, Training, isTouched: i == touchedIndex);
+  return makeGroupData(2, Training! as double, isTouched: i == touchedIndex);
   case 3:
-  return makeGroupData(3, Response, isTouched: i == touchedIndex);
+  return makeGroupData(3, Response! as double, isTouched: i == touchedIndex);
   case 4:
-  return makeGroupData(4, Total, isTouched: i == touchedIndex);
+  return makeGroupData(4, Total! as double, isTouched: i == touchedIndex);
     case 5:
       return makeGroupData(5, 2, isTouched: i == touchedIndex);
   default:
   return throw Error();
   }
   });
-                BarChartData mainBarData() {
+                BarChartData mainBarData({
+                  double? Regularity ,
+                  double? Feeding ,
+                  double? Training,
+                  double? Response,
+                  double? Total,
+  }){
                 return BarChartData(
                 barTouchData: BarTouchData(
                 touchTooltipData: BarTouchTooltipData(
@@ -185,10 +201,10 @@ class ActivityScreen extends StatefulWidget {
                 weekDay = 'running';
                 break;
                 case 4:
-                weekDay = 'response';
+                weekDay = 'personality';
                 break;
                 case 5:
-                  weekDay = 'The total';
+                  weekDay = 'personality';
                   break;
 
                 default:
@@ -251,7 +267,13 @@ class ActivityScreen extends StatefulWidget {
                 borderData: FlBorderData(
                 show: false,
                 ),
-                barGroups: showingGroups(),
+                barGroups: showingGroups(
+                  Feeding: widget.Feeding,
+                  Regularity:  widget.Regularity!,
+                  Response:  widget.Response!,
+                  Total: widget.Total,
+                  Training: widget.Training,
+                ),
                 gridData: const FlGridData(show: false),
                 );
                 }
@@ -273,10 +295,10 @@ class ActivityScreen extends StatefulWidget {
                 text = const Text('Training ', style: style);
                 break;
                 case 3:
-                text = const Text(' Response', style: style);
+                text = const Text('Response', style: style);
                 break;
                 case 4:
-                text = const Text('Total', style: style);
+                text = const Text('   Personality', style: style);
                 break;
                 default:
                 text = const Text('', style: style);

@@ -76,7 +76,7 @@ class _HomeSignUpScreenState extends State<HomeSignUpScreen> {
                           )),
                     ),
                     const SizedBox(height: 25.0,),
-                    Text("If you don't have an account, you can now visit us to create an account for you",
+                    Text("This app belongs to BLACK GYM, and no one can register in it unless it has been added by our administrator. To register, you must visit us at our branches.",
                       maxLines: 4,
                       style: TextStyle(
                         inherit: false,

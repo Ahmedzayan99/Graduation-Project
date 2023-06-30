@@ -233,7 +233,6 @@ class AuthCubit extends Cubit<AuthStates> {
 
   //<<<<<<<<<<<<<<<<<Start the cubit of Login by firebase>>>>>>>>>>>>>>>>>>>>>>
   LoginModel? loginModel;
-UserModel? userModel;
   void userLogin({
     required String? email,
     required String? password,
@@ -246,8 +245,8 @@ UserModel? userModel;
     }).then((value) {
       print('22222222');
       loginModel = LoginModel.fromJson(value.data);
-      userModel =UserModel.fromJson(value.data);
-      print(userModel);
+      //userModel =UserModel.fromJson(value.data);
+      //print(userModel);
       CacheHelper.saveData(key: "token", value: loginModel?.data?.id);
       emit(LoginSuccessState());
     }).catchError((error) {

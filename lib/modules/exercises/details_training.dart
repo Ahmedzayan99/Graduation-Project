@@ -24,7 +24,7 @@ final String? description;
         listener:(context, state) =>{} ,
         builder:(context, state) {
           return ConditionalBuilder(
-            condition:homeTrainingDummy[1].data.isNotEmpty,
+            condition:name !=null,
             builder: (context) =>
                 Scaffold(backgroundColor: ColorsManager.black,
               appBar: AppBar(),

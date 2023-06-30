@@ -1,35 +1,70 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotifyHelper
 {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
   Future<void> init() async {
+
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
-
-    final DarwinInitializationSettings initializationSettingsIOS =
-    DarwinInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
-    );
-
+    var initializationSettingsIOS = DarwinInitializationSettings();
     var initializationSettings = InitializationSettings(
-
         android: initializationSettingsAndroid,
         iOS: initializationSettingsIOS);
 
+    _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()?.requestPermission();
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-    Timer.periodic( Duration(seconds: 50), (timer) async {
-      await showNotification();
+     initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsIOS);
+
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      showNotification(message);
     });
-    // onSelectNotification: selectNotification
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
+/*  Timer.periodic( Duration(seconds: 50), (timer) async {
+      await
+    });*/
+   // onSelectNotification: selectNotification;
+  }
+  Future onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+  }
+  Future<void> showNotification(RemoteMessage message) async {
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'channel_id',
+      'channel_name',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+    var iosPlatformChannelSpecifics = DarwinNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iosPlatformChannelSpecifics);
+
+    await _flutterLocalNotificationsPlugin.show(
+        0,
+        message.notification!.title,
+        message.notification!.body,
+        platformChannelSpecifics,
+        payload: message.data['taskId']);
   }
 
-  Future showNotification() async {
+
+/*  Future showNotification() async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your channel id',
       'your channel name',
@@ -54,8 +89,10 @@ class NotifyHelper
       platformChannelSpecifics,
 
     );
-  }
+  }*/
 }
+
+
 
 
 /*for (int i=0 ; i < scheduledNotificationDataTimes.length;i++){

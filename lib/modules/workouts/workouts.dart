@@ -22,11 +22,12 @@ class WorkoutsScreen extends StatefulWidget {
 }
 
 class _WorkoutsScreenState extends State<WorkoutsScreen> {
-      //AuthCubit.get(context).userModel!.data!.createdAt;
-  bool value=false;
-
   get index => null;
 
+  List<int> selectedIndexes=[];
+
+
+      //AuthCubit.get(context).userModel!.data!.createdAt;
   @override
   Widget build(BuildContext context) {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
@@ -35,6 +36,17 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
       },
       builder: (context, state) {
         var cubit = GymCubit.get(context);
+        var userModel = GymCubit.get(context).userModel!.users!.rate![0];
+        final  Regularity=double.parse(userModel!.regularity as String)  ;
+        final  Feeding=double.parse(userModel!.feeding as String)  ;
+        final  Response=double.parse(userModel!.response as String)  ;
+        final  Training=double.parse(userModel!.training as String)  ;
+        final  Total=double.parse(userModel!.total as String)  ;
+        /*double Total= userModel!.total as double ;
+        double Feeding=userModel!.feeding! as double ;
+        double  Regularity=userModel!.regularity! as double ;
+        double Response= userModel!.response! as double;
+*/
      SystemChrome.setEnabledSystemUIMode (SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
         return Scaffold(
@@ -45,6 +57,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                       Container(
                     clipBehavior:Clip.antiAliasWithSaveLayer ,
                     decoration:BoxDecoration(
@@ -84,7 +97,9 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                             controller:cubit.today,
                             onDateChange: (selectedDate) {
                               cubit.todayDateBeforeFormat =selectedDate;
-                              cubit.getPlan(id: '35',day:'${DateFormat('EEEE').format((selectedDate))}');
+                              cubit.getPlan(
+                                 // id:49,day:'${DateFormat('EEEE').format((selectedDate))}'
+                              );
                             },
                             locale: 'EN',
                             cubit.dateBarStartDay,
@@ -128,41 +143,33 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                         backgroundBlendMode: BlendMode.screen,
                       ) ,
                       child: ConditionalBuilder(
-                        condition: state is! GetPlanLoading,
-                        builder:(context) {
-                          return Padding(
-                          padding:  const EdgeInsets.all(20.0),
-                          child: ListView.separated(
-                          physics:BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap:true ,
-                          itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                          border: Border.all(
-                          color: const Color.fromRGBO(
-                          248, 202, 89, 0.6470588235294118),
-                          width: 1.5,
-                          style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                        condition:cubit.onlyMucsleModel!.data!.isNotEmpty,
+                          builder:(context) {
+                          if(cubit.internet! && GymCubit.get(context).onlyMucsleModel!.data!.isNotEmpty)
+                             {
+                              return Padding(
+                                padding:  const EdgeInsets.only(top: 10.0,right: 0.0,left: 0.0),
+                                child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap:true ,
+                                    itemBuilder: (context, index) => Padding(
+                                      padding: const EdgeInsets.only(top:10.0,left: 5.0),
+                                      child: Column(
+                                        children: [
+                                          /*  Row(
                           children: [
-                          Row(
-                          children: [
-
                           Expanded(
                           child: cubit.value1 == false
-                    //      || CacheHelper.getDataIntoShPre(key: "value1") == false
+                      //   || acheHelper.getDataIntoShPre(key: "value1") == false
                           ?
                           const Icon(Icons.check_box_outline_blank,size: 37,):Icon(Icons.check_box,size: 37,
                           color: ColorsManager.primary,
                           ),
                           ),
-                          cubit.planlModel?.data![index].exercise?.groups == 2 ||
-                          cubit.planlModel?.data![index].exercise?.groups == 3 ||
-                          cubit.planlModel?.data![index].exercise?.groups == 4 ?
+                            cubit.onlyMucsleModel!.data![index].groups == 2 ||
+                                cubit.onlyMucsleModel!.data![index].groups == 3 ||
+                                cubit.onlyMucsleModel!.data![index].groups== 4 ?
                           Expanded(
                           child: cubit.value2 == false
                        //   || CacheHelper.getDataIntoShPre(key: "value2") == false
@@ -171,8 +178,8 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                           color: ColorsManager.primary,
                           ),
                           ):const SizedBox(),
-                          cubit.planlModel?.data![index].exercise?.groups == 3 ||
-                          cubit.planlModel?.data![index].exercise?.groups == 4?
+                            cubit.onlyMucsleModel!.data![index].groups == 3 ||
+                              cubit.onlyMucsleModel!.data![index].groups == 4?
                           Expanded(
                           child: cubit.value3 == false
                           || CacheHelper.getDataIntoShPre(key: "value3") == false
@@ -181,7 +188,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                           color: ColorsManager.primary,
                           ),
                           ):const SizedBox(),
-                          cubit.planlModel?.data![index].exercise?.groups == 4 ?
+                            cubit.onlyMucsleModel!.data![index].groups == 4 ?
                           Expanded(
                           child: cubit.value4 == false
                           || CacheHelper.getDataIntoShPre(key: "value4") == false
@@ -191,171 +198,103 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                           ),
                           ):const SizedBox(),
                           ],
-                          ),
-                          const SizedBox(height: 15.0,),
-                          Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          Expanded(
-                          child: Column(
-                          children: [
-                          Container(
-                          width: 157.0,
-                          height: 141.0,
-                          decoration: BoxDecoration(
-                          border: Border.all(
-                          color: const Color.fromRGBO(
-                          248, 202, 89, 0.6470588235294118),
-                          width: 1.5,
-                          style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(20.0),
-                          image:  DecorationImage(
-                          image: NetworkImage(
-                          cubit.planlModel!.data![index].exercise!.image as String),
-                          fit: BoxFit.cover,),
-                          ),
-                          ),
-                          TextButton(onPressed: () {
-                          Navigator.push(context,
-                          PageRouteBuilder(
-                          pageBuilder:(context, animation, secondaryAnimation) =>
-                          DetailsTraining(
-                          name:cubit.planlModel!.data![index].exercise!.name ,
-                          image:cubit.planlModel!.data![index].exercise!.image ,
-                          description:cubit.planlModel!.data![index].exercise!.description ,),),);
-                          },
-                          child: const Text('Show more',
-                          style: TextStyle(
-                          color: Color.fromRGBO(255, 227, 40, 1),
-                          ),),
-                          )
-                          ],
-                          ),
-                          ),
-                          const SizedBox(width: 10.0,),
-                          Expanded(
-                          child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                          InkWell(
-                          child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
-                          margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
-                          child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                          'set 1',
-                          style: TextStyle
-                          (
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),),
-                          ),
-                          ),
-                          onTap: (){
-                            cubit.setValueCheckOne();
-                          print(index);
-                          },
-                          ),
-                          const SizedBox(height: 10),
-                          cubit.planlModel?.data![index].exercise?.groups ==2||
-                          cubit.planlModel?.data![index].exercise?.groups ==3 ||
-                          cubit.planlModel?.data![index].exercise?.groups ==4 ?
-                          InkWell(
-                          child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
-                          margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
-                          child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                          'set 2',
-                          style: TextStyle
-                          (
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),),
-                          ),
-                          ),
-                          onTap: (){
-                          cubit.setValueCheckTwo();
-                          },
-                          )
-                              :const SizedBox(),
-                          const SizedBox(height: 10),
-                          cubit.planlModel?.data![index].exercise?.groups ==3 ||
-                          cubit.planlModel?.data![index].exercise?.groups ==4 ?
-                          InkWell(
-                          child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
-                          margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
-                          child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                          'set 3',
-                          style: TextStyle
-                          (
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),),
-                          ),
-                          ),
-                          onTap: (){
-                          cubit.setValueCheckThree();
-                          print(index);
-                          },
-                          )
-                              :const SizedBox(),
-                          const SizedBox(height: 10),
-                          cubit.planlModel?.data![index].exercise?.groups ==4 ?
-                          InkWell(
-                          child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
-                          margin: const EdgeInsetsDirectional.only(start: 20.0,end: 20.0),
-                          child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                          'set 4',
-                          style: TextStyle
-                          (
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),),
-                          ),
-                          ),
-                          onTap: (){
-                          cubit.setValueCheckFour();
-                          },
-                          ):const SizedBox(),
-                          ],
-                          ),
-                          ),
-                          ],
-                          ),
-                          ],
-                          ),
-                          ),
-                          ),
-                          separatorBuilder: (context, index) {
-                          return const SizedBox(height: 20,);},
-                          itemCount:cubit.planlModel!.data!.length ),
-                          );
+                          ),*/
+                                          //   const SizedBox(height: 15.0,),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 80.0,
+                                                height: 80.0,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: const Color.fromRGBO(
+                                                          248, 202, 89, 0.6470588235294118),
+                                                      width: 1.5,
+                                                      style: BorderStyle.solid),
+                                                  borderRadius: BorderRadius.circular(20.0),
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(cubit.onlyMucsleModel!.data![index].image.toString()),
+                                                    fit: BoxFit.cover,),
+
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10.0,),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 10.0,),
+                                                    Text(cubit.onlyMucsleModel!.data![index].name.toString(),
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.fade,
+                                                      style: const TextStyle(
+                                                        color: Color.fromRGBO(251, 251, 251, 1),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18,
+                                                      ),),
+                                                    SizedBox(height: 5.0,),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                      child: Text('${cubit.onlyMucsleModel!.data![index].groups.toString()} set x 10-12 reps',
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style:  TextStyle(
+                                                          color: ColorsManager.primary,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 14.0,
+                                                        ),),
+                                                    ),
+                                                    TextButton(onPressed: () {
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsTraining(
+                                                        image:cubit.onlyMucsleModel!.data![index].image.toString() ,
+                                                        description:cubit.onlyMucsleModel!.data![index].description.toString() ,
+                                                        name: cubit.onlyMucsleModel!.data![index].name.toString(),
+
+                                                      )));
+                                                    },
+                                                      child: const Text('Show more',
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(255, 227, 40, 1),
+                                                        ),),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                  child: Chip(
+                                                      backgroundColor: Colors.cyan,
+                                                      label: Text('${cubit.onlyMucsleModel!.data![index].muscle !=null?cubit.onlyMucsleModel!.data![index].muscle!.name:'leg'}')))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    separatorBuilder: (context, index) {
+                                      return const SizedBox();},
+                                    itemCount: cubit.onlyMucsleModel!.data!.length ),
+                              );
+                              }
+                          else {
+                          return  Text('',style: TextStyle(color: Colors.pink));
+                          }
                         },
-                          fallback: (context) {
-                      return showProgressIndicator();
-                      },
+                          fallback:(context) {
+                            if (GymCubit.get(context).onlyMucsleModel!.data!.isEmpty){
+                              showProgressIndicator(context);
+                            }
+                          return Text('',style:TextStyle(color: Colors.pink));}
                       ),
                     ),
                       const SizedBox(height: 10.0,),
-                       ActivityScreen(),
+                       ActivityScreen(
+                       Training:Training,//Training as double,
+                         Total: Total,//Total as double,
+                         Feeding:Feeding,//Feeding as double,
+                         Regularity:Regularity,//Regularity  as double,
+                         Response:Response, //Response as double,
+                       ),
                 ],
               ),
             ),

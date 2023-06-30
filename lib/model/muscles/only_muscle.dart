@@ -14,8 +14,8 @@ class OnlyMucsleModel {
         data!.add(new Data.fromJson(v));
       });
     }
+    null;
   }
-
 }
 
 class Data {

@@ -1,4 +1,4 @@
-class PlanModel {
+/*class PlanModel {
   bool? success;
   String? message;
   List<Data>? data;
@@ -82,7 +82,6 @@ class Exercise {
   }
 
 }
-
 class Muscle {
   int? id;
   String? name;
@@ -103,5 +102,71 @@ class Muscle {
     image = json['image'];
 
   }
+}*/
+class PlanModel {
+  bool? success;
+  String? message;
+  List<Data>? data;
 
+  PlanModel({this.success, this.message, this.data});
+
+  PlanModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+ Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
+  int? id;
+  int? userId;
+  String? muscles;
+  String? exercises;
+  String? day;
+  String? createdAt;
+  String? updatedAt;
+  Data(
+      {this.id,
+        this.userId,
+        this.muscles,
+        this.exercises,
+        this.day,
+        this.createdAt,
+        this.updatedAt,
+        });
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    muscles = json['muscles'];
+    exercises = json['exercises'];
+    day = json['day'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['muscles'] = this.muscles;
+    data['exercises'] = this.exercises;
+    data['day'] = this.day;
+    return data;
+  }
 }

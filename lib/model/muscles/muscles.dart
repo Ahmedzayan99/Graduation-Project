@@ -15,10 +15,7 @@ class MusclesModel {
       });
     }
   }
-
 }
-
-
 class Data {
   int? id;
   String? name;

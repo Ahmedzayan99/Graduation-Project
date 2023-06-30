@@ -4,6 +4,9 @@ class GymInitialState extends GymStates {}
 
 class GymLoadingState extends GymStates {}
 
+class GymChangeVisiblePasswordEditState extends GymStates {}
+class GymChangeVisiblePasswordConfirmEditState extends GymStates {}
+
 class GymChangeBottomNavBarState extends GymStates {}
 
 class GymChangeBottomSheetState extends GymStates {}
@@ -29,6 +32,12 @@ class UploadProfileImageErrorState extends GymStates {}
 class UpdateNameLoadingState extends GymStates {}
 
 class UpdateUserBadyLoadingState extends GymStates {}
+
+class UpdateUserPasswordLoadingState extends GymStates {}
+
+class UpdateUserPasswordSuccessState extends GymStates {}
+
+class UpdateUserPasswordErrorState extends GymStates {}
 
 class UserUpdateErrorState extends GymStates {}
 
@@ -107,5 +116,22 @@ class GetOnlyMusclesError extends GymStates {
 
   GetOnlyMusclesError({required this.error});
 }
+
+class CreateNotesLoadingState extends GymStates {}
+class CreateNotesSuccess extends GymStates {}
+class CreateNotesError extends GymStates {
+}
+class gNotesLoadingState extends GymStates {}
+class greateNotesSuccess extends GymStates {}
+class greateNotesError extends GymStates {
+}
+class GetPlanMusclesLoading extends GymStates {}
+class GetPlanMusclesSuccess extends GymStates {}
+class GetPlanMusclesError extends GymStates {
+  final String error;
+  GetPlanMusclesError({required this.error});
+}
+
+
 
 class ChangeValueCheckBox extends GymStates {}

@@ -7,6 +7,7 @@ import 'package:blackgym/shared/components.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../shared/network/local/cache_helper.dart';
@@ -14,6 +15,7 @@ import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import '../login_register/homeSignup.dart';
+import 'edit_Profile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -113,43 +115,43 @@ class SettingsScreen extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       SizedBox(
-                                      height: 210.0,
-                                      child: Stack(
-                                        alignment: AlignmentDirectional
-                                            .bottomCenter,
-                                        children: [
-                                          const Align(
-                                            alignment:
-                                            AlignmentDirectional
-                                                .topStart,
-                                            child: SizedBox(
-                                                height: 160.0,
-                                                width: double.infinity,
-                                                //   width: double.infinity,
-                                                child: Image(
-                                                  image: AssetImage(
-                                                      'assets/images/gym.jpg'),
-                                                  fit: BoxFit.cover,
-                                                )),
-                                          ),
-                                          CircleAvatar(
-                                            radius: 55.0,
-                                            backgroundColor:
-                                            ColorsManager.primary,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  '${userModel?.data!.imageUrl}'),
-                                              radius: 50.0,
+                                        height: 210.0,
+                                        child: Stack(
+                                          alignment: AlignmentDirectional
+                                              .bottomCenter,
+                                          children: [
+                                            const Align(
+                                              alignment:
+                                              AlignmentDirectional
+                                                  .topStart,
+                                              child: SizedBox(
+                                                  height: 160.0,
+                                                  width: double.infinity,
+                                                  //   width: double.infinity,
+                                                  child: Image(
+                                                    image: AssetImage(
+                                                        'assets/images/gym.jpg'),
+                                                    fit: BoxFit.cover,
+                                                  )),
                                             ),
-                                          ),
-                                        ],
+                                            CircleAvatar(
+                                              radius: 55.0,
+                                              backgroundColor:
+                                              ColorsManager.primary,
+                                              child: CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    '${userModel?.users!.imageUrl}'),
+                                                radius: 50.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
                                       const SizedBox(
                                         height: 10.0,
                                       ),
                                       Text(
-                                        '${userModel?.data!.name}',
+                                        '${userModel?.users!.name}',
                                         style: const TextStyle(
                                           color: Color.fromRGBO(
                                               251, 251, 251, 1),
@@ -161,203 +163,203 @@ class SettingsScreen extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
-                                          Row(
-                                            children: [
-                                              Text("${'userName'.tr(context)}",
-                                                style: const TextStyle(
+                                            Row(
+                                              children: [
+                                                Text("${'userName'.tr(context)}",
+                                                  style: const TextStyle(
                                                     color: Color.fromRGBO(
                                                         251, 251, 251, 1),
                                                     fontSize: 14.0,
-                                                    ),
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.email}',
-                                                    style: const TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.email}',
+                                                      style: const TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "${'phoneNumber'.tr(context)}",
-                                                style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      251, 251, 251, 1),
-                                                  fontSize: 14.0,
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'phoneNumber'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                width: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.phoneNumber}',
-                                                    style: const TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      inherit: true,
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.phoneNumber}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "${'gender'.tr(context)}",
-                                                style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      251, 251, 251, 1),
-                                                  fontSize: 14.0,
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'gender'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                width: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.gender}',
-                                                    style: const TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      inherit: true,
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.gender}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "${'age'.tr(context)}",
-                                                style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      251, 251, 251, 1),
-                                                  fontSize: 14.0,
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'age'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                width: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.age}',
-                                                    style: const TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      inherit: true,
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.age}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "${'weight'.tr(context)}",
-                                                style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      251, 251, 251, 1),
-                                                  fontSize: 14.0,
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'weight'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                width: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.weight}',
-                                                    style: const TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      inherit: true,
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.weight}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "${'height'.tr(context)}",
-                                                style: const TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      251, 251, 251, 1),
-                                                  fontSize: 14.0,
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${'height'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        251, 251, 251, 1),
+                                                    fontSize: 14.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                width: 20.0,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:AlignmentDirectional.centerEnd,
-                                                  child: Text(
-                                                    '${userModel?.data!.height}',
-                                                    style: const TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      inherit: true,
-                                                      color: Color.fromRGBO(
-                                                          251, 251, 251, 1),
-                                                      fontSize: 14.0,
+                                                const SizedBox(
+                                                  width: 20.0,
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:AlignmentDirectional.centerEnd,
+                                                    child: Text(
+                                                      '${userModel?.users!.height}',
+                                                      style: const TextStyle(
+                                                        decoration: TextDecoration
+                                                            .underline,
+                                                        inherit: true,
+                                                        color: Color.fromRGBO(
+                                                            251, 251, 251, 1),
+                                                        fontSize: 14.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20.0,
-                                          ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
                                             Row(
                                               children: [
                                                 Text(
@@ -375,7 +377,7 @@ class SettingsScreen extends StatelessWidget {
                                                   child: Align(
                                                     alignment:AlignmentDirectional.centerEnd,
                                                     child: Text(
-                                                      '${userModel?.data!.fatPercentage}',
+                                                      '${userModel?.users!.fatPercentage}',
                                                       style: const TextStyle(
                                                         decoration: TextDecoration
                                                             .underline,
@@ -409,7 +411,7 @@ class SettingsScreen extends StatelessWidget {
                                                   child: Align(
                                                     alignment:AlignmentDirectional.centerEnd,
                                                     child: Text(
-                                                     '${userModel?.data!.coashName}',
+                                                      '${userModel?.users!.coashName}',
                                                       style: const TextStyle(
                                                         decoration: TextDecoration
                                                             .underline,
@@ -427,71 +429,71 @@ class SettingsScreen extends StatelessWidget {
                                               height: 20.0,
                                             ),
                                             Row(children: [
-                                                Text(
-                                                  "Subscription",
-                                                  style: const TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        251, 251, 251, 1),
-                                                    fontSize: 14.0,
-                                                  ),
+                                              Text(
+                                                "Subscription",
+                                                style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      251, 251, 251, 1),
+                                                  fontSize: 14.0,
                                                 ),
-                                                const SizedBox(
-                                                  width: 20.0,
-                                                ),
-                                                Expanded(
-                                                  child: Align(
-                                                    alignment:AlignmentDirectional.centerEnd,
-                                                    child: Text(
-                                                      '${userModel?.data!.membership}',
-                                                      style: const TextStyle(
-                                                        decoration: TextDecoration
-                                                            .underline,
-                                                        inherit: true,
-                                                        color: Color.fromRGBO(
-                                                            251, 251, 251, 1),
-                                                        fontSize: 14.0,
-                                                      ),
+                                              ),
+                                              const SizedBox(
+                                                width: 20.0,
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:AlignmentDirectional.centerEnd,
+                                                  child: Text(
+                                                    '${userModel?.users!.gender}',
+                                                    style: const TextStyle(
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      inherit: true,
+                                                      color: Color.fromRGBO(
+                                                          251, 251, 251, 1),
+                                                      fontSize: 14.0,
                                                     ),
                                                   ),
                                                 ),
-                                              ],
+                                              ),
+                                            ],
                                             ),
-                                          const SizedBox(
+                                            const SizedBox(
                                               height: 20.0,
                                             ),
-                                        ],),
+                                          ],),
                                       ),
-                                  /*    Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          MaterialButton(
-                                            height: 45,
-                                            minWidth: 70.0,
-                                            shape: const StadiumBorder(),
-                                            color: ColorsManager.primary,
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditProfileScreen(),
-                                                  ));
-                                            },
-                                            child:  Text(
-                                                "${'editMyProfile'.tr(context)}",
-                                                style: const TextStyle(
-                                                  inherit: false,
-                                                  color: Colors.white,
-                                                  fontSize: 20.0,
-                                                  fontWeight:
-                                                  FontWeight.bold,
-                                                )),
-                                          ),
-                                        ],
-                                      ),*/
+                                        Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            MaterialButton(
+                                              height: 45,
+                                              minWidth: 70.0,
+                                              shape: const StadiumBorder(),
+                                              color: ColorsManager.primary,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditProfileScreen(),
+                                                    ));
+                                              },
+                                              child:  Text(
+                                                  "${'editMyProfile'.tr(context)}",
+                                                  style: const TextStyle(
+                                                    inherit: false,
+                                                    color: Colors.white,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -717,6 +719,97 @@ class SettingsScreen extends StatelessWidget {
                           )
                             else
                               const SizedBox(),
+                          const SizedBox(height: 15.0),
+                          Container(
+                            width: double.infinity,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                                color: ColorsManager.grey,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0))),
+                            child: InkWell(
+                              onTap: () {
+                                cubit.changeBottomEvaluateCoach();
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2.0),
+                                    child: Icon(Icons.place_outlined,
+                                      color: ColorsManager.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4.0,
+                                  ),
+                                  Text(
+                                    "Rating your coach",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: ColorsManager.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 40.0,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        cubit.myProfile
+                                            ? Icon(
+                                          Icons.expand_more,
+                                          color: ColorsManager.white,
+                                        )
+                                            : Icon(
+                                          Icons.navigate_next,
+                                          color: ColorsManager.white,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if(cubit.EvaluateCoach)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Container(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: BoxDecoration(
+                                    color: ColorsManager.grey,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10.0))),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:  CrossAxisAlignment.center,
+                                        children: [
+                                          RatingBar.builder(
+                                            itemBuilder: (BuildContext context, int index) {
+                                              return Icon(Icons.star);},
+                                            onRatingUpdate: (double value) {  },
+
+
+                                          )
+
+              ],),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            )
+                          else
+                            const SizedBox(),
                           const SizedBox(height: 15.0),
                           Container(
                             width: double.infinity,

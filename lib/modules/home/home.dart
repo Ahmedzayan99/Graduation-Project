@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                            //   print(GymCubit.get(context).taskList.toString());
                        //           Navigator.push(context,
                             //   MaterialPageRoute(builder: (context) =>TaskListPage(),),);
-                         //    GymCubit.get(context).changeIndex(1);
+                            GymCubit.get(context).changeIndex(1);
                            },
                             child:  Text(
                                 "${'letsStart'.tr(context)}",
