@@ -19,7 +19,7 @@ ThemeData getAppThemeData() => ThemeData(
     ),
     //bottom Sheet theme
     bottomSheetTheme: BottomSheetThemeData(
-        elevation: 20.0,
+      elevation: 20.0,
         showDragHandle:true ,
         constraints: BoxConstraints.expand(
             height: 299.0,

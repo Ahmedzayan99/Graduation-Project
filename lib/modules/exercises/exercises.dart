@@ -22,9 +22,12 @@ class ExercisesScreen extends StatelessWidget {
       },
       builder: (context, state){
         var cubit = GymCubit.get(context);
-       if(cubit.internet! && GymCubit.get(context).musclesModel!.data!.isNotEmpty)
+       if(cubit.internet! && GymCubit.get(context).musclesModel!.data! !=null)
         {
          return const HomeTrainingItemWidget();
+       }
+       else if(state is GetAllMusclesLoading ){
+         return Center(child: defaultProgressIndicator(),);
        }
        else {
          return Scaffold(

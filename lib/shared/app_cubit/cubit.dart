@@ -4,15 +4,16 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
-import 'package:blackgym/model/home_training_model.dart';
-import 'package:blackgym/model/muscles/all_exercises.dart';
+import 'package:blackgym/model/plan/exercises_by_plan.dart';
+import 'package:blackgym/model/notes/notes.dart';
+import 'package:blackgym/model/exercises/all_exercises.dart';
 import 'package:blackgym/model/muscles/muscles.dart';
-import 'package:blackgym/model/muscles/only_muscle.dart';
-import 'package:blackgym/model/muscles/plan.dart';
-import 'package:blackgym/model/user_model.dart';
+import 'package:blackgym/model/exercises/only_muscle.dart';
+import 'package:blackgym/model/plan/plan.dart';
+import 'package:blackgym/model/authentication/get_user/user_model.dart';
 import 'package:blackgym/modules/exercises/exercises.dart';
 import 'package:blackgym/modules/home/home.dart';
-import 'package:blackgym/modules/notas/newTask.dart';
+import 'package:blackgym/modules/notas/notes_layout.dart';
 import 'package:blackgym/modules/settings/settings.dart';
 import 'package:blackgym/modules/workouts/workouts.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
@@ -34,6 +35,7 @@ class GymCubit extends Cubit<GymStates> {
 
   get index => null;
 
+
   static GymCubit get(context) => BlocProvider.of(context);
 
   //<<<<<<<<<<<<<<<<<Start the cubit of BottomNavigationBar >>>>>>>>>>>>>>>>>>>>>>
@@ -42,7 +44,7 @@ class GymCubit extends Cubit<GymStates> {
     const HomeScreen(),
     const ExercisesScreen(),
     WorkoutsScreen(),
-    NewTaskScreen(),
+    NotesLayoutScreen(),
     SettingsScreen(),
   ];
 
@@ -52,9 +54,8 @@ class GymCubit extends Cubit<GymStates> {
       getAllMuscles();
     }
     if (index == 2) {
-      getOnlyMuscles(id: 4);
       getUserData();
-
+      getPlan(day:'${DateFormat('EEEE').format((todayDateBeforeFormat))}');
       //'${DateFormat('EEEE').format((DateTime.now()))}');
     }
     if (index == 4) {
@@ -208,7 +209,6 @@ class GymCubit extends Cubit<GymStates> {
       DioHelper.postData(url:updateProfil , data: {
         "user_id":userModel!.users!.id,
       "name":userModel!.users!.name,
-      "email":  'Ahmed.zayan14@gmail.com',
       "password":'123456789',
       "phone_number":userModel!.users!.phoneNumber,
       "height":userModel!.users!.height,
@@ -235,7 +235,6 @@ class GymCubit extends Cubit<GymStates> {
     DioHelper.postData(url:updateProfil , data: {
       "user_id":userModel!.users!.id,
       "name":userModel!.users!.name,
-      "email":  'Ahmed.zayan99@gmail.com',
       "password":password,
       "phone_number":userModel!.users!.phoneNumber,
       "height":userModel!.users!.height,
@@ -337,8 +336,7 @@ class GymCubit extends Cubit<GymStates> {
   }*/
 //
   Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
-    CacheHelper.removeUserData(key: 'uId');
+    CacheHelper.removeUserData(key:'token');
   }
   List<String> dropDownButton = [
     'ar',
@@ -494,23 +492,40 @@ class GymCubit extends Cubit<GymStates> {
   String? date = DateFormat('EEEE,dd MMMM').format((DateTime.now()));
 
   PlanModel? planlModel;
-  String? planid;
   Future<void> getPlan(
-  //{ int? id,
- //   String? day,}
+  {required String? day,}
   ) async {
+    planlModel!.data ==null;
     emit(GetPlanLoading());
-    await DioHelper.getData(url: api)
+    await DioHelper.getData(url:'$api${CacheHelper.getDataIntoShPre(key:'token')}/$day')
         .then((value) {
       planlModel = PlanModel.fromJson(value.data);
-      planid = value.data['exercises'];
-      print('errorbisho$planid');
-      print(planlModel.toString());
-      emit(GetPlanSuccess());
-    })
-        .catchError((error) {
+             print('dddddddddddddddd');
+          emit(GetPlanSuccess());
+      //  }
+        }).catchError((error) {
       emit(GetPlanError(error: error.toString()));
       print('ssssssssssssssssssssssss' + error.toString());
+    });
+  }
+  ExercisesModel? onlyMucsleModel;
+  Future<void> getOnlyMuscles() async {
+    emit(GetOnlyMusclesLoading());
+    await DioHelper.getData(url:alllexercises)
+        .then((value) {
+      onlyMucsleModel = ExercisesModel.fromJson(value.data);
+      /*print("${idExer?.length}");
+      for(int i=0;i<6;i++){
+        if(onlyMucsleModel!.data![i].name=="Front Squat"){
+            var aaa = onlyMucsleModel!.data![i];
+           ahmed!.add(ExercisesPlan.fromJson(aaa.toJson()));
+         print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${aaa!.toJson()}');
+         print('sssssssssssssssssssssssssssssssssssssssssssssssssss${ahmed!.toList()}');
+      }*/
+      emit(GetOnlyMusclesSuccess());
+        })
+        .catchError((error) {
+      emit(GetOnlyMusclesError(error: error.toString()));
     });
   }
 
@@ -527,39 +542,26 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-  AllExercises? onlyMucsleModel;
-  Future<void> getOnlyMuscles({ required int? id,
-  }) async {
-    emit(GetOnlyMusclesLoading());
-    await DioHelper.getData(url:alllexercises)
-        .then((value) {
-      onlyMucsleModel = AllExercises.fromJson(value.data);
-     // final items =onlyMucsleModel!.data![index] as dynamic;
-   //   final filteritem =items!.where((items) => items['id']=='4').toList();
-   //   print('ffffiiiilllll${filteritem}');
-      emit(GetOnlyMusclesSuccess());
-    })
-        .catchError((error) {
-      emit(GetOnlyMusclesError(error: error.toString()));
-    });
-  }
 
 
   OnlyMucsleModel? onlyMucsleModel1;
   Future<void> getOnlyMuscles1({
     required int? id,
-  }      ) async {
+
+  } ) async {
     emit(GetOnlyMusclesLoading());
+    onlyMucsleModel1==[];
     await DioHelper.getData(url:'${OonlyMuscles}$id')
         .then((value) {
       onlyMucsleModel1 = OnlyMucsleModel.fromJson(value.data);
-
       emit(GetOnlyMusclesSuccess());
     })
         .catchError((error) {
       emit(GetOnlyMusclesError(error: error.toString()));
     });
   }
+
+
 
   UserModel? userModel;
   Future<void> getUserData() async {
@@ -604,47 +606,6 @@ class GymCubit extends Cubit<GymStates> {
     });
   }
 
-  bool value1 = false;
-
-  void setValueCheckOne() {
-    value1 = !value1;
-    // log(value1.toString());
-    //  value1 == true ?
-    // CacheHelper.saveData(key: "value1", value: true):CacheHelper.removeUserData(key: "value1");
-    emit(ChangeValueCheckBox());
-  }
-
-  bool value2 = false;
-
-  void setValueCheckTwo() {
-    value2 = !value2;
-    //  log(value2.toString());
-    //  value2 == true ?
-    //   CacheHelper.saveData(key: "value2", value: true):CacheHelper.removeUserData(key: "value2");
-    emit(ChangeValueCheckBox());
-  }
-
-  bool value3 = false;
-
-  void setValueCheckThree() {
-    value3 = !value3;
-    log(value3.toString() as num);
-    value3 == true ?
-    CacheHelper.saveData(key: "value3", value: true) : CacheHelper
-        .removeUserData(key: "value3");
-    emit(ChangeValueCheckBox());
-  }
-
-  bool value4 = false;
-
-  void setValueCheckFour() {
-    value4 = !value4;
-    log(value4.toString() as num);
-    value4 == true ?
-    CacheHelper.saveData(key: "value4", value: true) : CacheHelper
-        .removeUserData(key: "value4");
-    emit(ChangeValueCheckBox());
-  }
 /*  Future<void> CreateNotes({
    required String title,
    required String time,

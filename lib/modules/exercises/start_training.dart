@@ -23,7 +23,7 @@ class StartTraining extends StatelessWidget {
                  height: double.infinity,
                  decoration: const BoxDecoration(
                      image:DecorationImage(
-                         image: AssetImage("assets/images/background1.png"),fit: BoxFit.fill) ),
+                         image: AssetImage("assets/images/background1.png"),opacity: 180,fit: BoxFit.fill) ),
                  child: Scaffold(
                    appBar: AppBar(),
                    body: SingleChildScrollView(
@@ -42,7 +42,7 @@ class StartTraining extends StatelessWidget {
                                      children: [
                                        Expanded(
                                          child: Container(
-                                           width: 157.0,
+                                           width: 141.0,
                                            height: 141.0,
                                            decoration: BoxDecoration(
                                              border: Border.all(
@@ -64,7 +64,8 @@ class StartTraining extends StatelessWidget {
                                            crossAxisAlignment: CrossAxisAlignment.start,
                                            mainAxisAlignment: MainAxisAlignment.start,
                                            children: [
-                                             Text(cubit.onlyMucsleModel1!.data![index].name.toString(),
+                                             SizedBox(height: 10.0,),
+                                             Text(cubit.onlyMucsleModel1!.data![index].name.toString().toUpperCase(),
                                                maxLines: 1,
                                                overflow: TextOverflow.fade,
                                                style: const TextStyle(
@@ -72,25 +73,46 @@ class StartTraining extends StatelessWidget {
                                                  fontWeight: FontWeight.bold,
                                                  fontSize: 18,
                                                ),),
+                                             SizedBox(height: 8.0,),
                                              SizedBox(
-                                               height: 93.0,
+                                               height: 70.0,
                                                child: Text(cubit.onlyMucsleModel1!.data![index].description.toString(),
                                                  maxLines: 4,
                                                  overflow: TextOverflow.ellipsis,
                                                  style: const TextStyle(
                                                    color: Color.fromRGBO(188, 186, 186, 1),
-                                                   fontWeight: FontWeight.w200,
-                                                   fontSize: 12.0,
+                                                   fontWeight: FontWeight.w400,
+                                                   fontSize: 14.0,
                                                  ),),
                                              ),
                                              TextButton(onPressed: () {
-                                               Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsTraining(
-                                                 image:cubit.onlyMucsleModel!.data![index].image.toString() ,
-                                                 description:cubit.onlyMucsleModel!.data![index].description.toString() ,
-                                                 name: cubit.onlyMucsleModel!.data![index].name.toString(),
+                                               Navigator.push(
+                                                 context,
+                                                 MaterialPageRoute(
+                                                   builder: (context) => DetailsTraining(
+                                                       name: "${cubit.onlyMucsleModel1! !=null
+                                                                 &&cubit.onlyMucsleModel1!.data! !=null
+                                                                 &&cubit.onlyMucsleModel1!.data![index]!=null
+                                                                 &&cubit.onlyMucsleModel1!.data![index]!.name! !=null?
+                                                                 cubit.onlyMucsleModel1!.data![index]!.name!
+                                                                     :'ddddddd'}",
 
-                                               )));
-                                             },
+                                                       image:cubit.onlyMucsleModel1! !=null
+                                                                     &&cubit.onlyMucsleModel1!.data! !=null
+                                                                     &&cubit.onlyMucsleModel1!.data![index]!=null
+                                                                     &&cubit.onlyMucsleModel1!.data![index]!.image! !=null?
+                                                                     cubit.onlyMucsleModel1!.data![index]!.image!.toString()
+                                                                      :'ddddddd',
+
+                                 description: '${cubit.onlyMucsleModel1! !=null
+                                 &&cubit.onlyMucsleModel1!.data! !=null
+                                 &&cubit.onlyMucsleModel1!.data![index]!=null
+                                 &&cubit.onlyMucsleModel1!.data![index]!.description! !=null?
+                                 cubit.onlyMucsleModel1!.data![index]!.description!
+                                     :'ddddddd'}'
+                                 ),
+                                 ),
+                                 );},
                                                child: const Text('Show more',
                                                  style: TextStyle(
                                                    color: Color.fromRGBO(255, 227, 40, 1),

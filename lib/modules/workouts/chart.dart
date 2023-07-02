@@ -298,7 +298,7 @@ class ActivityScreen extends StatefulWidget {
                 text = const Text('Response', style: style);
                 break;
                 case 4:
-                text = const Text('   Personality', style: style);
+                text = const Text('    Personality', style: style);
                 break;
                 default:
                 text = const Text('', style: style);

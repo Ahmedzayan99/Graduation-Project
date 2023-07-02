@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:blackgym/layout/home_login.dart';
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/components.dart';
@@ -10,11 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../shared/network/local/cache_helper.dart';
 import '../../shared/styles/colors_manager.dart';
 import '../../shared/styles/iconly_broken.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import '../login_register/homeSignup.dart';
 import 'edit_Profile.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -377,7 +376,7 @@ class SettingsScreen extends StatelessWidget {
                                                   child: Align(
                                                     alignment:AlignmentDirectional.centerEnd,
                                                     child: Text(
-                                                      '${userModel?.users!.fatPercentage}',
+                                                      '${userModel?.users!.fatPercentage}%',
                                                       style: const TextStyle(
                                                         decoration: TextDecoration
                                                             .underline,
@@ -444,7 +443,7 @@ class SettingsScreen extends StatelessWidget {
                                                 child: Align(
                                                   alignment:AlignmentDirectional.centerEnd,
                                                   child: Text(
-                                                    '${userModel?.users!.gender}',
+                                                    '${userModel?.users!.membership}',
                                                     style: const TextStyle(
                                                       decoration: TextDecoration
                                                           .underline,
@@ -634,7 +633,7 @@ class SettingsScreen extends StatelessWidget {
                                     width: 4.0,
                                   ),
                                   Text(
-                                    "Our branches",
+                                    "Our Branches",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -745,7 +744,7 @@ class SettingsScreen extends StatelessWidget {
                                     width: 4.0,
                                   ),
                                   Text(
-                                    "Rating your coach",
+                                    "Rate Your Coach",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -794,9 +793,11 @@ class SettingsScreen extends StatelessWidget {
                                         crossAxisAlignment:  CrossAxisAlignment.center,
                                         children: [
                                           RatingBar.builder(
+
                                             itemBuilder: (BuildContext context, int index) {
-                                              return Icon(Icons.star);},
+                                              return Icon(Icons.star,color: ColorsManager.primary,);},
                                             onRatingUpdate: (double value) {  },
+
 
 
                                           )
@@ -827,7 +828,7 @@ class SettingsScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomeSignUpScreen(),
+                                              const HomeIdentifyScreen(),
                                         ),
                                         (route) => false);
                                   },
@@ -864,13 +865,6 @@ class SettingsScreen extends StatelessWidget {
                                 const SizedBox(height: 15.0),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeSignUpScreen(),
-                                        ),
-                                        (route) => false);
                                   },
                                   child: Row(
                                     crossAxisAlignment:
@@ -958,7 +952,7 @@ class SettingsScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.only(start:4.0,
+                                        padding: const EdgeInsetsDirectional.only(start:3.1,
                                         ),
                                         child:SvgPicture.asset(
                                           'assets/images/instagram-logo-A807AD378B-seeklogo.com.svg',
@@ -968,7 +962,7 @@ class SettingsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(
-                                        width: 2.0,
+                                      //  width: 1.0,
                                       ),
                                       Text(
                                         "${'ourInstagram'.tr(context)}",
@@ -999,16 +993,14 @@ class SettingsScreen extends StatelessWidget {
                                     Radius.circular(10.0))),
                             child: InkWell(
                               onTap: () {
-                                GymCubit.get(context).logOut();
-                                CacheHelper.removeUserData(key: 'token')
-                                    .then((value) {
-                                 /* Navigator.pushAndRemoveUntil(
+                                GymCubit.get(context).logOut().then((value) {
+                                  Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const ChangeLanguageScreen(),
+                                        const HomeIdentifyScreen(),
                                       ),
-                                      (route) => false);*/
+                                          (route) => false);
                                 });
                               },
                               child: Row(

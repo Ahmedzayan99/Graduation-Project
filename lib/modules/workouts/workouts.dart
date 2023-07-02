@@ -3,7 +3,6 @@ import 'package:blackgym/modules/exercises/details_training.dart';
 import 'package:blackgym/modules/workouts/chart.dart';
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
-import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +24,6 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
   get index => null;
 
   List<int> selectedIndexes=[];
-
-
       //AuthCubit.get(context).userModel!.data!.createdAt;
   @override
   Widget build(BuildContext context) {
@@ -36,13 +33,15 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
       },
       builder: (context, state) {
         var cubit = GymCubit.get(context);
-        var userModel = GymCubit.get(context).userModel!.users!.rate![0];
-        final  Regularity=double.parse(userModel!.regularity as String)  ;
-        final  Feeding=double.parse(userModel!.feeding as String)  ;
-        final  Response=double.parse(userModel!.response as String)  ;
-        final  Training=double.parse(userModel!.training as String)  ;
-        final  Total=double.parse(userModel!.total as String)  ;
-        /*double Total= userModel!.total as double ;
+        var planModel =cubit.planlModel;
+       var   userModel= GymCubit.get(context).userModel!.users!.rate![0];
+          final Regularity = double.parse(userModel.regularity as String) ;
+          final Feeding = double.parse(userModel.feeding as String) ;
+          final Response = double.parse(userModel.response as String) ;
+          final Training = double.parse(userModel.training as String);
+          final Total = double.parse(userModel.total as String);
+
+                /*double Total= userModel!.total as double ;
         double Feeding=userModel!.feeding! as double ;
         double  Regularity=userModel!.regularity! as double ;
         double Response= userModel!.response! as double;
@@ -57,7 +56,6 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                       Container(
                     clipBehavior:Clip.antiAliasWithSaveLayer ,
                     decoration:BoxDecoration(
@@ -97,8 +95,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                             controller:cubit.today,
                             onDateChange: (selectedDate) {
                               cubit.todayDateBeforeFormat =selectedDate;
-                              cubit.getPlan(
-                                 // id:49,day:'${DateFormat('EEEE').format((selectedDate))}'
+                              cubit.getPlan(day:'${DateFormat('EEEE').format((selectedDate))}'
                               );
                             },
                             locale: 'EN',
@@ -143,11 +140,9 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                         backgroundBlendMode: BlendMode.screen,
                       ) ,
                       child: ConditionalBuilder(
-                        condition:cubit.onlyMucsleModel!.data!.isNotEmpty,
+                        condition:planModel! !=null && planModel.data! !=null&& planModel.data!.data!.isNotEmpty,
                           builder:(context) {
-                          if(cubit.internet! && GymCubit.get(context).onlyMucsleModel!.data!.isNotEmpty)
-                             {
-                              return Padding(
+                            return Padding(
                                 padding:  const EdgeInsets.only(top: 10.0,right: 0.0,left: 0.0),
                                 child: ListView.separated(
                                     physics: BouncingScrollPhysics(),
@@ -214,7 +209,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                                                       style: BorderStyle.solid),
                                                   borderRadius: BorderRadius.circular(20.0),
                                                   image: DecorationImage(
-                                                    image: NetworkImage(cubit.onlyMucsleModel!.data![index].image.toString()),
+                                                    image: NetworkImage(planModel.data!.data![0].exercises![index].image.toString()),
                                                     fit: BoxFit.cover,),
 
                                                 ),
@@ -226,7 +221,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     SizedBox(height: 10.0,),
-                                                    Text(cubit.onlyMucsleModel!.data![index].name.toString(),
+                                                    Text(planModel.data!.data![0].exercises![index].name.toString(),
                                                       maxLines: 2,
                                                       overflow: TextOverflow.fade,
                                                       style: const TextStyle(
@@ -237,7 +232,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                                                     SizedBox(height: 5.0,),
                                                     SizedBox(
                                                       height: 15.0,
-                                                      child: Text('${cubit.onlyMucsleModel!.data![index].groups.toString()} set x 10-12 reps',
+                                                      child: Text('${planModel.data!.data![0].exercises![index].groups} set x 10-12 reps',
                                                         maxLines: 1,
                                                         overflow: TextOverflow.ellipsis,
                                                         style:  TextStyle(
@@ -247,10 +242,11 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                                                         ),),
                                                     ),
                                                     TextButton(onPressed: () {
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsTraining(
-                                                        image:cubit.onlyMucsleModel!.data![index].image.toString() ,
-                                                        description:cubit.onlyMucsleModel!.data![index].description.toString() ,
-                                                        name: cubit.onlyMucsleModel!.data![index].name.toString(),
+                                                      Navigator.push(context, MaterialPageRoute(builder:
+                                                          (context) => DetailsTraining(
+                                                        image:planModel.data!.data![index].exercises![index].image.toString() ,
+                                                        description:planModel.data!.data![index].exercises![index].description.toString() ,
+                                                        name:planModel.data!.data![index].exercises![index].name.toString(),
 
                                                       )));
                                                     },
@@ -273,28 +269,22 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                                     ),
                                     separatorBuilder: (context, index) {
                                       return const SizedBox();},
-                                    itemCount: cubit.onlyMucsleModel!.data!.length ),
+                                    itemCount: planModel.data!.data![0].exercises!.length),
                               );
-                              }
-                          else {
-                          return  Text('',style: TextStyle(color: Colors.pink));
-                          }
-                        },
+                              },
                           fallback:(context) {
-                            if (GymCubit.get(context).onlyMucsleModel!.data!.isEmpty){
-                              showProgressIndicator(context);
-                            }
-                          return Text('',style:TextStyle(color: Colors.pink));}
+                              return Center(child: Text('EMPTY',style:TextStyle(color: Colors.pink)));}
                       ),
                     ),
                       const SizedBox(height: 10.0,),
                        ActivityScreen(
-                       Training:Training,//Training as double,
-                         Total: Total,//Total as double,
-                         Feeding:Feeding,//Feeding as double,
-                         Regularity:Regularity,//Regularity  as double,
-                         Response:Response, //Response as double,
-                       ),
+                    Training:Training,//Training as double,
+                    Total: Total,//Total as double,
+                    Feeding:Feeding,//Feeding as double,
+                    Regularity:Regularity,//Regularity  as double,
+                    Response:Response, //Response as double,
+                  ),
+
                 ],
               ),
             ),

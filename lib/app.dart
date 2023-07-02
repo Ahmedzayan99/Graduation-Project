@@ -1,24 +1,23 @@
 import 'package:blackgym/shared/app_cubit/cubit.dart';
 import 'package:blackgym/shared/app_cubit/states.dart';
 import 'package:blackgym/shared/global/app_localization/app_localization.dart';
+import 'package:blackgym/shared/network/local/cache_helper.dart';
 import 'package:blackgym/shared/styles/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'modules/login_register/cubit/authentication_cubit.dart';
+import 'package:intl/intl.dart';
+
+import 'modules/login/cubit/authentication_cubit.dart';
 class MyApp extends StatelessWidget {
-//  final AppRouter appRouter;
   final Widget? startWidget;
-  //final  String? token;
   const MyApp({Key? key,
     required this.startWidget,
-    // required this.token,
   }) : super(key: key);
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..getAllMuscles()..getUserData()..createDatabase()..getPlan()..checkInternet()),
+        BlocProvider(create:(context) => GymCubit()..getUserData()..getAllMuscles()..getOnlyMuscles()..getNotes()..getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}')..checkInternet()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(
