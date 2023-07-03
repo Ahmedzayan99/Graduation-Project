@@ -121,9 +121,9 @@ class CreateNotesLoadingState extends GymStates {}
 class CreateNotesSuccess extends GymStates {}
 class CreateNotesError extends GymStates {
 }
-class gNotesLoadingState extends GymStates {}
-class greateNotesSuccess extends GymStates {}
-class greateNotesError extends GymStates {
+class GetNotesLoadingState extends GymStates {}
+class GetNotesSuccess extends GymStates {}
+class GetNotesError extends GymStates {
 }
 class GetPlanMusclesLoading extends GymStates {}
 class GetPlanMusclesSuccess extends GymStates {}
@@ -132,6 +132,13 @@ class GetPlanMusclesError extends GymStates {
   GetPlanMusclesError({required this.error});
 }
 
+
+class UpdateRateLoading extends GymStates {}
+class UpdateRateSuccess extends GymStates {}
+class UpdateRateError extends GymStates {
+  final String error;
+  UpdateRateError({required this.error});
+}
 
 
 class ChangeValueCheckBox extends GymStates {}

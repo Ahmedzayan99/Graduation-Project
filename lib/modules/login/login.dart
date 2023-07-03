@@ -41,7 +41,6 @@ class LoginScreen extends StatelessWidget {
               );
               GymCubit.get(context).current=0;
               GymCubit.get(context).getNotes();
-              GymCubit.get(context).getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}');
               Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) => NewLayout(),), (route) => false);
             }
@@ -172,7 +171,9 @@ class LoginScreen extends StatelessWidget {
                           if(_formKey.currentState!.validate())
                           {
                             cubit.userLogin(email: userNameController.text.trim(),
-                                          password: passController.text.trim(),);
+                                          password: passController.text.trim(),).then((value) {
+                                            GymCubit.get(context).getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}');
+                                          });
                           }
                         },
                         child:  Text("${'logIn'.tr(context)}",

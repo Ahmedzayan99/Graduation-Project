@@ -23,7 +23,7 @@ class AuthCubit extends Cubit<AuthStates> {
   //<<<<<<<<<<<<<<<<<Start the cubit of Login by API>>>>>>>>>>>>>>>>>>>>>>
   LoginModel? loginModel;
   String? messageLoginSuccess;
-  void userLogin({
+  Future<void> userLogin({
     required String? email,
     required String? password,
   }) async {

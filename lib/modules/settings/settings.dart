@@ -736,7 +736,7 @@ class SettingsScreen extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left: 2.0),
-                                    child: Icon(Icons.place_outlined,
+                                    child: Icon(Icons.star_rate_rounded,
                                       color: ColorsManager.primary,
                                     ),
                                   ),
@@ -793,13 +793,13 @@ class SettingsScreen extends StatelessWidget {
                                         crossAxisAlignment:  CrossAxisAlignment.center,
                                         children: [
                                           RatingBar.builder(
-
                                             itemBuilder: (BuildContext context, int index) {
                                               return Icon(Icons.star,color: ColorsManager.primary,);},
-                                            onRatingUpdate: (double value) {  },
-
-
-
+                                            onRatingUpdate: (double value) {
+                                              cubit.updateRate(stars:value.toInt()).then((value) {
+                                                cubit.changeBottomEvaluateCoach();
+                                              });
+                                            },
                                           )
 
               ],),

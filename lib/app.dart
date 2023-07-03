@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..getUserData()..getAllMuscles()..getOnlyMuscles()..getNotes()..getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}')..checkInternet()),
+        BlocProvider(create:(context) => GymCubit()..getUserData()..getAllMuscles()..getOnlyMuscles()..getNotes()..checkInternet()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
       child: BlocConsumer<GymCubit,GymStates>(

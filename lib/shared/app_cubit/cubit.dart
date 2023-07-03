@@ -32,12 +32,8 @@ import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 class GymCubit extends Cubit<GymStates> {
   GymCubit() : super(GymInitialState());
-
   get index => null;
-
-
   static GymCubit get(context) => BlocProvider.of(context);
-
   //<<<<<<<<<<<<<<<<<Start the cubit of BottomNavigationBar >>>>>>>>>>>>>>>>>>>>>>
   int current = 0;
   List<Widget> screen = [
@@ -54,7 +50,7 @@ class GymCubit extends Cubit<GymStates> {
       getAllMuscles();
     }
     if (index == 2) {
-      getUserData();
+    //  getUserData();
       getPlan(day:'${DateFormat('EEEE').format((todayDateBeforeFormat))}');
       //'${DateFormat('EEEE').format((DateTime.now()))}');
     }
@@ -206,7 +202,7 @@ class GymCubit extends Cubit<GymStates> {
  void updateProfileImage({
     String? image,
   }) {
-      DioHelper.postData(url:updateProfil , data: {
+      DioHelper.postData(url:updateProfile , data: {
         "user_id":userModel!.users!.id,
       "name":userModel!.users!.name,
       "password":'123456789',
@@ -232,7 +228,7 @@ class GymCubit extends Cubit<GymStates> {
     String? password,
   }) {
     emit(UpdateUserPasswordLoadingState());
-    DioHelper.postData(url:updateProfil , data: {
+    DioHelper.postData(url:updateProfile , data: {
       "user_id":userModel!.users!.id,
       "name":userModel!.users!.name,
       "password":password,
@@ -495,7 +491,6 @@ class GymCubit extends Cubit<GymStates> {
   Future<void> getPlan(
   {required String? day,}
   ) async {
-    planlModel!.data ==null;
     emit(GetPlanLoading());
     await DioHelper.getData(url:'$api${CacheHelper.getDataIntoShPre(key:'token')}/$day')
         .then((value) {
@@ -511,7 +506,7 @@ class GymCubit extends Cubit<GymStates> {
   ExercisesModel? onlyMucsleModel;
   Future<void> getOnlyMuscles() async {
     emit(GetOnlyMusclesLoading());
-    await DioHelper.getData(url:alllexercises)
+    await DioHelper.getData(url:allExercises)
         .then((value) {
       onlyMucsleModel = ExercisesModel.fromJson(value.data);
       /*print("${idExer?.length}");
@@ -551,7 +546,7 @@ class GymCubit extends Cubit<GymStates> {
   } ) async {
     emit(GetOnlyMusclesLoading());
     onlyMucsleModel1==[];
-    await DioHelper.getData(url:'${OonlyMuscles}$id')
+    await DioHelper.getData(url:'${muscleMuscles}$id')
         .then((value) {
       onlyMucsleModel1 = OnlyMucsleModel.fromJson(value.data);
       emit(GetOnlyMusclesSuccess());
@@ -566,7 +561,7 @@ class GymCubit extends Cubit<GymStates> {
   UserModel? userModel;
   Future<void> getUserData() async {
     emit(GetUserLoadingState());
-    await DioHelper.getData(url: user.oneUser(id: CacheHelper.getDataIntoShPre(key:'token'))).then((value) {
+    await DioHelper.getData(url: user.getProfile(id: CacheHelper.getDataIntoShPre(key:'token'))).then((value) {
       userModel = UserModel.fromJson(value.data);
       print(userModel!);
       emit(GetUserSuccessState());
@@ -665,7 +660,7 @@ class GymCubit extends Cubit<GymStates> {
   List<Notes>? task;
   List<Notes>? taskdane;
   void getNotes (){
-    emit(gNotesLoadingState());
+    emit(GetNotesLoadingState());
     FirebaseFirestore.instance
         .collection('Notes')
         .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
@@ -681,7 +676,7 @@ class GymCubit extends Cubit<GymStates> {
                   taskdane!.add(Notes.fromJson(element.data()));
               }
             });
-          emit(greateNotesSuccess());
+          emit(GetNotesSuccess());
     });
   }
   void deleteNotes (
@@ -690,7 +685,7 @@ class GymCubit extends Cubit<GymStates> {
 }
       ){
 
-    emit(gNotesLoadingState());
+    emit(GetNotesLoadingState());
     FirebaseFirestore.instance
         .collection('Notes')
         .doc('${CacheHelper.getDataIntoShPre(key:'token')}')
@@ -712,7 +707,7 @@ class GymCubit extends Cubit<GymStates> {
         required String title,
       }
       ){
-    emit(gNotesLoadingState());
+    emit(GetNotesLoadingState());
     Notes model = Notes(
       id: id,
       data: data,
@@ -733,11 +728,23 @@ class GymCubit extends Cubit<GymStates> {
       emit(CreateNotesError());
     });
   }
-
-
-  // final modelw;
-   List<Notes> modelw = [] ;
-
+  Future<void> updateRate({
+  required int stars,
+}
+      ) async {
+    emit(UpdateRateLoading());
+    await DioHelper.postData(
+        url: rate,
+        data:{
+          "user_id":userModel!.users!.id,
+          "Coash_id":29,
+          "stars":stars,
+        }).then((value) {
+          emit(UpdateRateSuccess());
+    }).catchError((error){
+      emit(UpdateRateError(error: error));
+    });
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   bool? internet;

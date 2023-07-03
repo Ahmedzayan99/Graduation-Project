@@ -7,13 +7,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ActivityScreen extends StatefulWidget {
-  double? Regularity;
-  double? Feeding ;
-  double? Training;
-  double? Response;
-  double? Total ;
-   ActivityScreen({Key? key,this.Regularity,this.Feeding,this.Training,this.Response,this.Total}) : super(key: key);
+class RateScreen extends StatefulWidget {
+  double? regularity;
+  double? feeding ;
+  double? training;
+  double? response;
+  double? personality ;
+   RateScreen({Key? key,this.regularity,this.feeding,this.training,this.response,this.personality}) : super(key: key);
 
   List<Color> get availableColors =><Color>[
   ColorsManager.primary  ,
@@ -26,12 +26,11 @@ class ActivityScreen extends StatefulWidget {
       ColorsManager.primary;
   final Color barColor = Colors.cyan;
   final Color touchedBarColor = ColorsManager.white;
-
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
+  State<RateScreen> createState() => _RateScreenState();
 }
 
-  class _ActivityScreenState extends State<ActivityScreen> {
+  class _RateScreenState extends State<RateScreen> {
 
 
   final Duration animDuration = const Duration(milliseconds: 250);
@@ -97,11 +96,11 @@ class ActivityScreen extends StatefulWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: BarChart(
       isPlaying ? randomData() : mainBarData(
-          Feeding: widget.Feeding,
-        Regularity:  widget.Regularity!,
-          Response:  widget.Response!,
-        Total: widget.Total,
-        Training: widget.Training,
+          Feeding: widget.feeding,
+        Regularity:  widget.regularity!,
+          Response:  widget.response!,
+        Total: widget.personality,
+        Training: widget.training,
       ),
       swapAnimationDuration: animDuration,
       ),
@@ -268,11 +267,11 @@ class ActivityScreen extends StatefulWidget {
                 show: false,
                 ),
                 barGroups: showingGroups(
-                  Feeding: widget.Feeding,
-                  Regularity:  widget.Regularity!,
-                  Response:  widget.Response!,
-                  Total: widget.Total,
-                  Training: widget.Training,
+                  Feeding: widget.feeding,
+                  Regularity:  widget.regularity!,
+                  Response:  widget.response!,
+                  Total: widget.personality,
+                  Training: widget.training,
                 ),
                 gridData: const FlGridData(show: false),
                 );
