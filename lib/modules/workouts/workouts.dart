@@ -23,7 +23,6 @@ class WorkoutsScreen extends StatefulWidget {
 
 class _WorkoutsScreenState extends State<WorkoutsScreen> {
   get index => null;
-
   List<int> selectedIndexes=[];
       //AuthCubit.get(context).userModel!.data!.createdAt;
   @override
@@ -35,8 +34,8 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
       builder: (context, state) {
         var cubit = GymCubit.get(context);
         var planModel =cubit.planlModel;
-       var   userModel= GymCubit.get(context).userModel!.users!.rate![0];
-          final regularity = double.parse(userModel.regularity as String) ;
+       var   userModel= cubit.userModel! != null && cubit.userModel!.users! !=null&&cubit.userModel!.users!.rate![0]!=null?cubit.userModel!.users!.rate![0]:null;
+          final regularity = double.parse(userModel!.regularity as String) ;
           final feeding = double.parse(userModel.feeding as String) ;
           final response = double.parse(userModel.response as String) ;
           final training = double.parse(userModel.training as String);
@@ -122,7 +121,7 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                     ),
                   ),
                       const SizedBox(height: 10.0,),
-                  Container(
+                      Container(
                       height: 400.0,
                       // clipBehavior: Clip.antiAliasWithSaveLayer,
                       decoration:BoxDecoration(
@@ -134,21 +133,20 @@ class _WorkoutsScreenState extends State<WorkoutsScreen> {
                         ),
                         color:ColorsManager.grey,
                         backgroundBlendMode: BlendMode.screen,),
-                    child:state is GetPlanLoading?
-                    defaultProgressIndicator():
-                    state is GetPlanError?
-                    Center(
-                        child:Text('There is No Plan Today',
-                        style:TextStyle(
-                            color: ColorsManager.primary,
-                            fontSize:25,
-                            fontWeight: FontWeight.bold))):
-                    planModel! !=null && planModel.data! !=null&& planModel.data!.data!.isNotEmpty?
-                    planExercises(planModel:planModel):
-                    SizedBox(),
-                  ),
-
-                  const SizedBox(height: 10.0,),
+                         child:state is GetPlanLoading||state is GymChangeBottomNavBarState?
+                             defaultProgressIndicator():
+                               state is GetPlanError?
+                                Center(
+                                       child:Text('There is No Plan Today',
+                                            style:TextStyle(
+                                             color: ColorsManager.primary,
+                                             fontSize:25,
+                                             fontWeight: FontWeight.bold))):
+                               planModel! !=null && planModel.data! !=null&& planModel.data!.data!.isNotEmpty?
+                                     planExercises(planModel:planModel):
+                                         SizedBox(),
+                      ),
+                      const SizedBox(height: 10.0,),
                        RateScreen(
                     training:training,//Training as double,
                     personality: personality,//Total as double,

@@ -171,9 +171,7 @@ class LoginScreen extends StatelessWidget {
                           if(_formKey.currentState!.validate())
                           {
                             cubit.userLogin(email: userNameController.text.trim(),
-                                          password: passController.text.trim(),).then((value) {
-                                            GymCubit.get(context).getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}');
-                                          });
+                                          password: passController.text.trim(),);
                           }
                         },
                         child:  Text("${'logIn'.tr(context)}",

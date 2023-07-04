@@ -35,7 +35,6 @@ class _HomeIdentifyScreenState extends State<HomeIdentifyScreen> {
             width: 230,
               height: 200,
             ),
-
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

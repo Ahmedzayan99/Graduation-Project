@@ -509,14 +509,6 @@ class GymCubit extends Cubit<GymStates> {
     await DioHelper.getData(url:allExercises)
         .then((value) {
       onlyMucsleModel = ExercisesModel.fromJson(value.data);
-      /*print("${idExer?.length}");
-      for(int i=0;i<6;i++){
-        if(onlyMucsleModel!.data![i].name=="Front Squat"){
-            var aaa = onlyMucsleModel!.data![i];
-           ahmed!.add(ExercisesPlan.fromJson(aaa.toJson()));
-         print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${aaa!.toJson()}');
-         print('sssssssssssssssssssssssssssssssssssssssssssssssssss${ahmed!.toList()}');
-      }*/
       emit(GetOnlyMusclesSuccess());
         })
         .catchError((error) {

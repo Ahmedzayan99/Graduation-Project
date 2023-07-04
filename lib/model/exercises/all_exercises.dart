@@ -35,8 +35,6 @@ class Data {
   int? groups;
   int? groupCount;
   int? muscleId;
-  String? createdAt;
-  String? updatedAt;
   Muscle? muscle;
 
   Data(
@@ -47,8 +45,6 @@ class Data {
         this.groups,
         this.groupCount,
         this.muscleId,
-        this.createdAt,
-        this.updatedAt,
         this.muscle});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -59,8 +55,6 @@ class Data {
     groups = json['groups'];
     groupCount = json['group_count'];
     muscleId = json['muscle_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
     muscle =
     json['muscle'] != null ? new Muscle.fromJson(json['muscle']) : null;
   }
@@ -74,8 +68,6 @@ class Data {
     data['groups'] = this.groups;
     data['group_count'] = this.groupCount;
     data['muscle_id'] = this.muscleId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     if (this.muscle != null) {
       data['muscle'] = this.muscle!.toJson();
     }

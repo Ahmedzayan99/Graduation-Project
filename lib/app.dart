@@ -17,14 +17,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => GymCubit()..getUserData()..getAllMuscles()..getOnlyMuscles()..getNotes()..checkInternet()),
+        BlocProvider(create:(context) => GymCubit()..getUserData()..getPlan(day:'${DateFormat('EEEE').format((DateTime.now()))}')..getAllMuscles()..getOnlyMuscles()..getNotes()..checkInternet()),
         BlocProvider(create:(context) => AuthCubit()),
       ],
-      child: BlocConsumer<GymCubit,GymStates>(
-        listener: (context, state) {},
-        builder:(context, state) {
-          return MaterialApp(
-            locale: GymCubit.get(context).lang =="en" ? const Locale("en"):const Locale("ar"),
+      child:MaterialApp(
+            locale:  Locale("en"),
             supportedLocales: const [
               Locale("en"),
               Locale("ar"),
@@ -48,9 +45,7 @@ class MyApp extends StatelessWidget {
             home: startWidget,
             //startWidget ,
             theme:getAppThemeData(),
-          );
-        },
-      ),
+    ),
     );
   }
 }
